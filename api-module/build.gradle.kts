@@ -1,8 +1,12 @@
 plugins {
-    kotlin("plugin.jpa") version "1.9.20"
-    kotlin("kapt") version "1.9.21"
+    kotlin("plugin.jpa")
+    kotlin("kapt")
     idea
 }
+
+val jsonwebtokenVersion: String by project
+val querydslVersion: String by project
+val springdocVersion: String by project
 
 allOpen {
     annotation("jakarta.persistence.Entity")
@@ -13,10 +17,13 @@ allOpen {
 dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     api("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
-    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    implementation("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
+    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
+
+    // Docs
+    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -27,6 +34,11 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:mysql")
+
+    // Security
+    implementation("io.jsonwebtoken:jjwt-api:$jsonwebtokenVersion")
+    implementation("io.jsonwebtoken:jjwt-impl:$jsonwebtokenVersion")
+    implementation("io.jsonwebtoken:jjwt-jackson:$jsonwebtokenVersion")
 }
 tasks.test {
     useJUnitPlatform()

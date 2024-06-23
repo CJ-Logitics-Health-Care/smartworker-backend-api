@@ -1,5 +1,8 @@
+val avroVersion: String by project
+val serializerVersion: String by project
+
 dependencies {
-    api("io.confluent:kafka-avro-serializer:${System.getProperty("avroVersion")}")
-    api("io.confluent:kafka-avro-serializer:${System.getProperty("serializerVersion")}")
+    api("org.apache.avro:avro:$avroVersion")
+    api("io.confluent:kafka-avro-serializer:$serializerVersion")
     api("org.springframework.kafka:spring-kafka")
 }

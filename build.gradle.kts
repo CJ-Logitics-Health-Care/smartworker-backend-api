@@ -1,10 +1,13 @@
 plugins {
-    id("org.springframework.boot") version "3.3.1" apply false
-    id("io.spring.dependency-management") version "1.1.5" apply false
-    kotlin("jvm") version "1.9.24"
-    kotlin("kapt") version "1.9.21"
-    kotlin("plugin.spring") version "1.9.24" apply false
+    id("org.springframework.boot") apply false
+    id("io.spring.dependency-management") apply false
+    kotlin("jvm")
+    kotlin("kapt")
+    kotlin("plugin.spring") apply false
 }
+
+val projectGroup: String by project
+val projectVersion: String by project
 
 java {
     toolchain {
@@ -13,8 +16,8 @@ java {
 }
 
 allprojects {
-    group = "com.cj.smartworker"
-    version = "0.0.1-SNAPSHOT"
+    group = projectGroup
+    version = projectVersion
     repositories {
         mavenCentral()
         maven {
