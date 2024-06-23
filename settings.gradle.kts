@@ -19,13 +19,6 @@ pluginManagement {
     val pluginSpring: String by settings
     val pluginJpa: String by settings
 
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        maven {
-            url = uri("https://packages.confluent.io/maven")
-        }
-    }
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
@@ -35,6 +28,11 @@ pluginManagement {
                 "kapt" -> useVersion(kaptVersion)
                 "plugin.spring" -> useVersion(pluginSpring)
                 "plugin.jpa" -> useVersion(pluginJpa)
+                "org.jetbrains.kotlin.jvm" -> useVersion(kotlinVersion)
+                "org.gradle.core" -> useVersion(kotlinVersion)
+                "org.jetbrains.kotlin.kapt" -> useVersion(kotlinVersion)
+                "org.jetbrains.kotlin.plugin.spring" -> useVersion(kotlinVersion)
+                "org.jetbrains.kotlin.plugin.jpa" -> useVersion(kotlinVersion)
             }
         }
     }

@@ -6,6 +6,7 @@ plugins {
 
 val jsonwebtokenVersion: String by project
 val querydslVersion: String by project
+val springdocVersion: String by project
 
 allOpen {
     annotation("jakarta.persistence.Entity")
@@ -20,6 +21,9 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
+
+    // Docs
+    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
