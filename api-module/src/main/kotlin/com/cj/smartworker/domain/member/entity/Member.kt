@@ -13,10 +13,12 @@ class Member(
     private val _memberId: MemberId,
     private val _loginId: LoginId,
     private val _password: Password,
-    private val _phoneNumber: PhoneNumber,
+    private val _phone: Phone,
     private val _createdAt: LocalDateTime,
     private val _gender: Gender,
     private val _email: Email,
+    private val _authorities: Set<Authority>,
+    private val _deleted: Deleted,
 ): RootAggregate<MemberId>(_memberId) {
     val memberId: MemberId
         get() = _memberId
@@ -24,12 +26,16 @@ class Member(
         get() = _loginId
     val password: Password
         get() = _password
-    val phoneNumber: PhoneNumber
-        get() = _phoneNumber
+    val phone: Phone
+        get() = _phone
     val createdAt: LocalDateTime
         get() = _createdAt
     val gender: Gender
         get() = _gender
     val email: Email
         get() = _email
+    val authorities: Set<Authority>
+        get() = _authorities
+    val deleted: Deleted
+        get() = _deleted
 }
