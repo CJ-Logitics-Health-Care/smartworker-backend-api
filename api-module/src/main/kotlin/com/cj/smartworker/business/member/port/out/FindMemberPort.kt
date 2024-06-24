@@ -2,9 +2,10 @@ package com.cj.smartworker.business.member.port.out
 
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.LoginId
+import com.cj.smartworker.domain.member.valueobject.MemberId
 
 interface FindMemberPort {
-    fun findById(id: Long): Member?
+    fun findById(id: MemberId): Member?
 
     fun findByLoginId(loginId: LoginId): Member?
 }

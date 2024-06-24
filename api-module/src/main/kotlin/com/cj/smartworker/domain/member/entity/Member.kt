@@ -16,8 +16,9 @@ class Member(
     private val _phone: Phone,
     private val _createdAt: LocalDateTime,
     private val _gender: Gender,
-    private val _email: Email,
+    private val _email: Email?,
     private val _authorities: Set<Authority>,
+    private val _employeeName: EmployeeName,
     private val _deleted: Deleted,
 ): RootAggregate<MemberId>(_memberId) {
     val memberId: MemberId
@@ -32,10 +33,12 @@ class Member(
         get() = _createdAt
     val gender: Gender
         get() = _gender
-    val email: Email
+    val email: Email?
         get() = _email
     val authorities: Set<Authority>
         get() = _authorities
     val deleted: Deleted
         get() = _deleted
+    val employeeName: EmployeeName
+        get() = _employeeName
 }
