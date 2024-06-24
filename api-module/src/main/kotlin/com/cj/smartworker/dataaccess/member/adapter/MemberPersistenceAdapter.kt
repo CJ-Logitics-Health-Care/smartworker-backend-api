@@ -10,6 +10,7 @@ import com.cj.smartworker.dataaccess.member.repository.MemberJpaRepository
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.Deleted
 import com.cj.smartworker.domain.member.valueobject.LoginId
+import com.cj.smartworker.domain.member.valueobject.MemberId
 import com.querydsl.jpa.impl.JPAQueryFactory
 
 @PersistenceAdapter
@@ -22,11 +23,11 @@ internal class MemberPersistenceAdapter(
         return memberJpaRepository.save(member.toJpaEntity()).toDomainEntity()
     }
 
-    override fun findById(id: Long): Member? {
+    override fun findById(id: MemberId): Member? {
         return queryFactory.select(memberJpaEntity)
             .from(memberJpaEntity)
             .where(
-                memberJpaEntity.id.eq(id)
+                memberJpaEntity.id.eq(id.id)
                 .and(memberJpaEntity.deleted.eq(Deleted.NOT_DELETED)))
             .fetchOne()
             ?.let { return it.toDomainEntity() }
