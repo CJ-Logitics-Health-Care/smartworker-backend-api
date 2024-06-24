@@ -16,7 +16,7 @@ internal class SecurityFilter(
         const val REFRESH_TOKEN = "Refresh"
         const val IS_REFRESH = "IsRefresh"
     }
-    private val logger = logger()
+    private val log = logger()
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -25,7 +25,7 @@ internal class SecurityFilter(
     ) {
         val jwt: String? = resolveToken(request)
         val requestURI = request.requestURI
-        logger.info("request uri: $requestURI")
+        log.info("request uri: $requestURI")
 
         // 유효성 검증
         if (org.springframework.util.StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
@@ -54,7 +54,7 @@ internal class SecurityFilter(
 
         // refresh token인 경우 refresh token 재발행
         if (isRefresh) {
-            logger.info("create refresh token")
+            log.info("create refresh token")
             val refreshToken = tokenProvider.createRefreshToken(authentication)
             httpServletResponse.setHeader(REFRESH_TOKEN, refreshToken)
         }
