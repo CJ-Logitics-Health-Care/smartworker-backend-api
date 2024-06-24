@@ -50,7 +50,7 @@ class MemberJpaEntity(
     val gender: Gender,
 
     @Column(name = "email")
-    val email: String,
+    val email: String?,
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -66,6 +66,12 @@ class MemberJpaEntity(
         nullable = false,
     )
     val deleted: Deleted,
+
+    @Column(
+        name = "employee_name",
+        nullable = false,
+    )
+    val employeeName: String,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
