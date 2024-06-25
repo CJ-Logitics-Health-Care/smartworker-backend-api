@@ -44,3 +44,6 @@ out/
 
 ### infra ###
 /infra/db/
+
+### Open HTTP Client ###
+!/**/**/resources/http/
