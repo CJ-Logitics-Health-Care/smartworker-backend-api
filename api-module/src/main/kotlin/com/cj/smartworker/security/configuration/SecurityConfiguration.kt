@@ -37,7 +37,7 @@ class SecurityConfiguration(
     companion object {
         val publicUrlArray = arrayOf(
             "/",
-            "/v1/member/join",
+            "/v1/member/signup",
             "/v1/member/login",
         )
     }
