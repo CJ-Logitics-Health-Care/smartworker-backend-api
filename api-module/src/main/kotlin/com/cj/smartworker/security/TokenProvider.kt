@@ -80,7 +80,7 @@ class TokenProvider(
     fun authenticate(member: Member): Authentication {
         val authorities = member.authorities.map { SimpleGrantedAuthority(it.role) }.toSet()
         val principal = User(
-            member.memberId.id.toString(),
+            member.memberId?.id.toString(),
             member.employeeName.employeeName,
             authorities
         )

@@ -5,14 +5,14 @@ import com.cj.smartworker.dataaccess.member.entity.MemberJpaEntity
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.*
 
-fun Member.toJpaEntity(): MemberJpaEntity = let {
+fun Member.toJpaEntity(authorities: Set<AuthorityJpaEntity>): MemberJpaEntity = let {
     MemberJpaEntity(
-        id = it.id.id,
+        id = it.id?.id,
         email = it.email?.email,
         password = it.password.password,
         loginId = it.loginId.loginId,
         phone = it.phone.phone,
-        authorities = it.authorities.map { authority ->  AuthorityJpaEntity(id = null, authority = authority) }.toSet(),
+        authorities = authorities,
         deleted = it.deleted,
         createdAt = it.createdAt,
         gender = it.gender,
@@ -24,7 +24,7 @@ fun MemberJpaEntity.toDomainEntity(): Member = let {
     Member(
         _memberId = MemberId(it.id!!),
         _loginId = LoginId(it.loginId),
-        _password = Password(it.password),
+        _password = Password.fromEncoded(it.password),
         _email = it.email?.let { email -> Email(email) },
         _phone = Phone(it.phone),
         _authorities = it.authorities.map { authority -> authority.authority }.toSet(),

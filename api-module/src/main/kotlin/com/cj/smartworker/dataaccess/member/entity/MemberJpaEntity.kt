@@ -6,7 +6,13 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "member")
+@Table(
+    name = "member",
+    indexes = [
+        Index(name = "member_login_id_index", columnList = "login_id"),
+        Index(name = "member_phone_index", columnList = "phone"),
+    ],
+)
 class MemberJpaEntity(
     @Id
     @Column(
