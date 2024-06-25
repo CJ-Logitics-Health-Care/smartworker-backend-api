@@ -1,6 +1,7 @@
 package com.cj.smartworker.domain.member.valueobject
 
 import com.cj.smartworker.domain.member.exception.MemberDomainException
+import com.cj.smartworker.domain.util.PasswordEncodeUtil
 
 /**
  * 비밀빈호 8글자 이상, 영문 숫자 특수문자 모두 사용해야함
@@ -33,7 +34,7 @@ data class Password private constructor(
             if (password.contains(" ")) {
                 throw MemberDomainException("비밀번호에 공백이 포함되어있습니다.")
             }
-            return Password(value)
+            return Password(PasswordEncodeUtil.encode(value))
         }
 
         fun fromEncoded(encodedPassword: String): Password {

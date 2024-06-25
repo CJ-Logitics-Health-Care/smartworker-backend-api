@@ -1,5 +1,5 @@
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    testImplementation("org.testcontainers:mongodb")
+    api("org.springframework.boot:spring-boot-starter-data-mongodb")
+    api("org.testcontainers:mongodb")
 
 }
