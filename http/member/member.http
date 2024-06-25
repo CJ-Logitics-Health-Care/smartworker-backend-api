@@ -1,0 +1,58 @@
+### Sign Up
+POST localhost:8080/v1/member/signup
+Content-Type: application/json
+
+{
+    "loginId": "ssdf22",
+    "password": "SSd1234@!",
+    "phone": "010-1234-1234",
+    "gender": "FEMALE",
+    "email": "sdf2@gmail.com",
+    "employeeName": "홍길동"
+}
+
+### Sign Up2
+POST localhost:8080/v1/member/signup
+Content-Type: application/json
+
+{
+  "loginId": "ssdf23",
+  "password": "SSd1234@!",
+  "phone": "010-1234-1234",
+  "gender": "FEMALE",
+  "email": "sdf@gmail.com",
+  "employeeName": "홍길동"
+}
+
+### Login
+### 응답의 data.token을 변수로 받는다.
+POST localhost:8080/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "ssdf22",
+  "password": "SSd1234@!"
+}
+
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+### Login2
+### 응답의 data.token을 변수로 받는다.
+POST localhost:8080/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "ssdf23",
+  "password": "SSd1234@!"
+}
+
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+
+### Authorization by token
+GET localhost:8080/check/employee
+Authorization: Bearer {{auth_token}}
+
+### Authorization by token
+GET localhost:8080/check/admin
+Authorization: Bearer {{auth_token}}
