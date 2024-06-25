@@ -10,7 +10,7 @@ import java.time.LocalDateTime
  * 비밀빈호 8글자 이상, 영문 숫자 특수문자 모두 사용해야함
  */
 class Member(
-    private val _memberId: MemberId,
+    private val _memberId: MemberId?,
     private val _loginId: LoginId,
     private val _password: Password,
     private val _phone: Phone,
@@ -20,8 +20,8 @@ class Member(
     private val _authorities: Set<Authority>,
     private val _employeeName: EmployeeName,
     private val _deleted: Deleted,
-): RootAggregate<MemberId>(_memberId) {
-    val memberId: MemberId
+): RootAggregate<MemberId?>(_memberId) {
+    val memberId: MemberId?
         get() = _memberId
     val loginId: LoginId
         get() = _loginId
