@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import java.security.Key
@@ -33,6 +34,12 @@ class TokenProvider(
         Base64.getDecoder().decode(secret)
     )
     private val ONE_MINUTE: Long = 1000 * 60 // 1minutes
+
+    fun createToken(member: Member): String = let {
+        val authentication = authenticate(member)
+        SecurityContextHolder.getContext().authentication = authentication
+        createToken(authentication)
+    }
 
     fun createToken(authentication: Authentication): String {
         val authorities: String = authentication.authorities
