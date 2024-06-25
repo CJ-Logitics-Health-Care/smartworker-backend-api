@@ -3,7 +3,7 @@ version: "3.8"
 services:
   mongo:
     image: mongo:latest
-    container_name: serial-mongo
+    container_name: smart-worker-mongo
     tty: true
     ports:
       - "27018:27017"
@@ -11,7 +11,7 @@ services:
       - "../db/mongo:/data"
   mysql:
     image: mysql:8.0 # mysql:8 대신, mysql:8.0을 사용해주세요!
-    container_name: local-db
+    container_name: smart-worker-mysql
     environment:
       MYSQL_DATABASE: smart_worker
       MYSQL_ROOT_PASSWORD: sj991209

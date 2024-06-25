@@ -39,6 +39,9 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:$jsonwebtokenVersion")
     implementation("io.jsonwebtoken:jjwt-impl:$jsonwebtokenVersion")
     implementation("io.jsonwebtoken:jjwt-jackson:$jsonwebtokenVersion")
+
+    // Module
+    implementation(project(":document-db-module"))
 }
 tasks.test {
     useJUnitPlatform()
