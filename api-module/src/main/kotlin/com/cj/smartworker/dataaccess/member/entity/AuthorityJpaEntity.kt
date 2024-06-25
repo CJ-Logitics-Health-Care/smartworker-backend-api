@@ -4,7 +4,12 @@ import com.cj.smartworker.domain.member.valueobject.Authority
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "authority")
+@Table(
+    name = "authority",
+    indexes = [
+        Index(name = "authority_index", columnList = "authority"),
+    ],
+)
 class AuthorityJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
