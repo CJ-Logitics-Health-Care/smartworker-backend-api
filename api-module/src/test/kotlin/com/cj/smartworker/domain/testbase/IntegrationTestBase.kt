@@ -1,5 +1,9 @@
 package com.cj.smartworker.domain.testbase
 
+import com.cj.smartworker.domain.testbase.cleaner.MongoCleaner
+import com.cj.smartworker.domain.testbase.cleaner.RDBCleaner
+import org.junit.jupiter.api.BeforeEach
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
@@ -9,7 +13,19 @@ import java.time.Duration
 
 @SpringBootTest
 @ContextConfiguration(initializers = [IntegrationTestBase.IntegrationTestInitializer::class])
-class IntegrationTestBase {
+abstract class IntegrationTestBase {
+
+    @Autowired
+    private lateinit var rdbCleaner: RDBCleaner
+
+    @Autowired
+    private lateinit var mongoCleaner: MongoCleaner
+
+    @BeforeEach
+    fun beforeEach() {
+        rdbCleaner.execute()
+        mongoCleaner.cleanAll()
+    }
 
     companion object {
         private val MONGO_CONTAINER = MongoDBContainer("mongo:latest")
