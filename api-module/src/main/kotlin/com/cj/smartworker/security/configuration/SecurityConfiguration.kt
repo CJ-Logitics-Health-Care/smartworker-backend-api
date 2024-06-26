@@ -40,6 +40,12 @@ class SecurityConfiguration(
             "/v1/member/signup",
             "/v1/member/login",
         )
+        val swaggerUrlArray = arrayOf(
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/webjars/**",
+        )
     }
 
     @Bean
@@ -48,6 +54,7 @@ class SecurityConfiguration(
             .cors{ it.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { auth ->
                 auth.requestMatchers(*publicUrlArray).permitAll()
+                    .requestMatchers(*swaggerUrlArray).permitAll()
                     .requestMatchers(GET, "/actuator/**").permitAll()
                     .anyRequest().fullyAuthenticated()
             }
