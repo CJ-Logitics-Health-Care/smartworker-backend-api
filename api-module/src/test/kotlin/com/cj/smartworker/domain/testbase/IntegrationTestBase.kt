@@ -5,6 +5,7 @@ import com.cj.smartworker.domain.testbase.cleaner.RDBCleaner
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.util.TestPropertyValues
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.test.context.ContextConfiguration
@@ -44,6 +45,8 @@ abstract class IntegrationTestBase {
                 "spring.data.mongodb.database" to "test",
                 "spring.data.mongodb.auto-index-creation" to true.toString(),
             )
+
+            TestPropertyValues.of(properties).applyTo(applicationContext)
         }
 
     }
