@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "Member API", description = "회원 가입, 로그인, 로그아웃, 회원 정보 수정, 회원 탈퇴 등 API 목록입니다.")
 @WebAdapter
 @RestController
-@RequestMapping("/v1/member")
+@RequestMapping("/api/v1/member")
 internal class SignupController(
     private val signupUseCase: SignupUseCase,
 ) {
