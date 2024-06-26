@@ -1,5 +1,5 @@
 ### Sign Up
-POST localhost:8080/v1/member/signup
+POST localhost:8080/api/v1/member/signup
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Sign Up2
-POST localhost:8080/v1/member/signup
+POST localhost:8080/api/v1/member/signup
 Content-Type: application/json
 
 {
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 ### Login
 ### 응답의 data.token을 변수로 받는다.
-POST localhost:8080/v1/member/login
+POST localhost:8080/api/v1/member/login
 Content-Type: application/json
 
 {
@@ -38,7 +38,7 @@ Content-Type: application/json
 
 ### Login2
 ### 응답의 data.token을 변수로 받는다.
-POST localhost:8080/v1/member/login
+POST localhost:8080/api/v1/member/login
 Content-Type: application/json
 
 {
@@ -50,9 +50,9 @@ Content-Type: application/json
 
 
 ### Authorization by token
-GET localhost:8080/check/employee
+GET localhost:8080/api/check/employee
 Authorization: Bearer {{auth_token}}
 
 ### Authorization by token
-GET localhost:8080/check/admin
+GET localhost:8080/api/check/admin
 Authorization: Bearer {{auth_token}}
