@@ -9,7 +9,7 @@ docker compose up
 ./run-api-module.sh
 ```
 
-## API DOCS
+## API Document
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
