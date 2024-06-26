@@ -4,6 +4,7 @@ import com.cj.smartworker.annotation.PersistenceAdapter
 import com.cj.smartworker.business.member.port.`in`.SaveMemberPort
 import com.cj.smartworker.business.member.port.out.FindMemberPort
 import com.cj.smartworker.business.member.port.out.IsFirstMemberPort
+import com.cj.smartworker.business.member.port.out.SearchMemberPort
 import com.cj.smartworker.dataaccess.member.entity.AuthorityJpaEntity
 import com.cj.smartworker.dataaccess.member.entity.QMemberJpaEntity.memberJpaEntity
 import com.cj.smartworker.dataaccess.member.mapper.toDomainEntity
@@ -24,7 +25,7 @@ internal class MemberPersistenceAdapter(
     private val authorityJpaRepository: AuthorityJpaRepository,
 ) : SaveMemberPort,
     FindMemberPort,
-    IsFirstMemberPort {
+    IsFirstMemberPort, SearchMemberPort {
     override fun saveMember(member: Member): Member {
 
         val authorityJpaEntities = member.authorities.map { authority ->
@@ -59,12 +60,12 @@ internal class MemberPersistenceAdapter(
 
     override fun findByEmail(email: Email): Member? {
         return queryFactory.select(memberJpaEntity)
-                .from(memberJpaEntity)
-                .where(
-                    memberJpaEntity.email.eq(email.email)
-                        .and(memberJpaEntity.deleted.eq(Deleted.NOT_DELETED))
-                )
-                .fetchOne()?.toDomainEntity()
+            .from(memberJpaEntity)
+            .where(
+                memberJpaEntity.email.eq(email.email)
+                    .and(memberJpaEntity.deleted.eq(Deleted.NOT_DELETED))
+            )
+            .fetchOne()?.toDomainEntity()
     }
 
     override fun isFirstMember(): Boolean {
@@ -74,5 +75,16 @@ internal class MemberPersistenceAdapter(
             .fetchFirst()
             ?.let { return false }
             ?: true
+    }
+
+    override fun searchByLoginId(loginId: LoginId): Member? {
+        return queryFactory.select(memberJpaEntity)
+            .from(memberJpaEntity)
+            .where(
+                memberJpaEntity.loginId.eq(loginId.loginId),
+                memberJpaEntity.deleted.eq(Deleted.NOT_DELETED),
+            )
+            .fetchOne()
+            ?.let { return it.toDomainEntity() }
     }
 }

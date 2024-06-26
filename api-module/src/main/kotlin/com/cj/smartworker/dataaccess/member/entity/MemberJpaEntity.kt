@@ -78,6 +78,12 @@ class MemberJpaEntity(
         nullable = false,
     )
     val employeeName: String,
+
+    @Column(
+        name = "age",
+        nullable = false,
+    )
+    val age: Int,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

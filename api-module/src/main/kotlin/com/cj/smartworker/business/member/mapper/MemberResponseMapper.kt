@@ -1,0 +1,24 @@
+package com.cj.smartworker.business.member.mapper
+
+import com.cj.smartworker.business.member.dto.response.MemberResponse
+import com.cj.smartworker.domain.member.entity.Member
+import org.springframework.stereotype.Component
+
+@Component
+class MemberResponseMapper {
+    fun memberToMemberResponse(member: Member): MemberResponse {
+        if (member.memberId == null) {
+            throw IllegalArgumentException("MemberId가 없습니다.")
+        }
+        return MemberResponse(
+            memberId = member.memberId!!.id,
+            email = member.email?.email,
+            phone = member.phone.phone,
+            authorities = member.authorities,
+            createdAt = member.createdAt,
+            age = member.age.age,
+            name = member.employeeName.employeeName,
+            gender = member.gender,
+        )
+    }
+}

@@ -20,6 +20,7 @@ class Member(
     private val _authorities: Set<Authority>,
     private val _employeeName: EmployeeName,
     private val _deleted: Deleted,
+    private val _age: Age,
 ): RootAggregate<MemberId?>(_memberId) {
     val memberId: MemberId?
         get() = _memberId
@@ -41,4 +42,7 @@ class Member(
         get() = _deleted
     val employeeName: EmployeeName
         get() = _employeeName
+
+    val age: Age
+        get() = _age
 }
