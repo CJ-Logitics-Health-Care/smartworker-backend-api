@@ -56,3 +56,7 @@ Authorization: Bearer {{auth_token}}
 ### Authorization by token
 GET localhost:8080/api/check/admin
 Authorization: Bearer {{auth_token}}
+
+### 로그인 아이디로 검색 - Admin 권한만 가능
+GET localhost:8080/api/v1/member/search?loginId=ssdf24
+Authorization: Bearer {{auth_token}}
