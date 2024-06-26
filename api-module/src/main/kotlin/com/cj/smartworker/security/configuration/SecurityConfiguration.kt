@@ -37,8 +37,8 @@ class SecurityConfiguration(
     companion object {
         val publicUrlArray = arrayOf(
             "/",
-            "/v1/member/signup",
-            "/v1/member/login",
+            "/api/v1/member/signup",
+            "/api/v1/member/login",
         )
         val swaggerUrlArray = arrayOf(
             "/swagger-ui/**",
