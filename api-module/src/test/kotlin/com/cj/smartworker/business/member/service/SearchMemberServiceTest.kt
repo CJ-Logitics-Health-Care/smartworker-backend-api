@@ -19,6 +19,6 @@ class SearchMemberServiceTest @Autowired constructor(
         signupUseCase.signup(signupCommand)
         val loginId = signupCommand.loginId
         val memberResponse = searchMemberUseCase.searchByLoginId(LoginId(loginId))
-        assertEquals(signupCommand.employeeName, memberResponse.name)
+        assertEquals(signupCommand.employeeName, memberResponse!!.name)
     }
 }
