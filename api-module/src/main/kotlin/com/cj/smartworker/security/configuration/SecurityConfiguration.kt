@@ -39,6 +39,7 @@ class SecurityConfiguration(
             "/",
             "/api/v1/member/signup",
             "/api/v1/member/login",
+            "/api/v1/member/send/approval-code",
         )
         val swaggerUrlArray = arrayOf(
             "/swagger-ui/**",
