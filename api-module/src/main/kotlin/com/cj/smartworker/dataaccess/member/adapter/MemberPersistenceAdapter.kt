@@ -25,7 +25,8 @@ internal class MemberPersistenceAdapter(
     private val authorityJpaRepository: AuthorityJpaRepository,
 ) : SaveMemberPort,
     FindMemberPort,
-    IsFirstMemberPort, SearchMemberPort {
+    IsFirstMemberPort,
+    SearchMemberPort {
     override fun saveMember(member: Member): Member {
 
         val authorityJpaEntities = member.authorities.map { authority ->

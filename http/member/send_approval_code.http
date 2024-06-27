@@ -1,0 +1,5 @@
+### Set the global client set dns host server
+@DNS_HOST = localhost:8080
+
+POST {{DNS_HOST}}/api/v1/member/send/approval-code?phone=01044745825
+Content-Type: application/json

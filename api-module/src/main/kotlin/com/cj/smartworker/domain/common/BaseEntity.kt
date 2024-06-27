@@ -1,7 +1,7 @@
 package com.cj.smartworker.domain.common
 
 abstract class BaseEntity<ID>(
-    val id: ID,
+    open val id: ID,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

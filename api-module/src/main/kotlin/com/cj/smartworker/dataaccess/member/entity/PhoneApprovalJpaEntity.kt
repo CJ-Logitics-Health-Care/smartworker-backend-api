@@ -1,30 +1,36 @@
 package com.cj.smartworker.dataaccess.member.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "approve_phone")
-class ApprovePhoneJpaEntity(
+@Table(
+    name = "phone_approval",
+    indexes = [
+        Index(name = "phone_approval_phone_index", columnList = "phone"),
+    ],
+)
+class PhoneApprovalJpaEntity(
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "phone_approval_id")
+    val id: Long?,
+
     @Column(name = "phone")
     val phone: String,
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime,
 
-    @Column(name = "member_id", nullable = false)
-    val memberId: Long,
+    @Column(name = "approval_code", columnDefinition = "varchar(7)")
+    val approvalCode: String,
 
     @Column(name = "is_approved", nullable = false)
     val isApproved: Boolean,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ApprovePhoneJpaEntity) return false
+        if (other !is PhoneApprovalJpaEntity) return false
 
         if (phone != other.phone) return false
 
