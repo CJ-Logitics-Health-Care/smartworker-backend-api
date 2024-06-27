@@ -7,6 +7,7 @@ plugins {
 val jsonwebtokenVersion: String by project
 val querydslVersion: String by project
 val springdocVersion: String by project
+val mockkVersion: String by project
 
 allOpen {
     annotation("jakarta.persistence.Entity")
@@ -34,6 +35,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:mysql")
+    testImplementation("io.mockk:mockk:${mockkVersion}")
 
     // Security
     implementation("io.jsonwebtoken:jjwt-api:$jsonwebtokenVersion")
@@ -42,6 +44,9 @@ dependencies {
 
     // Module
     implementation(project(":document-db-module"))
+
+    // SMS
+    implementation("net.nurigo:sdk:4.3.0")
 }
 tasks.test {
     useJUnitPlatform()
