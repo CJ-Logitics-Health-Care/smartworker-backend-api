@@ -15,44 +15,24 @@ import java.time.LocalDateTime
 )
 class MemberJpaEntity(
     @Id
-    @Column(
-        name = "member_id",
-        nullable = false,
-        unique = true,
-    )
+    @Column(name = "member_id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
 
-    @Column(
-        name = "login_id",
-        nullable = false,
-        unique = true,
-    )
+    @Column(name = "login_id", nullable = false, unique = true)
     val loginId: String,
 
-    @Column(
-        name = "password",
-        nullable = false,
-    )
+    @Column(name = "password", nullable = false)
     val password: String,
 
-    @Column(
-        name = "phone",
-        nullable = false,
-    )
+    @Column(name = "phone", nullable = false)
     val phone: String,
 
-    @Column(
-        name = "created_at",
-        nullable = false,
-    )
+    @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime,
 
     @Enumerated(EnumType.STRING)
-    @Column(
-        name = "gender",
-        nullable = false,
-    )
+    @Column(name = "gender", nullable = false)
     val gender: Gender,
 
     @Column(name = "email")
@@ -67,22 +47,13 @@ class MemberJpaEntity(
     val authorities: Set<AuthorityJpaEntity>,
 
     @Enumerated(EnumType.STRING)
-    @Column(
-        name = "deleted",
-        nullable = false,
-    )
+    @Column(name = "deleted", nullable = false)
     val deleted: Deleted,
 
-    @Column(
-        name = "employee_name",
-        nullable = false,
-    )
+    @Column(name = "employee_name", nullable = false)
     val employeeName: String,
 
-    @Column(
-        name = "age",
-        nullable = false,
-    )
+    @Column(name = "age", nullable = false)
     val age: Int,
 ) {
     override fun equals(other: Any?): Boolean {
