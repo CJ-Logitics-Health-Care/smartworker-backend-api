@@ -5,6 +5,7 @@ docker compose up
 ```
 
 ## Run API Module
+Java version을 21로 세팅 후 실행해 주세요.
 ```
 ./run-api-module.sh
 ```
