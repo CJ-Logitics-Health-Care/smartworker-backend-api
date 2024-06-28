@@ -1,6 +1,7 @@
 package com.cj.smartworker.dataaccess.member.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
+import com.cj.smartworker.business.member.port.out.FindApprovalCodePort
 import com.cj.smartworker.business.member.port.out.FindPhoneApprovalHistoryPort
 import com.cj.smartworker.business.member.port.out.SavePhoneApprovalCodePort
 import com.cj.smartworker.dataaccess.member.entity.QPhoneApprovalJpaEntity.*
@@ -17,7 +18,8 @@ class PhoneApprovalAdapter(
     private val phoneApprovalJpaRepository: PhoneApprovalJpaRepository,
     private val queryFactory: JPAQueryFactory,
 ): FindPhoneApprovalHistoryPort,
-    SavePhoneApprovalCodePort {
+    SavePhoneApprovalCodePort,
+    FindApprovalCodePort {
     override fun findPhoneApprovalHistory(phone: Phone, dateTime: LocalDateTime): Int {
         val fetch = queryFactory.select(phoneApprovalJpaEntity.id.count())
             .from(phoneApprovalJpaEntity)
@@ -32,5 +34,14 @@ class PhoneApprovalAdapter(
     override fun savePhoneApprovalCode(phoneApproval: PhoneApproval): PhoneApproval {
         val save = phoneApprovalJpaRepository.save(phoneApproval.toJpaEntity())
         return save.toDomainEntity()
+    }
+
+    override fun findByPhone(phone: Phone): PhoneApproval? {
+        val phoneApprovalJpaEntity = queryFactory.select(phoneApprovalJpaEntity)
+            .from(phoneApprovalJpaEntity)
+            .where(phoneApprovalJpaEntity.phone.eq(phone.phone))
+            .orderBy(phoneApprovalJpaEntity.createdAt.desc())
+            .fetchOne()
+        return phoneApprovalJpaEntity?.toDomainEntity()
     }
 }
