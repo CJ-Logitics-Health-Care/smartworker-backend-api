@@ -3,7 +3,7 @@ package com.cj.smartworker.business.member.service
 import com.cj.smartworker.business.member.port.`in`.SearchMemberUseCase
 import com.cj.smartworker.business.member.port.`in`.SignupUseCase
 import com.cj.smartworker.domain.member.valueobject.LoginId
-import com.cj.smartworker.domain.testbase.IntegrationTestBase
+import com.cj.smartworker.testbase.IntegrationTestBase
 import com.cj.smartworker.fixture.MemberFixture
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

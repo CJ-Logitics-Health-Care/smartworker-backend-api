@@ -1,4 +1,4 @@
-package com.cj.smartworker.domain.testbase.cleaner
+package com.cj.smartworker.testbase.cleaner
 
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext

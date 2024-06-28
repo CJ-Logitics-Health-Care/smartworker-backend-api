@@ -1,7 +1,7 @@
-package com.cj.smartworker.domain.testbase
+package com.cj.smartworker.testbase
 
-import com.cj.smartworker.domain.testbase.cleaner.MongoCleaner
-import com.cj.smartworker.domain.testbase.cleaner.RDBCleaner
+import com.cj.smartworker.testbase.cleaner.MongoCleaner
+import com.cj.smartworker.testbase.cleaner.RDBCleaner
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -44,6 +44,10 @@ abstract class IntegrationTestBase {
                 "spring.data.mongodb.uri" to MONGO_CONTAINER.replicaSetUrl,
                 "spring.data.mongodb.database" to "test",
                 "spring.data.mongodb.auto-index-creation" to true.toString(),
+                "sms.from" to "01012341234",
+                "sms.apiKey" to "test",
+                "sms.apiSecret" to "test",
+                "sms.serviceDomain" to "https://test.com",
             )
 
             TestPropertyValues.of(properties).applyTo(applicationContext)

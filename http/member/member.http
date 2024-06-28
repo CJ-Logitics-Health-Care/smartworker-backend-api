@@ -1,5 +1,7 @@
+@DNS_HOST = localhost:8080
+
 ### Sign Up
-POST localhost:8080/api/v1/member/signup
+POST {{DNS_HOST}}/api/v1/member/signup
 Content-Type: application/json
 
 {
@@ -12,7 +14,7 @@ Content-Type: application/json
 }
 
 ### Sign Up2
-POST localhost:8080/api/v1/member/signup
+POST {{DNS_HOST}}/api/v1/member/signup
 Content-Type: application/json
 
 {
@@ -26,7 +28,7 @@ Content-Type: application/json
 
 ### Login
 ### 응답의 data.token을 변수로 받는다.
-POST localhost:8080/api/v1/member/login
+POST {{DNS_HOST}}/api/v1/member/login
 Content-Type: application/json
 
 {
@@ -38,7 +40,7 @@ Content-Type: application/json
 
 ### Login2
 ### 응답의 data.token을 변수로 받는다.
-POST localhost:8080/api/v1/member/login
+POST {{DNS_HOST}}/api/v1/member/login
 Content-Type: application/json
 
 {
@@ -50,13 +52,13 @@ Content-Type: application/json
 
 
 ### Authorization by token
-GET localhost:8080/api/check/employee
+GET {{DNS_HOST}}/api/check/employee
 Authorization: Bearer {{auth_token}}
 
 ### Authorization by token
-GET localhost:8080/api/check/admin
+GET {{DNS_HOST}}/api/check/admin
 Authorization: Bearer {{auth_token}}
 
 ### 로그인 아이디로 검색 - Admin 권한만 가능
-GET localhost:8080/api/v1/member/search?loginId=ssdf24
+GET {{DNS_HOST}}/api/v1/member/search?loginId=ssdf24
 Authorization: Bearer {{auth_token}}
