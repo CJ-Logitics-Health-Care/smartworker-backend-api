@@ -2,9 +2,9 @@
 @DNS_HOST = localhost:8080
 
 ### 휴대폰 번호 인증번호 전송
-POST {{DNS_HOST}}/api/v1/member/send/approval-code?phone=01044745825
+POST {{DNS_HOST}}/api/v1/member/send/approval-code?phone=010-4474-5825
 Content-Type: application/json
 
 ### 휴대폰 번호 인증
-PUT {{DNS_HOST}}/api/v1/member/approve?approvalCode=383883&phone=01044745825
+PUT {{DNS_HOST}}/api/v1/member/approve?approvalCode=141666&phone=010-4474-5825
 Content-Type: application/json
