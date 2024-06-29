@@ -2,7 +2,8 @@ package com.cj.smartworker.domain.member.valueobject
 
 import com.cj.smartworker.domain.member.exception.MemberDomainException
 
-data class Age(
+@JvmInline
+value class Age(
     val age: Int
 ) {
     init {

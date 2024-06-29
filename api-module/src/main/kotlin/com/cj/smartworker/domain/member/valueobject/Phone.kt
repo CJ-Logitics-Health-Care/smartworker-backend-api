@@ -2,7 +2,8 @@ package com.cj.smartworker.domain.member.valueobject
 
 import com.cj.smartworker.domain.member.exception.MemberDomainException
 
-data class Phone(
+@JvmInline
+value class Phone(
     val phone: String,
 ) {
     init {
