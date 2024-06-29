@@ -5,10 +5,11 @@ import com.cj.smartworker.domain.member.exception.MemberDomainException
 /**
  * 아이디 4~12 글자, 영어와 숫자 조합만 가능
  */
-data class LoginId(
+@JvmInline
+value class LoginId(
     val loginId: String,
 ) {
-    private val regex = "^[a-zA-Z0-9]*$".toRegex()
+
     init {
         if (loginId.length !in 4..12) {
             throw MemberDomainException("아이디의 길이는 4 ~ 12글자여야합니다.")
@@ -24,3 +25,4 @@ data class LoginId(
         }
     }
 }
+private val regex = "^[a-zA-Z0-9]*$".toRegex()
