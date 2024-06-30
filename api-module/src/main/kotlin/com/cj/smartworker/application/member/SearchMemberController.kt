@@ -28,9 +28,9 @@ internal class SearchMemberController(
     @GetMapping("/search")
     @PreAuthorize("hasRole('ADMIN')")
     fun searchByLoginId(
-        @RequestParam("loginId") loginId: String,
+        @RequestParam("loginId") loginId: LoginId,
     ): GenericResponse<MemberResponse?> {
-        val memberResponse = searchMemberUseCase.searchByLoginId(LoginId(loginId))
+        val memberResponse = searchMemberUseCase.searchByLoginId(loginId)
 
         return GenericResponse(
             data = memberResponse,

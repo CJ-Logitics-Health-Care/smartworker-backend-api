@@ -15,7 +15,7 @@ spring:
         show_sql: true
         format_sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     open-in-view: false
   data:
     mongodb:

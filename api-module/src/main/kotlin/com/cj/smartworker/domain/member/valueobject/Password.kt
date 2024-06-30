@@ -8,7 +8,8 @@ import com.cj.smartworker.domain.util.PasswordEncodeUtil
  * 특수문자: !@#$%^&*-
  * 중간에 whitespace가 있으면 안됨
  */
-data class Password private constructor(
+@JvmInline
+value class Password private constructor(
     val password: String,
 ) {
     companion object {
