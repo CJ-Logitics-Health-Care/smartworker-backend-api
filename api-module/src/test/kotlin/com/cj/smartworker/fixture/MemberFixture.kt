@@ -13,7 +13,9 @@ class MemberFixture {
                 gender = Gender.MALE,
                 email = null,
                 employeeName = "홍길동",
-                age = 20,
+                year = 2000,
+                month = 1,
+                day = 1
             )
         }
     }

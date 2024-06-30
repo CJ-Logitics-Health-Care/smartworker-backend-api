@@ -17,7 +17,9 @@ fun Member.toJpaEntity(authorities: Set<AuthorityJpaEntity>): MemberJpaEntity = 
         createdAt = it.createdAt,
         gender = it.gender,
         employeeName = it.employeeName.employeeName,
-        age = it.age.age,
+        year = it.year.year,
+        month = it.month.month,
+        day = it.day.day,
     )
 }
 
@@ -33,6 +35,8 @@ fun MemberJpaEntity.toDomainEntity(): Member = let {
         _createdAt = it.createdAt,
         _gender = it.gender,
         _employeeName = EmployeeName(it.employeeName),
-        _age = Age(it.age),
+        _year = Year(it.year),
+        _month = Month(it.month),
+        _day = Day(it.day),
     )
 }

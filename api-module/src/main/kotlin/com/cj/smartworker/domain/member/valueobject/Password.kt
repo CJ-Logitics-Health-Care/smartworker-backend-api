@@ -1,6 +1,5 @@
 package com.cj.smartworker.domain.member.valueobject
 
-import com.cj.smartworker.domain.member.exception.MemberDomainException
 import com.cj.smartworker.domain.util.PasswordEncodeUtil
 
 /**
@@ -9,33 +8,30 @@ import com.cj.smartworker.domain.util.PasswordEncodeUtil
  * 중간에 whitespace가 있으면 안됨
  */
 @JvmInline
-value class Password private constructor(
-    val password: String,
-) {
+value class Password private constructor(val password: String) {
     companion object {
+        private const val SPECIAL_CHARACTERS = "!@#$%^&*-"
+
         operator fun invoke(value: String): Password {
-            val password = value.trim()
+            val trimmedPassword = value.trim()
 
-            if (password.length !in 8..20) {
-                throw MemberDomainException("비밀번호의 길이는 8 ~ 20글자여야합니다.")
+            require(trimmedPassword.length in 8..20) {
+                "비밀번호의 길이는 8 ~ 20글자여야합니다."
             }
-            // Check if the password contains at least one English letter
-            val containsLetter = password.any { it.isLetter() }
 
-            // Check if the password contains at least one digit
-            val containsDigit = password.any { it.isDigit() }
+            val containsLetter = trimmedPassword.any { it.isLetter() }
+            val containsDigit = trimmedPassword.any { it.isDigit() }
+            val containsSpecialChar = trimmedPassword.any { it in SPECIAL_CHARACTERS }
+            val containsWhitespace = trimmedPassword.any { it.isWhitespace() }
 
-            // Check if the password contains at least one special character
-            val specialCharacters = "!@#$%^&*-"
-            val containsSpecialChar = password.any { it in specialCharacters }
-
-            if (!containsLetter || !containsDigit || !containsSpecialChar) {
-                throw MemberDomainException("비밀번호는 영어, 숫자, 특수문자를 포함해야합니다.")
+            require(containsLetter && containsDigit && containsSpecialChar) {
+                "비밀번호는 영어, 숫자, 특수문자를 포함해야합니다."
             }
-            if (password.contains(" ")) {
-                throw MemberDomainException("비밀번호에 공백이 포함되어있습니다.")
+            require(!containsWhitespace) {
+                "비밀번호에 공백이 포함되어있습니다."
             }
-            return Password(PasswordEncodeUtil.encode(value))
+
+            return Password(PasswordEncodeUtil.encode(trimmedPassword))
         }
 
         fun fromEncoded(encodedPassword: String): Password {
