@@ -41,6 +41,7 @@ class PhoneApprovalAdapter(
             .from(phoneApprovalJpaEntity)
             .where(phoneApprovalJpaEntity.phone.eq(phone.phone))
             .orderBy(phoneApprovalJpaEntity.createdAt.desc())
+            .limit(1)
             .fetchOne()
         return phoneApprovalJpaEntity?.toDomainEntity()
     }
