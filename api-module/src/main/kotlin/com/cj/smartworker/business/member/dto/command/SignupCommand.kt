@@ -17,6 +17,10 @@ data class SignupCommand(
     val email: String?,
     @Schema(description = "이름")
     val employeeName: String,
-    @Schema(description = "나이")
-    val age: Int,
+    @Schema(description = "년도")
+    val year: Int,
+    @Schema(description = "월")
+    val month: Int,
+    @Schema(description = "일")
+    val day: Int,
 )

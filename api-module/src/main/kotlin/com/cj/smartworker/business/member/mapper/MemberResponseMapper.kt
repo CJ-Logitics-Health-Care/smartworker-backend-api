@@ -16,9 +16,11 @@ class MemberResponseMapper {
             phone = member.phone.phone,
             authorities = member.authorities,
             createdAt = member.createdAt,
-            age = member.age.age,
             name = member.employeeName.employeeName,
             gender = member.gender,
+            year = member.year.year,
+            month = member.month.month,
+            day = member.day.day,
         )
     }
 }

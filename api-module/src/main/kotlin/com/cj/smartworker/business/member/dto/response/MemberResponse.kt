@@ -20,8 +20,12 @@ data class MemberResponse(
     val email: String?,
     @Schema(description = "권한")
     val authorities: Set<Authority>,
-    @Schema(description = "나이")
-    val age: Int,
+    @Schema(description = "태어난 연도")
+    val year: Int,
+    @Schema(description = "태어난 월")
+    val month: Int,
+    @Schema(description = "태어난 일")
+    val day: Int,
     @Schema(description = "생성일시")
     @JsonFormat(
         shape = JsonFormat.Shape.STRING,
