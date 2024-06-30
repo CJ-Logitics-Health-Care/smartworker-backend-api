@@ -3,7 +3,8 @@ package com.cj.smartworker.domain.member.valueobject
 import com.cj.smartworker.domain.member.exception.MemberDomainException
 import kotlin.random.Random
 
-class ApprovalCode private constructor(
+@JvmInline
+value class ApprovalCode private constructor(
     val approvalCode: String,
 ) {
     companion object {

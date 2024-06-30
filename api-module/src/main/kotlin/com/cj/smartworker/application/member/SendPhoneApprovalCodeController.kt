@@ -31,9 +31,9 @@ internal class SendPhoneApprovalCodeController(
     )
     @ApiResponse(responseCode = "200", description = "인증번호 전송 성공")
     fun sendApprovalCodeToPhone(
-        @RequestParam("phone") phone: String,
+        @RequestParam("phone") phone: Phone,
     ): GenericResponse<Unit> {
-        sendPhoneApprovalCodeUseCase.requestPhoneApproveCode(Phone(phone))
+        sendPhoneApprovalCodeUseCase.requestPhoneApproveCode(phone)
 
         return GenericResponse(
             data = Unit,

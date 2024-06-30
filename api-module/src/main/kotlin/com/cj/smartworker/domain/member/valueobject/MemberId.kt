@@ -1,5 +1,6 @@
 package com.cj.smartworker.domain.member.valueobject
 
-data class MemberId(
+@JvmInline
+value class MemberId(
     val id: Long,
 )

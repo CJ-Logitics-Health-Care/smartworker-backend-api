@@ -2,10 +2,11 @@ package com.cj.smartworker.domain.member.valueobject
 
 import com.cj.smartworker.domain.member.exception.MemberDomainException
 
-data class Email(
+@JvmInline
+value class Email(
     val email: String,
 ) {
-    private val message = "잘못된 이메일 형식입니다."
+
     init {
         val contains = email.contains("@")
         if (!contains) {
@@ -20,3 +21,4 @@ data class Email(
         }
     }
 }
+private const val message = "잘못된 이메일 형식입니다."

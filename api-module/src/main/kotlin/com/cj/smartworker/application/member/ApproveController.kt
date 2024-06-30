@@ -25,12 +25,12 @@ internal class ApproveController(
     @ApiResponse(responseCode = "200", description = "인증 성공")
     @PutMapping("/approve")
     fun approvePhone(
-        @RequestParam approvalCode: String,
-        @RequestParam phone: String,
+        @RequestParam approvalCode: ApprovalCode,
+        @RequestParam phone: Phone,
     ): GenericResponse<Boolean> {
         val approve = approveCodeUseCase.approve(
-            approvalCode = ApprovalCode(approvalCode),
-            phone = Phone(phone),
+            approvalCode = approvalCode,
+            phone = phone,
         )
         return GenericResponse(
             data = approve,

@@ -1,5 +1,6 @@
 package com.cj.smartworker.domain.member.valueobject
 
-data class PhoneApprovalId(
+@JvmInline
+value class PhoneApprovalId(
     val id: Long,
 )
