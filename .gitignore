@@ -41,9 +41,9 @@ out/
 
 ### yml ###
 /**/**/resources/
+!/**/**/resources/application.yml
+!/**/**/resources/application-local.yml
 
 ### infra ###
 /infra/db/
 
-### Open HTTP Client ###
-!/**/**/resources/http/
