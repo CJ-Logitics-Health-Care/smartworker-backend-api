@@ -47,7 +47,9 @@ internal class SignupService(
             _authorities = setOf(authority),
             _email = command.email?.let { Email(it) },
             _employeeName = EmployeeName(command.employeeName),
-            _age = Age(command.age),
+            _year = Year(command.year),
+            _month = Month(command.month),
+            _day = Day(command.day),
         ).let {
             saveMemberPort.saveMember(it)
         }

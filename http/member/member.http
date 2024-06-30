@@ -10,7 +10,10 @@ Content-Type: application/json
     "phone": "010-1234-1234",
     "gender": "FEMALE",
     "email": "sdf2@gmail.com",
-    "employeeName": "홍길동"
+    "employeeName": "홍길동",
+    "year": 2021,
+    "month": 1,
+    "day": 1
 }
 
 ### Sign Up2
@@ -23,7 +26,10 @@ Content-Type: application/json
   "phone": "010-1234-1234",
   "gender": "FEMALE",
   "email": "sdf@gmail.com",
-  "employeeName": "홍길동"
+  "employeeName": "홍길동",
+  "year": 2021,
+  "month": 1,
+  "day": 1
 }
 
 ### Login
