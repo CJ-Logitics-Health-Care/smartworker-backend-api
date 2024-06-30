@@ -1,6 +1,7 @@
 package com.cj.smartworker.dataaccess.member.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
+import com.cj.smartworker.business.member.port.out.DeleteApprovalCodePort
 import com.cj.smartworker.business.member.port.out.FindApprovalCodePort
 import com.cj.smartworker.business.member.port.out.FindPhoneApprovalHistoryPort
 import com.cj.smartworker.business.member.port.out.SavePhoneApprovalCodePort
@@ -19,7 +20,8 @@ class PhoneApprovalAdapter(
     private val queryFactory: JPAQueryFactory,
 ): FindPhoneApprovalHistoryPort,
     SavePhoneApprovalCodePort,
-    FindApprovalCodePort {
+    FindApprovalCodePort,
+    DeleteApprovalCodePort {
     override fun findPhoneApprovalHistory(phone: Phone, dateTime: LocalDateTime): Int {
         val fetch = queryFactory.select(phoneApprovalJpaEntity.id.count())
             .from(phoneApprovalJpaEntity)
@@ -43,5 +45,9 @@ class PhoneApprovalAdapter(
             .orderBy(phoneApprovalJpaEntity.createdAt.desc())
             .fetchOne()
         return phoneApprovalJpaEntity?.toDomainEntity()
+    }
+
+    override fun deleteApprovalCode(phone: Phone) {
+        phoneApprovalJpaRepository.deleteByPhone(phone.phone)
     }
 }

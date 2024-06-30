@@ -26,7 +26,7 @@ internal class SendPhoneApprovalCodeController(
         summary = "휴대폰 인증 번호 전송",
         description = "휴대폰 인증 번호를 전송합니다.",
         parameters = [
-            Parameter(name = "phone", description = "휴대폰 번호", required = true, example = "01012345678 or 010-1234-5678")
+            Parameter(name = "phone", description = "휴대폰 번호", required = true, example = "010-1234-5678")
         ]
     )
     @ApiResponse(responseCode = "200", description = "인증번호 전송 성공")
