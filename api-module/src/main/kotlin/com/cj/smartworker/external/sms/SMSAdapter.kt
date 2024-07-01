@@ -1,8 +1,6 @@
 package com.cj.smartworker.external.sms
 
 import com.cj.smartworker.annotation.ExternalAdapter
-import com.cj.smartworker.business.member.port.out.SendApprovalCodeToPhonePort
-import com.cj.smartworker.domain.member.valueobject.ApprovalCode
 import com.cj.smartworker.domain.member.valueobject.Phone
 import net.nurigo.sdk.message.model.Message
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest

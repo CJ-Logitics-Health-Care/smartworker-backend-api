@@ -20,6 +20,9 @@ internal class SignupService(
     private val saveMemberPort: SaveMemberPort,
 ) : SignupUseCase {
 
+    /**
+     * 실제 production에선 휴대폰 인증 추가 필요
+     */
     @Transactional
     override fun signup(command: SignupCommand) {
         findMemberPort.findByLoginId(LoginId(command.loginId))
@@ -40,7 +43,6 @@ internal class SignupService(
             _memberId = null,
             _loginId = LoginId(command.loginId),
             _password = Password(command.password),
-            _phone = Phone(command.phone),
             _gender = command.gender,
             _createdAt = Instant.now().toKstLocalDateTime(),
             _deleted = Deleted.NOT_DELETED,
@@ -50,6 +52,7 @@ internal class SignupService(
             _year = Year(command.year),
             _month = Month(command.month),
             _day = Day(command.day),
+            _phone = Phone(command.phone),
         ).let {
             saveMemberPort.saveMember(it)
         }

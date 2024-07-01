@@ -2,7 +2,6 @@ package com.cj.smartworker.application.member
 
 import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
-import com.cj.smartworker.business.member.port.`in`.SendPhoneApprovalCodeUseCase
 import com.cj.smartworker.domain.member.valueobject.Phone
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
