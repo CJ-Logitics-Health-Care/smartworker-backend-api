@@ -44,9 +44,6 @@ dependencies {
 
     // Module
     implementation(project(":document-db-module"))
-
-    // SMS
-    implementation("net.nurigo:sdk:4.3.0")
 }
 tasks.test {
     useJUnitPlatform()
