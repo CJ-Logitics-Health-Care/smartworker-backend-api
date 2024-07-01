@@ -1,5 +1,3 @@
-
-
 jwt:
   secret: Tm92YUhvbWVQYWdlc2FkZmFzZGZhc2RmYXNkZnNhZGY=
 spring:
@@ -48,9 +46,3 @@ springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   writer-with-default-pretty-printer: true
-
-sms:
-  from: 01044745825
-  apiKey: NCSA942P5OFNFMQT
-  apiSecret: O2HJXMNM6IO4VOUBC3N7XPIFZLB8G6MR
-  serviceDomain: https://api.coolsms.co.kr
