@@ -32,6 +32,7 @@ internal class CursorPagingMemberController(
             Parameter(name = "size", description = "페이지 사이즈", required = false),
         ]
     )
+    @Operation(summary = "직원 전체 커서 페이징 조회", description = "직원 전체 커서 페이징 조회를 진행합니다.\nAdmin만 가능합니다.")
     @ApiResponse(responseCode = "200", description = "조회 성공")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/cursor-paging")
