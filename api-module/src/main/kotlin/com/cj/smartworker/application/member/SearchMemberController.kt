@@ -23,7 +23,8 @@ internal class SearchMemberController(
 ) {
     @Operation(
         summary = "회원 로그인 아이디로 검색",
-        description = "회원 로그인 아이디로 회원을 검색합니다. 유저가 없을 시 null을 반환합니다.")
+        description = "회원 로그인 아이디로 회원을 검색합니다. 유저가 없을 시 null을 반환합니다.",
+    )
     @ApiResponse(responseCode = "200", description = "검색 성공")
     @GetMapping("/search")
     @PreAuthorize("hasRole('ADMIN')")
