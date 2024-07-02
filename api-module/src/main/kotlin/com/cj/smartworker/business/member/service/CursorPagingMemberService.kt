@@ -8,12 +8,14 @@ import com.cj.smartworker.business.member.port.out.HasNextMemberPort
 import com.cj.smartworker.business.member.port.out.PagingMemberPort
 import com.cj.smartworker.domain.member.valueobject.MemberId
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 internal class CursorPagingMemberService(
     private val pagingMemberPort: PagingMemberPort,
     private val hasNextMemberPort: HasNextMemberPort,
 ): CursorPagingMemberUseCase {
+    @Transactional(readOnly = true)
     override fun findMembers(cursorRequest: CursorRequest): CursorResultResponse<MemberPagingResponse> {
         pagingMemberPort.pagingMembers(cursorRequest).let { members ->
             val lastIndex = if (members.isEmpty()) null else members.last().memberId

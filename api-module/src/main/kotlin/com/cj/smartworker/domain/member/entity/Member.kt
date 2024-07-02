@@ -13,16 +13,16 @@ class Member(
     private val _memberId: MemberId?,
     private val _loginId: LoginId,
     private val _password: Password,
-    private val _phone: Phone,
+    private var _phone: Phone,
     private val _createdAt: LocalDateTime,
-    private val _gender: Gender,
-    private val _email: Email?,
-    private val _authorities: Set<Authority>,
-    private val _employeeName: EmployeeName,
+    private var _gender: Gender,
+    private var _email: Email?,
+    private var _authorities: Set<Authority>,
+    private var _employeeName: EmployeeName,
     private val _deleted: Deleted,
-    private val _year: Year,
-    private val _month: Month,
-    private val _day: Day,
+    private var _year: Year,
+    private var _month: Month,
+    private var _day: Day,
 ): RootAggregate<MemberId?>(_memberId) {
     val memberId: MemberId?
         get() = _memberId
@@ -50,4 +50,37 @@ class Member(
         get() = _month
     val day: Day
         get() = _day
+
+    fun changePhone(phone: Phone): Member {
+        _phone = phone
+        return this
+    }
+    fun changeGender(gender: Gender): Member {
+        _gender = gender
+        return this
+    }
+    fun changeAuthority(authorities: Set<Authority>): Member {
+        _authorities = authorities
+        return this
+    }
+    fun changeYear(year: Year): Member {
+        _year = year
+        return this
+    }
+    fun changeMonth(month: Month): Member {
+        _month = month
+        return this
+    }
+    fun changeDay(day: Day): Member {
+        _day = day
+        return this
+    }
+    fun changeEmployeeName(employeeName: EmployeeName): Member {
+        _employeeName = employeeName
+        return this
+    }
+    fun changeEmail(email: Email?): Member {
+        _email = email
+        return this
+    }
 }
