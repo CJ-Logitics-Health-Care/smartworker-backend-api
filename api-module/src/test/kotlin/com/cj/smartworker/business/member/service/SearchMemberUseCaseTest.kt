@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-class SearchMemberServiceTest @Autowired constructor(
+class SearchMemberUseCaseTest @Autowired constructor(
     private val searchMemberUseCase: SearchMemberUseCase,
     private val signupUseCase: SignupUseCase,
 ): IntegrationTestBase() {
