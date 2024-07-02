@@ -31,7 +31,7 @@ class UpdateMemberUseCaseTest @Autowired constructor(
         val memberId = signupUseCase.signup(signupCommand)
         val year = Year(1999)
         val gender = Gender.FEMALE
-        val phone = "010-1234-1234"
+        val phone = Phone("010-1234-1234")
         val email = Email("sss@gmail.com")
         val updateMemberCommand = UpdateMemberCommand(
             memberId = memberId,

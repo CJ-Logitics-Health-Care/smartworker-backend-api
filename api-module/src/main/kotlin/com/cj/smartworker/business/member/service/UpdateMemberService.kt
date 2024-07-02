@@ -21,7 +21,7 @@ internal class UpdateMemberService(
             throw MemberDomainException("회원을 찾지 못하였습니다.")
         }
         member.apply {
-            changePhone(Phone(updateMemberCommand.phone))
+            changePhone(updateMemberCommand.phone)
             changeGender(updateMemberCommand.gender)
             changeAuthority(setOf(updateMemberCommand.authority))
             changeYear(updateMemberCommand.year)

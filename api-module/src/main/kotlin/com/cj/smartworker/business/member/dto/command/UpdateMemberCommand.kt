@@ -8,7 +8,7 @@ data class UpdateMemberCommand(
     @Schema(description = "회원 ID", example = "3")
     val memberId: MemberId,
     @Schema(description = "전화번호")
-    val phone: String,
+    val phone: Phone,
     @Schema(description = "성별")
     val gender: Gender,
     @Schema(description = "권한")
