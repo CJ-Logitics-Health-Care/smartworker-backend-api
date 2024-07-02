@@ -24,7 +24,7 @@ internal class SignupService(
      * 실제 production에선 휴대폰 인증 추가 필요
      */
     @Transactional
-    override fun signup(command: SignupCommand) {
+    override fun signup(command: SignupCommand): MemberId {
         findMemberPort.findByLoginId(LoginId(command.loginId))
             ?.let {
                 throw MemberDomainException("이미 가입된 회원입니다.")
@@ -39,7 +39,7 @@ internal class SignupService(
 
         val authority = if (isFirst) Authority.ADMIN else Authority.EMPLOYEE
 
-        Member(
+        return Member(
             _memberId = null,
             _loginId = LoginId(command.loginId),
             _password = Password(command.password),
@@ -54,7 +54,7 @@ internal class SignupService(
             _day = Day(command.day),
             _phone = Phone(command.phone),
         ).let {
-            saveMemberPort.saveMember(it)
+            saveMemberPort.saveMember(it).memberId!!
         }
     }
 }
