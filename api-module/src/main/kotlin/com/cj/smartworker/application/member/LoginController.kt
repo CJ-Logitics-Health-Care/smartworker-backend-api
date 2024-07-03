@@ -24,7 +24,7 @@ internal class LoginController(
     private val loginUseCase: LoginUseCase,
 ) {
 
-    @Operation(summary = "로그인", description = "로그인을 진행합니다.")
+    @Operation(summary = "로그인", description = "로그인을 진행합니다. token은 nullable합니다.")
     @ApiResponse(responseCode = "200", description = "로그인 성공")
     @PostMapping("/login")
     fun login(

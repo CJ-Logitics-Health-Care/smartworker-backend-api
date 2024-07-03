@@ -39,7 +39,8 @@ Content-Type: application/json
 
 {
   "loginId": "ssdf22",
-  "password": "SSd1234@!"
+  "password": "SSd1234@!",
+  "token": "eyJhbGs"
 }
 
 > {% client.global.set("auth_token", response.body.data.token); %}
