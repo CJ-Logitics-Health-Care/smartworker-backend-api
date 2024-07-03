@@ -9,6 +9,7 @@ import com.cj.smartworker.business.member.port.out.SaveTokenPort
 import com.cj.smartworker.domain.member.entity.DeviceToken
 import com.cj.smartworker.domain.member.exception.MemberDomainException
 import com.cj.smartworker.domain.member.valueobject.LoginId
+import com.cj.smartworker.domain.member.valueobject.Token
 import com.cj.smartworker.domain.util.PasswordEncodeUtil
 import com.cj.smartworker.domain.util.logger
 import com.cj.smartworker.security.TokenProvider
@@ -35,9 +36,9 @@ internal class LoginService(
         }
 
         findTokenPort.findByMemberId(member.memberId!!) ?.let {
-            if (loginRequest.token != null &&  it.token != loginRequest.token) {
+            if (loginRequest.token != null &&  it.token.token != loginRequest.token) {
                 logger.info("기존 디바이스 토큰이 존재하고, 새로운 디바이스 토큰이 다릅니다. 기존 디바이스 토큰을 업데이트 합니다.")
-                it.updateToken(loginRequest.token)
+                it.updateToken(Token(loginRequest.token))
                 saveTokenPort.saveToken(it)
             }
         } ?: run {
@@ -48,7 +49,7 @@ internal class LoginService(
                     DeviceToken(
                         _deviceTokenId = null,
                         _memberId = member.memberId!!,
-                        _token = loginRequest.token,
+                        _token = Token(loginRequest.token),
                     )
                 )
             }
