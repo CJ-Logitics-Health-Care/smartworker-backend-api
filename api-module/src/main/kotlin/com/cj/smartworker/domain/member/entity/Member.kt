@@ -19,7 +19,7 @@ class Member(
     private var _email: Email?,
     private var _authorities: Set<Authority>,
     private var _employeeName: EmployeeName,
-    private val _deleted: Deleted,
+    private var _deleted: Deleted,
     private var _year: Year,
     private var _month: Month,
     private var _day: Day,
@@ -81,6 +81,10 @@ class Member(
     }
     fun changeEmail(email: Email?): Member {
         _email = email
+        return this
+    }
+    fun delete(): Member {
+        _deleted = Deleted.DELETED
         return this
     }
 }
