@@ -7,5 +7,5 @@ import org.springframework.security.core.userdetails.User
 class AccountAdapter(member: Member): User(
     member.loginId.loginId,
     member.password.password,
-    member.authorities.map { GrantedAuthority { it.role } }
+    member.authorities.map { GrantedAuthority { it.authority.role } }
 )

@@ -5,6 +5,7 @@ import com.cj.smartworker.business.member.port.`in`.SaveMemberPort
 import com.cj.smartworker.business.member.port.`in`.SignupUseCase
 import com.cj.smartworker.business.member.port.out.FindMemberPort
 import com.cj.smartworker.business.member.port.out.IsFirstMemberPort
+import com.cj.smartworker.domain.member.entity.AuthorityEntity
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.exception.MemberDomainException
 import com.cj.smartworker.domain.member.valueobject.*
@@ -46,7 +47,10 @@ internal class SignupService(
             _gender = command.gender,
             _createdAt = Instant.now().toKstLocalDateTime(),
             _deleted = Deleted.NOT_DELETED,
-            _authorities = setOf(authority),
+            _authorities = setOf(AuthorityEntity(
+                _authorityId = null,
+                _authority = authority,
+            )),
             _email = command.email?.let { Email(it) },
             _employeeName = EmployeeName(command.employeeName),
             _year = Year(command.year),

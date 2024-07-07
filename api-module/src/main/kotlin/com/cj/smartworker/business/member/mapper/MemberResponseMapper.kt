@@ -14,7 +14,7 @@ class MemberResponseMapper {
             memberId = member.memberId!!.id,
             email = member.email?.email,
             phone = member.phone.phone,
-            authorities = member.authorities,
+            authorities = member.authorities.map { it.authority }.toSet(),
             createdAt = member.createdAt,
             name = member.employeeName.employeeName,
             gender = member.gender,

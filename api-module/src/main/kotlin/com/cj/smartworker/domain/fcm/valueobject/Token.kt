@@ -1,4 +1,4 @@
-package com.cj.smartworker.domain.member.valueobject
+package com.cj.smartworker.domain.fcm.valueobject
 
 /**
  * 유저 휴대폰의 토큰입니다.
