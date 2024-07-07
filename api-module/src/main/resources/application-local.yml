@@ -46,3 +46,6 @@ springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   writer-with-default-pretty-printer: true
+
+fcm:
+  project-id: smartworker-78dd9

@@ -1,7 +1,7 @@
-package com.cj.smartworker.dataaccess.member.entity
+package com.cj.smartworker.dataaccess.fcm.entity
 
-import com.cj.smartworker.domain.member.valueobject.MemberId
-import com.cj.smartworker.domain.member.valueobject.Token
+import com.cj.smartworker.dataaccess.member.entity.MemberJpaEntity
+import com.cj.smartworker.domain.fcm.valueobject.Token
 import jakarta.persistence.*
 
 @Entity
@@ -11,8 +11,9 @@ class DeviceTokenJpaEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
 
-    @Column(name = "member_id")
-    val memberId: MemberId,
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
+    val member: MemberJpaEntity,
 
     @Column(name = "token")
     val token: Token,
