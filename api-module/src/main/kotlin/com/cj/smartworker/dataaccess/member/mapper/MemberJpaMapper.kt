@@ -8,7 +8,7 @@ import com.cj.smartworker.domain.member.valueobject.*
 
 fun Member.toJpaEntity(): MemberJpaEntity = let {
     MemberJpaEntity(
-        id = it.id?.id,
+        id = it.memberId?.id,
         email = it.email?.email,
         password = it.password.password,
         loginId = it.loginId.loginId,
@@ -29,7 +29,7 @@ fun Member.toJpaEntity(): MemberJpaEntity = let {
 
 fun MemberJpaEntity.toDomainEntity(): Member = let {
     Member(
-        _memberId = MemberId(it.id!!),
+        _memberId = it.id?.let { id -> MemberId(id) },
         _loginId = LoginId(it.loginId),
         _password = Password.fromEncoded(it.password),
         _email = it.email?.let { email -> Email(email) },
