@@ -20,7 +20,7 @@ class DeviceTokenPersistenceAdapter(
 ): SaveTokenPort,
     FindTokenPort {
     override fun findByMemberIds(memberIds: List<MemberId>): Map<Token, Member> {
-        val findByMemberIdIn = deviceTokenRepository.findByMemberIdIn(memberIds)
+        val findByMemberIdIn = deviceTokenRepository.findByMemberIdIn(memberIds.map { it.id })
         return findByMemberIdIn.associate {
             it.token to it.toDomain().member
         }

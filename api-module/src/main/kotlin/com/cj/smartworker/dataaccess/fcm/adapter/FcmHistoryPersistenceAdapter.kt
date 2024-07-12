@@ -5,22 +5,31 @@ import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.repository.FcmHistoryJpaRepository
 import com.cj.smartworker.dataaccess.member.mapper.toJpaEntity
-import com.cj.smartworker.dataaccess.member.repository.AuthorityJpaRepository
+import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import com.cj.smartworker.domain.member.entity.Member
 import java.time.LocalDateTime
 
 @PersistenceAdapter
 internal class FcmHistoryPersistenceAdapter(
     private val fcmHistoryJpaRepository: FcmHistoryJpaRepository,
-    private val authorityJpaRepository: AuthorityJpaRepository,
 ): SaveFcmHistoryPort {
-    override fun saveFcmHistory(reporter: Member, admins: Set<Member>, createdAt: LocalDateTime) {
-        FcmHistoryJpaEntity(
+    override fun saveFcmHistory(
+        reporter: Member,
+        admins: Set<Member>,
+        createdAt: LocalDateTime,
+        x: Int,
+        y: Int,
+        emergency: Emergency,
+    ) {
+        val fcmHistoryJpaEntity = FcmHistoryJpaEntity(
             id = null,
             createdAt = createdAt,
             reporter = reporter.toJpaEntity(),
             admins = admins.map { it.toJpaEntity() }.toSet(),
+            x = x,
+            y = y,
+            emergency = emergency,
         )
-        TODO("Not yet implemented")
+        fcmHistoryJpaRepository.save(fcmHistoryJpaEntity)
     }
 }

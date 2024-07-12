@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface DeviceTokenJpaRepository: JpaRepository<DeviceTokenJpaEntity, Long>{
     fun findByMemberId(memberId: MemberId): DeviceTokenJpaEntity?
-    fun findByMemberIdIn(memberIds: List<MemberId>): List<DeviceTokenJpaEntity>
+    fun findByMemberIdIn(memberIds: List<Long>): List<DeviceTokenJpaEntity>
 }

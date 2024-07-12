@@ -1,6 +1,7 @@
 package com.cj.smartworker.dataaccess.fcm.entity
 
 import com.cj.smartworker.dataaccess.member.entity.MemberJpaEntity
+import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -26,6 +27,16 @@ class FcmHistoryJpaEntity(
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id", nullable = false)
     val reporter: MemberJpaEntity, // 알람을 보낸 사용자
+
+    @Column(name = "x", nullable = false)
+    val x: Int,
+
+    @Column(name = "y", nullable = false)
+    val y: Int,
+
+    @Column(name = "emergency", nullable = false)
+    @Enumerated(EnumType.STRING)
+    val emergency: Emergency,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
