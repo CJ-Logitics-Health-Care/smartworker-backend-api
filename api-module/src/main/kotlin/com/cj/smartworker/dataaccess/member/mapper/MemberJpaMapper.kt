@@ -2,17 +2,21 @@ package com.cj.smartworker.dataaccess.member.mapper
 
 import com.cj.smartworker.dataaccess.member.entity.AuthorityJpaEntity
 import com.cj.smartworker.dataaccess.member.entity.MemberJpaEntity
+import com.cj.smartworker.domain.member.entity.AuthorityEntity
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.*
 
-fun Member.toJpaEntity(authorities: Set<AuthorityJpaEntity>): MemberJpaEntity = let {
+fun Member.toJpaEntity(): MemberJpaEntity = let {
     MemberJpaEntity(
-        id = it.id?.id,
+        id = it.memberId?.id,
         email = it.email?.email,
         password = it.password.password,
         loginId = it.loginId.loginId,
         phone = it.phone.phone,
-        authorities = authorities,
+        authorities = it.authorities.map { authority -> AuthorityJpaEntity(
+            id = authority.authorityId?.authorityId,
+            authority = authority.authority,
+        ) }.toSet(),
         deleted = it.deleted,
         createdAt = it.createdAt,
         gender = it.gender,
@@ -25,12 +29,15 @@ fun Member.toJpaEntity(authorities: Set<AuthorityJpaEntity>): MemberJpaEntity = 
 
 fun MemberJpaEntity.toDomainEntity(): Member = let {
     Member(
-        _memberId = MemberId(it.id!!),
+        _memberId = it.id?.let { id -> MemberId(id) },
         _loginId = LoginId(it.loginId),
         _password = Password.fromEncoded(it.password),
         _email = it.email?.let { email -> Email(email) },
         _phone = Phone(it.phone),
-        _authorities = it.authorities.map { authority -> authority.authority }.toSet(),
+        _authorities = it.authorities.map { authority -> AuthorityEntity(
+            _authorityId = AuthorityId(it.id!!),
+            _authority = authority.authority,
+        ) }.toSet(),
         _deleted = it.deleted,
         _createdAt = it.createdAt,
         _gender = it.gender,

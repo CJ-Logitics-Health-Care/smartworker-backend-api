@@ -1,15 +1,15 @@
 package com.cj.smartworker.business.member.service
 
+import com.cj.smartworker.business.fcm.port.out.FindTokenPort
 import com.cj.smartworker.business.member.dto.TokenResponse
 import com.cj.smartworker.business.member.dto.request.LoginRequest
 import com.cj.smartworker.business.member.port.`in`.LoginUseCase
 import com.cj.smartworker.business.member.port.out.FindMemberPort
-import com.cj.smartworker.business.member.port.out.FindTokenPort
-import com.cj.smartworker.business.member.port.out.SaveTokenPort
-import com.cj.smartworker.domain.member.entity.DeviceToken
+import com.cj.smartworker.business.fcm.port.out.SaveTokenPort
+import com.cj.smartworker.domain.fcm.entity.DeviceToken
 import com.cj.smartworker.domain.member.exception.MemberDomainException
 import com.cj.smartworker.domain.member.valueobject.LoginId
-import com.cj.smartworker.domain.member.valueobject.Token
+import com.cj.smartworker.domain.fcm.valueobject.Token
 import com.cj.smartworker.domain.util.PasswordEncodeUtil
 import com.cj.smartworker.domain.util.logger
 import com.cj.smartworker.security.TokenProvider
@@ -48,7 +48,7 @@ internal class LoginService(
                 saveTokenPort.saveToken(
                     DeviceToken(
                         _deviceTokenId = null,
-                        _memberId = member.memberId!!,
+                        _member = member,
                         _token = Token(loginRequest.token),
                     )
                 )

@@ -4,9 +4,9 @@ import com.cj.smartworker.business.member.dto.command.UpdateMemberCommand
 import com.cj.smartworker.business.member.port.`in`.SaveMemberPort
 import com.cj.smartworker.business.member.port.`in`.UpdateMemberUseCase
 import com.cj.smartworker.business.member.port.out.FindMemberPort
+import com.cj.smartworker.domain.member.entity.AuthorityEntity
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.exception.MemberDomainException
-import com.cj.smartworker.domain.member.valueobject.Phone
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -23,7 +23,10 @@ internal class UpdateMemberService(
         member.apply {
             changePhone(updateMemberCommand.phone)
             changeGender(updateMemberCommand.gender)
-            changeAuthority(setOf(updateMemberCommand.authority))
+            changeAuthority(setOf(AuthorityEntity(
+                _authorityId = null,
+                _authority = updateMemberCommand.authority,
+            )))
             changeYear(updateMemberCommand.year)
             changeMonth(updateMemberCommand.month)
             changeDay(updateMemberCommand.day)

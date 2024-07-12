@@ -17,7 +17,7 @@ class Member(
     private val _createdAt: LocalDateTime,
     private var _gender: Gender,
     private var _email: Email?,
-    private var _authorities: Set<Authority>,
+    private var _authorities: Set<AuthorityEntity>,
     private var _employeeName: EmployeeName,
     private var _deleted: Deleted,
     private var _year: Year,
@@ -38,7 +38,7 @@ class Member(
         get() = _gender
     val email: Email?
         get() = _email
-    val authorities: Set<Authority>
+    val authorities: Set<AuthorityEntity>
         get() = _authorities
     val deleted: Deleted
         get() = _deleted
@@ -59,7 +59,7 @@ class Member(
         _gender = gender
         return this
     }
-    fun changeAuthority(authorities: Set<Authority>): Member {
+    fun changeAuthority(authorities: Set<AuthorityEntity>): Member {
         _authorities = authorities
         return this
     }

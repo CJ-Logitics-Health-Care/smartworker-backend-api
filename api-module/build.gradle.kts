@@ -42,6 +42,9 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-impl:$jsonwebtokenVersion")
     implementation("io.jsonwebtoken:jjwt-jackson:$jsonwebtokenVersion")
 
+    // FCM
+    implementation("com.google.firebase:firebase-admin:9.2.0")
+
     // Module
     implementation(project(":document-db-module"))
 }

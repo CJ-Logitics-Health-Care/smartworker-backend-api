@@ -1,19 +1,19 @@
-package com.cj.smartworker.domain.member.entity
+package com.cj.smartworker.domain.fcm.entity
 
 import com.cj.smartworker.domain.common.BaseEntity
 import com.cj.smartworker.domain.member.valueobject.DeviceTokenId
-import com.cj.smartworker.domain.member.valueobject.MemberId
-import com.cj.smartworker.domain.member.valueobject.Token
+import com.cj.smartworker.domain.fcm.valueobject.Token
+import com.cj.smartworker.domain.member.entity.Member
 
 class DeviceToken(
     private val _deviceTokenId: DeviceTokenId?,
-    private val _memberId: MemberId,
+    private val _member: Member,
     private var _token: Token,
 ): BaseEntity<DeviceTokenId?>(_deviceTokenId){
     val deviceTokenId: DeviceTokenId?
         get() = _deviceTokenId
-    val memberId: MemberId
-        get() = _memberId
+    val member: Member
+        get() = _member
 
     val token: Token
         get() = _token

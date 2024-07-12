@@ -2,20 +2,20 @@ package com.cj.smartworker.dataaccess.member.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
 import com.cj.smartworker.business.member.port.`in`.SaveMemberPort
+import com.cj.smartworker.business.member.port.out.FindAdminPort
 import com.cj.smartworker.business.member.port.out.FindMemberPort
 import com.cj.smartworker.business.member.port.out.IsFirstMemberPort
 import com.cj.smartworker.business.member.port.out.SearchMemberPort
 import com.cj.smartworker.dataaccess.member.entity.AuthorityJpaEntity
 import com.cj.smartworker.dataaccess.member.entity.QMemberJpaEntity.memberJpaEntity
+import com.cj.smartworker.dataaccess.member.mapper.toDomain
 import com.cj.smartworker.dataaccess.member.mapper.toDomainEntity
 import com.cj.smartworker.dataaccess.member.mapper.toJpaEntity
 import com.cj.smartworker.dataaccess.member.repository.AuthorityJpaRepository
 import com.cj.smartworker.dataaccess.member.repository.MemberJpaRepository
 import com.cj.smartworker.domain.member.entity.Member
-import com.cj.smartworker.domain.member.valueobject.Deleted
-import com.cj.smartworker.domain.member.valueobject.Email
-import com.cj.smartworker.domain.member.valueobject.LoginId
-import com.cj.smartworker.domain.member.valueobject.MemberId
+import com.cj.smartworker.domain.member.valueobject.*
+import com.cj.smartworker.domain.util.logger
 import com.querydsl.jpa.impl.JPAQueryFactory
 
 @PersistenceAdapter
@@ -26,15 +26,19 @@ internal class MemberPersistenceAdapter(
 ) : SaveMemberPort,
     FindMemberPort,
     IsFirstMemberPort,
-    SearchMemberPort {
+    SearchMemberPort,
+    FindAdminPort {
+        private val logger = logger()
     override fun saveMember(member: Member): Member {
-
-        val authorityJpaEntities = member.authorities.map { authority ->
-            authorityJpaRepository.findByAuthority(authority)
-                ?: let { authorityJpaRepository.save(AuthorityJpaEntity(id = null, authority = authority)) }
-        }.toSet()
-
-        return memberJpaRepository.save(member.toJpaEntity(authorityJpaEntities)).toDomainEntity()
+        val authorityJpaEntities = mutableSetOf<AuthorityJpaEntity>()
+        member.authorities.forEach { authority ->
+            val authorityJpaEntity = (authorityJpaRepository.findByAuthority(authority.authority)
+                ?: authorityJpaRepository.save(AuthorityJpaEntity(null, authority.authority)))
+            authorityJpaEntities.add(authorityJpaEntity)
+        }
+        logger.info("member.toJpaEntity(): ${member.toJpaEntity().authorities.map {it.id}}")
+        member.changeAuthority(authorityJpaEntities.map { it.toDomain() }.toSet())
+        return memberJpaRepository.save(member.toJpaEntity()).toDomainEntity()
     }
 
     override fun findById(id: MemberId): Member? {
@@ -87,5 +91,16 @@ internal class MemberPersistenceAdapter(
             )
             .fetchOne()
             ?.let { return it.toDomainEntity() }
+    }
+
+    override fun findAdmins(): List<Member> {
+        val memberJpaEntityIds = queryFactory.select(memberJpaEntity)
+            .from(memberJpaEntity)
+            .where(
+                memberJpaEntity.authorities.any().authority.eq(Authority.ADMIN),
+                memberJpaEntity.deleted.eq(Deleted.NOT_DELETED),
+            )
+            .fetch()
+        return memberJpaEntityIds.map { it.toDomainEntity() }
     }
 }
