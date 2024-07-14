@@ -20,7 +20,7 @@ class KafkaProducerConfig <K: Serializable, V: Serializable>(
     @Bean
     fun producerConfig(): MutableMap<String, Any> {
 
-        return mutableMapOf<String, Any>(
+        return mutableMapOf(
             BOOTSTRAP_SERVERS_CONFIG to kafkaConfigData.bootstrapServers,
             kafkaConfigData.schemaRegistryUrlKey to kafkaConfigData.schemaRegistryUrl,
             KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,

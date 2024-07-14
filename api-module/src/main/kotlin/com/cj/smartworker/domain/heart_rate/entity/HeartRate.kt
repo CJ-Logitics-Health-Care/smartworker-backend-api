@@ -10,8 +10,6 @@ class HeartRate(
     private val _heartRateId: UUID,
     private val _memberId: MemberId,
     private val _value: HeartRateValue,
-    private val _x: Int,
-    private val _y: Int,
     private val _timestamp: LocalDateTime,
 ): RootAggregate<UUID>(_heartRateId) {
     val heartRateId: UUID
@@ -20,10 +18,6 @@ class HeartRate(
         get() = _memberId
     val value: HeartRateValue
         get() = _value
-    val x: Int
-        get() = _x
-    val y: Int
-        get() = _y
     val timestamp: LocalDateTime
         get() = _timestamp
 }
