@@ -46,4 +46,7 @@ out/
 
 ### infra ###
 /infra/db/
+/infra/kafka
+/infra/zookeeper
+
 
