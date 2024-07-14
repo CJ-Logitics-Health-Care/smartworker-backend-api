@@ -1,7 +1,7 @@
 ## Infra setting
 ```text
 cd ./infra/local
-start-up.sh
+./start-up.sh
 
 // 종료
 ./shutdown.sh
