@@ -49,3 +49,5 @@ springdoc:
 
 fcm:
   project-id: smartworker-78dd9
+heart-rate:
+  topic-name: heart-rate

@@ -2,7 +2,7 @@ package com.cj.smartworker.kafka.model
 
 import java.io.Serializable
 
-data class HeartRate(
+data class HeartRateDto(
     val memberId: Long,
     val heartRate: Int,
     val timestamp: Long,
