@@ -1,7 +1,10 @@
 ## Infra setting
 ```text
 cd ./infra/local
-docker compose up
+start-up.sh
+
+// 종료
+./shutdown.sh
 ```
 
 ## Run API Module
