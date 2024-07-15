@@ -1,4 +1,4 @@
-## Infra setting
+## Infra Docker setting
 ```text
 cd ./infra/local
 ./start-up.sh
