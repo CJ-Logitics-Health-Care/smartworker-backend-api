@@ -43,6 +43,7 @@ out/
 /**/**/resources/
 !/**/**/resources/application.yml
 !/**/**/resources/application-local.yml
+!/**/**/resources/firebase/**
 
 ### infra ###
 /infra/db/
