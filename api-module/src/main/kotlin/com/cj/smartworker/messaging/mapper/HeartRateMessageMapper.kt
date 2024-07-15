@@ -11,7 +11,7 @@ class HeartRateMessageMapper {
         return HeartRateDto(
             memberId = heartRate.memberId.id,
             heartRate = heartRate.value.value,
-            timestamp = heartRate.timestamp.toEpochSecond(ZoneOffset.of(KOREA_OFFSET))
+            timestamp = heartRate.timestamp.toEpochSecond(ZoneOffset.of(KOREA_OFFSET)),
         )
     }
 }
