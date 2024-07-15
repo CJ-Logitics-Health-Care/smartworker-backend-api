@@ -1,4 +1,9 @@
 ## Infra Docker setting
+mac에서 가능합니다.
+
+```text
+brew install kcat
+```
 ```text
 cd ./infra/local
 ./start-up.sh
