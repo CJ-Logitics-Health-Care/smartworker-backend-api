@@ -25,3 +25,6 @@ yes | rm -r ../kafka/*
 yes | rm -r ../zookeeper/*
 
 echo "Shutdown services"
+
+echo "Shutdown MongoDB and MySQL"
+docker-compose -f common.yml -f docker-compose.yml down

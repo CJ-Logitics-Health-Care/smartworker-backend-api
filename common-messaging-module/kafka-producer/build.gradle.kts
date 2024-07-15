@@ -1,3 +1,3 @@
 dependencies {
-    implementation(project(":common-messaging-module:kafka-config-data"))
+    api(project(":common-messaging-module:kafka-config-data"))
 }
