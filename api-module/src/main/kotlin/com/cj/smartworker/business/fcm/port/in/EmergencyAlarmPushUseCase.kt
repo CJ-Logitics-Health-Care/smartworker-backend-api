@@ -7,8 +7,8 @@ import com.cj.smartworker.domain.member.valueobject.EmployeeName
 fun interface EmergencyAlarmPushUseCase {
     fun pushEmergencyAlarm(
         member: Member,
-        x: Int,
-        y: Int,
+        x: Float,
+        y: Float,
         emergency: Emergency,
     ): List<EmployeeName>
 }

@@ -37,8 +37,8 @@ internal class FcmPushController(
     @ApiResponse(responseCode = "200", description = "푸시 성공. 관리자 이름 목록 반환.")
     @PostMapping("/emergency-alarm")
     fun emergencyAlarmPush(
-        @RequestParam("x") x: Int,
-        @RequestParam("y") y: Int,
+        @RequestParam("x") x: Float,
+        @RequestParam("y") y: Float,
         @RequestParam("emergency") emergency: Emergency,
     ): GenericResponse<List<EmployeeName>> {
         val adminNames = emergencyAlarmPushUseCase.pushEmergencyAlarm(
