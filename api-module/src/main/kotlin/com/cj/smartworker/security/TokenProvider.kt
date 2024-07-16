@@ -46,7 +46,9 @@ class TokenProvider(
             .joinToString(",") { it.authority }
 
         val now: Long = Date().time
-        val validity = Date(now.plus(ONE_MINUTE * 15))
+        // 임시 수정
+//        val validity = Date(now.plus(ONE_MINUTE * 15))
+        val validity = Date(now.plus(ONE_MINUTE * 60 * 24 * 4))
 
         return Jwts.builder()
             .header()
