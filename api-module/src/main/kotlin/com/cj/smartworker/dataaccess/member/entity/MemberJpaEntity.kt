@@ -61,6 +61,9 @@ class MemberJpaEntity(
 
     @Column(name = "day", nullable = false)
     val day: Int,
+
+    @Column(name = "heart_rate_threshold", nullable = false)
+    val heartRateThreshold: Int,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

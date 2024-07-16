@@ -5,6 +5,7 @@ import com.cj.smartworker.business.member.port.`in`.SaveMemberPort
 import com.cj.smartworker.business.member.port.`in`.SignupUseCase
 import com.cj.smartworker.business.member.port.out.FindMemberPort
 import com.cj.smartworker.business.member.port.out.IsFirstMemberPort
+import com.cj.smartworker.domain.heart_rate.value.HeartRateValue
 import com.cj.smartworker.domain.member.entity.AuthorityEntity
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.exception.MemberDomainException
@@ -39,6 +40,17 @@ internal class SignupService(
         val isFirst = isFirstMemberPort.isFirstMember()
 
         val authority = if (isFirst) Authority.ADMIN else Authority.EMPLOYEE
+        val age = Instant.now().toKstLocalDateTime().year - command.year + 1
+        val heartRateThreshold = if (command.gender == Gender.MALE && age < 40) {
+            // The HUNT formula (men and women who are active): 211 - (0.64 x age)
+            HeartRateValue(211 - (0.64 * age).toInt())
+        } else if (command.gender == Gender.FEMALE && age < 40) {
+            // Gulati formula (women only): 206 - (0.88 × age)
+            HeartRateValue(206 - (0.88 * age).toInt())
+        } else {
+            // Tanaka formula(men and women over age 40): 208 - (0.7 × age)
+            HeartRateValue(208 - (0.7 * age).toInt())
+        }
 
         return Member(
             _memberId = null,
@@ -57,6 +69,7 @@ internal class SignupService(
             _month = Month(command.month),
             _day = Day(command.day),
             _phone = Phone(command.phone),
+            _heartRateThreshold = heartRateThreshold,
         ).let {
             saveMemberPort.saveMember(it).memberId!!
         }
