@@ -1,6 +1,7 @@
 package com.cj.smartworker.domain.member.entity
 
 import com.cj.smartworker.domain.common.RootAggregate
+import com.cj.smartworker.domain.heart_rate.value.HeartRateValue
 import com.cj.smartworker.domain.member.valueobject.*
 import java.time.LocalDateTime
 
@@ -23,6 +24,7 @@ class Member(
     private var _year: Year,
     private var _month: Month,
     private var _day: Day,
+    private var _heartRateThreshold: HeartRateValue
 ): RootAggregate<MemberId?>(_memberId) {
     val memberId: MemberId?
         get() = _memberId
@@ -50,6 +52,8 @@ class Member(
         get() = _month
     val day: Day
         get() = _day
+    val heartRateThreshold: HeartRateValue
+        get() = _heartRateThreshold
 
     fun changePhone(phone: Phone): Member {
         _phone = phone

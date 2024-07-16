@@ -2,6 +2,7 @@ package com.cj.smartworker.dataaccess.member.mapper
 
 import com.cj.smartworker.dataaccess.member.entity.AuthorityJpaEntity
 import com.cj.smartworker.dataaccess.member.entity.MemberJpaEntity
+import com.cj.smartworker.domain.heart_rate.value.HeartRateValue
 import com.cj.smartworker.domain.member.entity.AuthorityEntity
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.*
@@ -24,6 +25,7 @@ fun Member.toJpaEntity(): MemberJpaEntity = let {
         year = it.year.year,
         month = it.month.month,
         day = it.day.day,
+        heartRateThreshold = it.heartRateThreshold.value,
     )
 }
 
@@ -45,5 +47,6 @@ fun MemberJpaEntity.toDomainEntity(): Member = let {
         _year = Year(it.year),
         _month = Month(it.month),
         _day = Day(it.day),
+        _heartRateThreshold = HeartRateValue(it.heartRateThreshold),
     )
 }
