@@ -9,8 +9,8 @@ fun interface SaveFcmHistoryPort {
         reporter: Member,
         admins: Set<Member>,
         createdAt: LocalDateTime,
-        x: Int,
-        y: Int,
+        x: Float,
+        y: Float,
         emergency: Emergency,
     )
 }

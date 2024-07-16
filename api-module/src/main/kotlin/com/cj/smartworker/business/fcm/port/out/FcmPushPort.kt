@@ -5,7 +5,7 @@ fun interface FcmPushPort {
         targetToken: String,
         title: String,
         body: String,
-        x: Int,
-        y: Int,
+        x: Float,
+        y: Float,
     ): Boolean
 }

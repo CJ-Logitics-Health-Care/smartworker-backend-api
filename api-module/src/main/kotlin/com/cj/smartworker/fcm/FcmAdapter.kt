@@ -18,8 +18,8 @@ internal class FcmAdapter : FcmPushPort {
         targetToken: String,
         title: String,
         body: String,
-        x: Int,
-        y: Int,
+        x: Float,
+        y: Float,
     ): Boolean {
         try {
             val messagingSender: FirebaseMessaging = FirebaseMessaging.getInstance()

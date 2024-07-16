@@ -37,8 +37,8 @@ internal class EmergencyAlarmPushService(
     @Transactional
     override fun pushEmergencyAlarm(
         member: Member,
-        x: Int,
-        y: Int,
+        x: Float,
+        y: Float,
         emergency: Emergency,
     ): List<EmployeeName> {
         val findAdminIds = findAdminPort.findAdmins()
@@ -48,7 +48,7 @@ internal class EmergencyAlarmPushService(
             val sendMessageSuccess = fcmPushPort.sendMessage(
                 targetToken = it.key.token,
                 title = title,
-                body = "${member.employeeName.employeeName}께서 긴급 신고를 하였습니다. 확인해주세요.",
+                body = "${member.employeeName.employeeName}님께서 긴급 신고를 하였습니다. 확인해주세요.",
                 x = x,
                 y = y,
             )

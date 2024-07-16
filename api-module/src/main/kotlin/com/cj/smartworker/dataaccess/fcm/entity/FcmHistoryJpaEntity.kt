@@ -29,10 +29,10 @@ class FcmHistoryJpaEntity(
     val reporter: MemberJpaEntity, // 알람을 보낸 사용자
 
     @Column(name = "x", nullable = false)
-    val x: Int,
+    val x: Float,
 
     @Column(name = "y", nullable = false)
-    val y: Int,
+    val y: Float,
 
     @Column(name = "emergency", nullable = false)
     @Enumerated(EnumType.STRING)
