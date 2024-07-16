@@ -14,7 +14,12 @@ cd ./infra/local
 
 ## Run API Module
 Java version을 21로 세팅 후 실행해 주세요.
+
+root project에서 실행해 주세요.
 ```
+./build-image.sh
+```
+```text
 ./run-api-module.sh
 ```
 
