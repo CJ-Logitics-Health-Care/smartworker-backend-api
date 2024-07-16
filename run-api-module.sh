@@ -1,3 +1,1 @@
-./gradlew api-module:clean
-./gradlew api-module:build
-java -jar ./api-module/build/libs/api-module-0.0.1-SNAPSHOT.jar
+docker compose -f ./infra/local/common.yml -f ./infra/local/api-module.yml up -d
