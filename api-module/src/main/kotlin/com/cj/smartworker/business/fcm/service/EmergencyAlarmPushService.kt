@@ -65,7 +65,7 @@ internal class EmergencyAlarmPushService(
             createdAt = Instant.now().toKstLocalDateTime(),
             x = x,
             y = y,
-            emergency = Emergency.HEART_RATE,
+            emergency = emergency,
         )
         admins.forEach {
             logger.info("긴급 신고 알림을 받은 관리자: ${it.employeeName}")
