@@ -31,8 +31,6 @@ class DeviceTokenPersistenceAdapter(
     }
 
     override fun saveToken(deviceToken: DeviceToken): DeviceToken {
-        val memberJpaEntity = memberJpaRepository.findByIdOrNull(deviceToken.member.memberId!!.id)
-            ?: throw IllegalArgumentException("유저를 찾지 못하였습니다.")
         return deviceTokenRepository.save(deviceToken.toJpaEntity()).toDomain()
     }
 }

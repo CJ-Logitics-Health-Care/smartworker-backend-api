@@ -62,3 +62,4 @@ idea {
         generatedSourceDirs.add(kaptMain)
     }
 }
+

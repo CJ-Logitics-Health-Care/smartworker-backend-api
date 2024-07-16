@@ -18,7 +18,8 @@ class FcmConfiguration(
     private val logger = logger()
     companion object {
         private const val FILE_BASE_CONFIG_PATH = "firebase/smartworker-78dd9-firebase-adminsdk-fy0l2-687218fd65.json"
-        private val SYSTEM_RESOURCE_AS_STREAM = ClassLoader.getSystemResourceAsStream(FILE_BASE_CONFIG_PATH)
+        private val SYSTEM_RESOURCE_AS_STREAM = this::class.java.classLoader.getResourceAsStream(FILE_BASE_CONFIG_PATH)
+//        private val SYSTEM_RESOURCE_AS_STREAM = ClassLoader.getSystemResourceAsStream(FILE_BASE_CONFIG_PATH)
         private var GOOGLE_CREDENTIALS = GoogleCredentials.fromStream(SYSTEM_RESOURCE_AS_STREAM)
             .createScoped(listOf("https://www.googleapis.com/auth/cloud-platform"))
     }
