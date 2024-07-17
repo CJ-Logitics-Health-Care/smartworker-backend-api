@@ -24,8 +24,9 @@ class TokenProvider(
     @Value("\${jwt.secret}")
     private val secret: String,
     private val findMemberPort: FindMemberPort,
-): AuthenticationProvider {
+) : AuthenticationProvider {
     private val logger = logger()
+
     companion object {
         const val AUTHORITIES_KEY = "auth"
     }
@@ -38,10 +39,10 @@ class TokenProvider(
     fun createToken(member: Member): String = let {
         val authentication = authenticate(member)
         SecurityContextHolder.getContext().authentication = authentication
-        createToken(authentication)
+        createToken(authentication, member)
     }
 
-    fun createToken(authentication: Authentication): String {
+    fun createToken(authentication: Authentication, member: Member): String {
         val authorities: String = authentication.authorities
             .joinToString(",") { it.authority }
 
@@ -52,7 +53,12 @@ class TokenProvider(
 
         return Jwts.builder()
             .header()
-            .add(mapOf("Name" to authentication.principal.toString()))
+            .add(
+                mapOf(
+                    "Name" to member.employeeName.employeeName,
+                    "heartRateThreshold" to member.heartRateThreshold.value,
+                )
+            )
             .and()
             .subject(authentication.name)
             .claim(AUTHORITIES_KEY, authorities)
@@ -65,9 +71,10 @@ class TokenProvider(
     fun createRefreshToken(member: Member): String = let {
         logger.info("createRefreshToken from membership")
         val authentication = authenticate(member)
-        createRefreshToken(authentication)
+        createRefreshToken(authentication, member)
     }
-    fun createRefreshToken(authentication: Authentication): String {
+
+    fun createRefreshToken(authentication: Authentication, member: Member): String {
         val authorities: String = authentication.authorities
             .joinToString(",") { it.authority }
 
@@ -77,7 +84,12 @@ class TokenProvider(
 
         return Jwts.builder()
             .header()
-            .add(mapOf("Name" to authentication.principal.toString()))
+            .add(
+                mapOf(
+                    "Name" to member.employeeName.employeeName,
+                    "heartRateThreshold" to member.heartRateThreshold.value,
+                )
+            )
             .and()
             .subject(authentication.name)
             .claim(AUTHORITIES_KEY, authorities)
@@ -154,6 +166,7 @@ class TokenProvider(
         }
         return false
     }
+
     override fun supports(authentication: Class<*>?): Boolean {
         return UsernamePasswordAuthenticationToken::class.java.isAssignableFrom(authentication)
     }
