@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "FCM API", description = "FCM 푸시 등 API 목록입니다.")
+@Tag(name = "FCM API", description = "FCM 푸시, 히스토리 등 API 목록입니다.")
 @WebAdapter
 @RestController
 @RequestMapping("/api/v1/fcm")
@@ -32,7 +32,6 @@ internal class FcmPushController(
             Parameter(name = "y", description = "y 좌표", required = true),
             Parameter(name = "emergency", description = "HEART_RATE or REPORT", required = true),
         ]
-
     )
     @ApiResponse(responseCode = "200", description = "푸시 성공. 관리자 이름 목록 반환.")
     @PostMapping("/emergency-alarm")

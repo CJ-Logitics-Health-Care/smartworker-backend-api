@@ -16,3 +16,8 @@ Content-Type: application/json
 PUT {{DNS_HOST}}/api/v1/member/heart-rate-threshold?memberId=2&threshold=112
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+### 회원 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report?start=2024-07-15&end=2024-07-20
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
