@@ -1,0 +1,18 @@
+@DNS_HOST = localhost:8080
+
+### Login
+### 응답의 data.token을 변수로 받는다.
+POST {{DNS_HOST}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "ssdf22",
+  "password": "SSd1234@!",
+  "token": "c31VbLf2QlaITGLwtmbjnm:APA91bGR5kmT3n75oqMyhIvCjzd0CH8ss3ZpBPrcNve2AsZDZ8yQCjYzfvwLXuuLtAaFLTxR53teRIEliknPXV4A1IvBEyV31XfroRono9KuZ0V_5V7WmW-Ouet0aRlGGAJ2dvjLCMnG"
+}
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+### 회원 심박수 임계치 변경
+PUT {{DNS_HOST}}/api/v1/member/heart-rate-threshold?memberId=2&threshold=112
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
