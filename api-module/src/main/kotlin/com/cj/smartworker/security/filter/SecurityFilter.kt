@@ -1,6 +1,7 @@
 package com.cj.smartworker.security.filter
 
 import com.cj.smartworker.domain.util.logger
+import com.cj.smartworker.security.MemberContext.MEMBER
 import com.cj.smartworker.security.TokenProvider
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -48,14 +49,15 @@ internal class SecurityFilter(
         isRefresh: Boolean,
     ) {
         val authentication = tokenProvider.authenticate(jwt)
+        val member = MEMBER
         SecurityContextHolder.getContext().authentication = authentication
-        val token = tokenProvider.createToken(authentication)
+        val token = tokenProvider.createToken(authentication, member)
         httpServletResponse.setHeader(AUTHORIZATION_HEADER, token)
 
         // refresh token인 경우 refresh token 재발행
         if (isRefresh) {
             log.info("create refresh token")
-            val refreshToken = tokenProvider.createRefreshToken(authentication)
+            val refreshToken = tokenProvider.createRefreshToken(authentication, member)
             httpServletResponse.setHeader(REFRESH_TOKEN, refreshToken)
         }
     }
