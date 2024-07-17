@@ -91,4 +91,8 @@ class Member(
         _deleted = Deleted.DELETED
         return this
     }
+    fun changeHeartRateThreshold(heartRateThreshold: HeartRateValue): Member {
+        _heartRateThreshold = heartRateThreshold
+        return this
+    }
 }

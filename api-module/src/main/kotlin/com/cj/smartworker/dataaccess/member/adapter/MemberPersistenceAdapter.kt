@@ -2,10 +2,7 @@ package com.cj.smartworker.dataaccess.member.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
 import com.cj.smartworker.business.member.port.`in`.SaveMemberPort
-import com.cj.smartworker.business.member.port.out.FindAdminPort
-import com.cj.smartworker.business.member.port.out.FindMemberPort
-import com.cj.smartworker.business.member.port.out.IsFirstMemberPort
-import com.cj.smartworker.business.member.port.out.SearchMemberPort
+import com.cj.smartworker.business.member.port.out.*
 import com.cj.smartworker.dataaccess.member.entity.AuthorityJpaEntity
 import com.cj.smartworker.dataaccess.member.entity.QMemberJpaEntity.memberJpaEntity
 import com.cj.smartworker.dataaccess.member.mapper.toDomain
@@ -27,8 +24,9 @@ internal class MemberPersistenceAdapter(
     FindMemberPort,
     IsFirstMemberPort,
     SearchMemberPort,
-    FindAdminPort {
-        private val logger = logger()
+    FindAdminPort,
+    UpdateMemberPort {
+    private val logger = logger()
     override fun saveMember(member: Member): Member {
         val authorityJpaEntities = mutableSetOf<AuthorityJpaEntity>()
         member.authorities.forEach { authority ->
@@ -102,5 +100,9 @@ internal class MemberPersistenceAdapter(
             )
             .fetch()
         return memberJpaEntityIds.map { it.toDomainEntity() }
+    }
+
+    override fun update(member: Member) {
+        memberJpaRepository.save(member.toJpaEntity())
     }
 }
