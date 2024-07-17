@@ -26,7 +26,7 @@ internal class FcmPushController(
 
     @Operation(
         summary = "긴급 알람 푸시",
-        description = "긴급 알람 푸시를 전송합니다.",
+        description = "긴급 알람 푸시를 전송합니다. 전송되는 알림에서 알리는 나이는 만 나이 입니다.",
         parameters = [
             Parameter(name = "x", description = "x 좌표", required = true),
             Parameter(name = "y", description = "y 좌표", required = true),

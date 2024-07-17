@@ -2,6 +2,8 @@ package com.cj.smartworker.fcm
 
 import com.cj.smartworker.annotation.ExternalAdapter
 import com.cj.smartworker.business.fcm.port.out.FcmPushPort
+import com.cj.smartworker.domain.member.valueobject.EmployeeName
+import com.cj.smartworker.domain.member.valueobject.Phone
 import com.cj.smartworker.domain.util.logger
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
@@ -20,6 +22,9 @@ internal class FcmAdapter : FcmPushPort {
         body: String,
         x: Float,
         y: Float,
+        age: Int,
+        employeeName: EmployeeName,
+        phone: Phone,
     ): Boolean {
         try {
             val messagingSender: FirebaseMessaging = FirebaseMessaging.getInstance()
@@ -29,6 +34,9 @@ internal class FcmAdapter : FcmPushPort {
                     mapOf(
                         "x" to x.toString(),
                         "y" to y.toString(),
+                        "age" to age.toString(),
+                        "employeeName" to employeeName.employeeName,
+                        "phone" to phone.phone,
                     )
                 )
                 .setNotification(

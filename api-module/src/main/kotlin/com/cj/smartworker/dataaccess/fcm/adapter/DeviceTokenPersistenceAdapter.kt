@@ -11,12 +11,10 @@ import com.cj.smartworker.domain.fcm.entity.DeviceToken
 import com.cj.smartworker.domain.fcm.valueobject.Token
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.MemberId
-import org.springframework.data.repository.findByIdOrNull
 
 @PersistenceAdapter
 class DeviceTokenPersistenceAdapter(
     private val deviceTokenRepository: DeviceTokenJpaRepository,
-    private val memberJpaRepository: MemberJpaRepository,
 ): SaveTokenPort,
     FindTokenPort {
     override fun findByMemberIds(memberIds: List<MemberId>): Map<Token, Member> {

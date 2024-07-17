@@ -1,8 +1,9 @@
 package com.cj.smartworker.domain.member.valueobject
 
-import com.cj.smartworker.domain.member.exception.MemberDomainException
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.time.LocalDate
+import java.time.Period
 
 class PhoneTest {
     @Test

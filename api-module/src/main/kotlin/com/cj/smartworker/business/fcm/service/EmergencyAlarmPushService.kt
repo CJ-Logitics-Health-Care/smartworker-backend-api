@@ -13,6 +13,8 @@ import com.cj.smartworker.domain.util.toKstLocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
+import java.time.LocalDate
+import java.time.Period
 
 @Service
 internal class EmergencyAlarmPushService(
@@ -20,7 +22,7 @@ internal class EmergencyAlarmPushService(
     private val findTokenPort: FindTokenPort,
     private val findAdminPort: FindAdminPort,
     private val saveFcmHistoryPort: SaveFcmHistoryPort,
-): EmergencyAlarmPushUseCase {
+) : EmergencyAlarmPushUseCase {
 
     companion object {
         private const val HEART_RATE = "심박수 신고 알림"
@@ -44,6 +46,22 @@ internal class EmergencyAlarmPushService(
         val findAdminIds = findAdminPort.findAdmins()
         val admins = mutableSetOf<Member>()
         val title = if (emergency == Emergency.HEART_RATE) HEART_RATE else REPORT
+        val date = LocalDate.of(member.year.year, member.month.month, member.day.day)
+        val age = Period.between(date, LocalDate.now()).years
+        if (emergency == Emergency.HEART_RATE) {
+            findTokenPort.findByMemberId(member.memberId!!)?.let {
+                fcmPushPort.sendMessage(
+                    targetToken = it.token.token,
+                    title = title,
+                    body = "심박수가 높습니다. 확인해주세요.",
+                    x = x,
+                    y = y,
+                    age = age,
+                    employeeName = member.employeeName,
+                    phone = member.phone,
+                )
+            }
+        }
         findTokenPort.findByMemberIds(findAdminIds.map { it.memberId!! }).forEach {
             val sendMessageSuccess = fcmPushPort.sendMessage(
                 targetToken = it.key.token,
@@ -51,6 +69,9 @@ internal class EmergencyAlarmPushService(
                 body = "${member.employeeName.employeeName}님께서 긴급 신고를 하였습니다. 확인해주세요.",
                 x = x,
                 y = y,
+                age = age,
+                employeeName = member.employeeName,
+                phone = member.phone,
             )
             if (sendMessageSuccess) {
                 admins.add(it.value)
