@@ -28,7 +28,7 @@ internal class MemberPersistenceAdapter(
     IsFirstMemberPort,
     SearchMemberPort,
     FindAdminPort {
-        private val logger = logger()
+    private val logger = logger()
     override fun saveMember(member: Member): Member {
         val authorityJpaEntities = mutableSetOf<AuthorityJpaEntity>()
         member.authorities.forEach { authority ->
