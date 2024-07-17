@@ -16,7 +16,7 @@ class FcmHistoryJpaEntity(
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime,
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "fcm_history_admin",
         joinColumns = [JoinColumn(name = "fcm_history_id")],

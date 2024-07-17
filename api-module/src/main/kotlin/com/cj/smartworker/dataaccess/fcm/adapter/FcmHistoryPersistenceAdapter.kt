@@ -1,6 +1,8 @@
 package com.cj.smartworker.dataaccess.fcm.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
+import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
+import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.repository.FcmHistoryJpaRepository
@@ -12,7 +14,8 @@ import java.time.LocalDateTime
 @PersistenceAdapter
 internal class FcmHistoryPersistenceAdapter(
     private val fcmHistoryJpaRepository: FcmHistoryJpaRepository,
-): SaveFcmHistoryPort {
+): SaveFcmHistoryPort,
+    FindEmergencyReportPort {
     override fun saveFcmHistory(
         reporter: Member,
         admins: Set<Member>,
@@ -31,5 +34,21 @@ internal class FcmHistoryPersistenceAdapter(
             emergency = emergency,
         )
         fcmHistoryJpaRepository.save(fcmHistoryJpaEntity)
+    }
+
+    override fun findReport(start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto> {
+        return fcmHistoryJpaRepository.findByCreatedAtBetween(
+            start = start,
+            end = end,
+        ).map {
+            EmergencyReportDto(
+                id = it.id!!,
+                createdAt = it.createdAt,
+                reporter = it.reporter.employeeName,
+                x = it.x,
+                y = it.y,
+                emergency = it.emergency,
+            )
+        }
     }
 }
