@@ -2,6 +2,8 @@ package com.cj.smartworker.application.member
 
 import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
+import com.cj.smartworker.business.common.dto.response.CursorResultResponse
+import com.cj.smartworker.business.member.dto.response.MemberPagingResponse
 import com.cj.smartworker.business.member.dto.response.MemberResponse
 import com.cj.smartworker.business.member.port.`in`.SearchMemberUseCase
 import com.cj.smartworker.domain.member.valueobject.LoginId
@@ -30,7 +32,7 @@ internal class SearchMemberController(
     @PreAuthorize("hasRole('ADMIN')")
     fun searchByLoginId(
         @RequestParam("loginId") loginId: LoginId,
-    ): GenericResponse<MemberResponse?> {
+    ): GenericResponse<CursorResultResponse<MemberPagingResponse>> {
         val memberResponse = searchMemberUseCase.searchByLoginId(loginId)
 
         return GenericResponse(

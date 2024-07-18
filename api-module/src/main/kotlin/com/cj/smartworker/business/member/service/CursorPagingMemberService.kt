@@ -29,12 +29,11 @@ internal class CursorPagingMemberService(
             } else {
                 false
             }
-            members.map {
-                it.copy(
-                    phone = MaskingUtil.maskPhone(Phone(it.phone)),
-                    loginId = MaskingUtil.maskLoginId(LoginId(it.loginId)),
-                    employeeName = MaskingUtil.maskEmployeeName(EmployeeName(it.employeeName)),
-                )
+            members.forEach {
+                it.phone = MaskingUtil.maskPhone(Phone(it.phone))
+                it.employeeName = MaskingUtil.maskEmployeeName(EmployeeName(it.employeeName))
+                it.loginId = MaskingUtil.maskLoginId(LoginId(it.loginId))
+
             }
             return CursorResultResponse(members, hasNext, lastIndex)
         }
