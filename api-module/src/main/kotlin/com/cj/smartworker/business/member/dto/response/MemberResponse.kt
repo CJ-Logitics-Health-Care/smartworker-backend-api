@@ -10,8 +10,8 @@ import java.time.LocalDateTime
 data class MemberResponse(
     @Schema(description = "회원 ID")
     val memberId: Long,
-    @Schema(description = "로그인 ID")
-    val name: String,
+    @Schema(description = "회원 이름")
+    val employeeName: String,
     @Schema(description = "전화번호")
     val phone: String,
     @Schema(description = "성별")
