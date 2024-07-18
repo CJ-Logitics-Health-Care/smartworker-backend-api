@@ -45,6 +45,7 @@ internal class EmergencyAlarmPushService(
     ): List<EmployeeName> {
         val findAdminIds = findAdminPort.findAdmins()
         val admins = mutableSetOf<Member>()
+        val createdAt = Instant.now().toKstLocalDateTime()
         val title = if (emergency == Emergency.HEART_RATE) HEART_RATE else REPORT
         val date = LocalDate.of(member.year.year, member.month.month, member.day.day)
         val age = Period.between(date, LocalDate.now()).years
@@ -59,6 +60,7 @@ internal class EmergencyAlarmPushService(
                     age = age,
                     employeeName = member.employeeName,
                     phone = member.phone,
+                    createdAt = createdAt,
                 )
             }
         }
@@ -72,6 +74,7 @@ internal class EmergencyAlarmPushService(
                 age = age,
                 employeeName = member.employeeName,
                 phone = member.phone,
+                createdAt = createdAt,
             )
             if (sendMessageSuccess) {
                 admins.add(it.value)

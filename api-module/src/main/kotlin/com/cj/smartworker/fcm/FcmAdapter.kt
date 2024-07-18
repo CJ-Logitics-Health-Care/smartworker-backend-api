@@ -8,6 +8,8 @@ import com.cj.smartworker.domain.util.logger
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @ExternalAdapter
 internal class FcmAdapter : FcmPushPort {
@@ -25,7 +27,10 @@ internal class FcmAdapter : FcmPushPort {
         age: Int,
         employeeName: EmployeeName,
         phone: Phone,
+        createdAt: LocalDateTime,
     ): Boolean {
+        val pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
         try {
             val messagingSender: FirebaseMessaging = FirebaseMessaging.getInstance()
             val message = Message.builder()
@@ -37,6 +42,7 @@ internal class FcmAdapter : FcmPushPort {
                         "age" to age.toString(),
                         "employeeName" to employeeName.employeeName,
                         "phone" to phone.phone,
+                        "createdAt" to createdAt.format(pattern),
                     )
                 )
                 .setNotification(
