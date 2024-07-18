@@ -2,6 +2,7 @@ package com.cj.smartworker.business.fcm.port.out
 
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
+import com.cj.smartworker.domain.member.entity.Member
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -17,5 +18,9 @@ internal class FindEmergencyReportService(
             start = start,
             end = end,
         )
+    }
+
+    override fun findReport(member: Member): List<EmergencyReportDto> {
+        return findEmergencyReportPort.findReport(member)
     }
 }

@@ -75,6 +75,11 @@ GET {{DNS_HOST}}/api/v1/member/check/login-id?loginId=ssdf22
 
 
 ### FCM Push
-POST {{DNS_HOST}}/api/v1/fcm/emergency-alarm?x=123&y=129&emergency=HEART_RATE
+POST {{DNS_HOST}}/api/v1/fcm/emergency-alarm?x=123&y=129&emergency=REPORT
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 본인 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/employee/emergency-report
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}

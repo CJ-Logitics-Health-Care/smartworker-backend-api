@@ -4,6 +4,7 @@ import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
+import com.cj.smartworker.security.MemberContext.MEMBER
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@Tag(name = "FCM API", description = "FCM 푸시, 히스토리 등 API 목록입니다.")
+@Tag(name = "신고이력", description = "신고이력 조회 API 목록입니다.")
 @WebAdapter
 @RestController
 @RequestMapping("/api/v1/fcm")
@@ -27,7 +28,7 @@ internal class EmergencyReportController(
 ) {
 
     @Operation(
-        summary = "신고 이력 조회",
+        summary = "신고 이력 조회 [Admin]",
         description = "신고 이력을 조회합니다. [Admin]",
         parameters = [
             Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true),
@@ -36,7 +37,7 @@ internal class EmergencyReportController(
         ]
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @ApiResponse(responseCode = "200", description = "푸시 성공. 관리자 이름 목록 반환.")
+    @ApiResponse(responseCode = "200", description = "신고 목록 반환")
     @GetMapping("/admin/emergency-report")
     fun emergencyReport(
         @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
@@ -48,6 +49,21 @@ internal class EmergencyReportController(
         )
         return GenericResponse(
             data = report,
+            success = true,
+            statusCode = HttpStatus.OK.value(),
+        )
+    }
+
+    @Operation(
+        summary = "신고 이력 조회 [Employee]",
+        description = "신고 이력을 조회합니다. [Employee]",
+    )
+    @ApiResponse(responseCode = "200", description = "신고 목록 반환")
+    @GetMapping("/employee/emergency-report")
+    fun emergencyReport(): GenericResponse<List<EmergencyReportDto>> {
+
+        return GenericResponse(
+            data = emergencyReportUseCase.findReport(MEMBER),
             success = true,
             statusCode = HttpStatus.OK.value(),
         )
