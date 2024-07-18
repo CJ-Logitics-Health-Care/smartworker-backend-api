@@ -1,9 +1,9 @@
 package com.cj.smartworker.domain.member.valueobject
 
+import com.cj.smartworker.business.member.util.MaskingUtil
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.Period
 
 class PhoneTest {
     @Test
