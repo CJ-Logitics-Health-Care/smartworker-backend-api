@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 interface FindEmergencyReportUseCase {
     fun findReport(start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
 
-    fun findReport(member: Member): List<EmergencyReportDto>
+    fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
 
-    fun findReport(memberId: MemberId): List<EmergencyReportDto>
+    fun findReport(memberId: MemberId, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
 }

@@ -10,5 +10,9 @@ interface FcmHistoryJpaRepository: JpaRepository<FcmHistoryJpaEntity, Long> {
     // start end 사이의 신고 이력
     fun findByCreatedAtBetweenOrderByCreatedAtDesc(start: LocalDateTime, end: LocalDateTime): List<FcmHistoryJpaEntity>
 
-    fun findByReporterOrderByCreatedAtDesc(memberJapEntity: MemberJpaEntity): List<FcmHistoryJpaEntity>
+    fun findByReporterAndCreatedAtBetweenOrderByCreatedAtDesc(
+        memberJapEntity: MemberJpaEntity,
+        start: LocalDateTime,
+        end: LocalDateTime
+    ): List<FcmHistoryJpaEntity>
 }

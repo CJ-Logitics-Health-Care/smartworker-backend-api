@@ -48,12 +48,18 @@ internal class FcmHistoryPersistenceAdapter(
                 x = it.x,
                 y = it.y,
                 emergency = it.emergency,
+                loginId = it.reporter.loginId,
+                phone = it.reporter.phone,
             )
         }
     }
 
-    override fun findReport(member: Member): List<EmergencyReportDto> {
-        return fcmHistoryJpaRepository.findByReporterOrderByCreatedAtDesc(member.toJpaEntity()).map {
+    override fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto> {
+        return fcmHistoryJpaRepository.findByReporterAndCreatedAtBetweenOrderByCreatedAtDesc(
+            memberJapEntity = member.toJpaEntity(),
+            start = start,
+            end = end,
+        ).map {
             EmergencyReportDto(
                 id = it.id!!,
                 createdAt = it.createdAt,
@@ -61,6 +67,8 @@ internal class FcmHistoryPersistenceAdapter(
                 x = it.x,
                 y = it.y,
                 emergency = it.emergency,
+                loginId = it.reporter.loginId,
+                phone = it.reporter.phone,
             )
         }
     }

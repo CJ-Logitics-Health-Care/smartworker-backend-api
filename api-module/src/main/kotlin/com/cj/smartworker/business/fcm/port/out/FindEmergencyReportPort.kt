@@ -7,5 +7,5 @@ import java.time.LocalDateTime
 interface FindEmergencyReportPort {
     fun findReport(start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
 
-    fun findReport(member: Member): List<EmergencyReportDto>
+    fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
 }
