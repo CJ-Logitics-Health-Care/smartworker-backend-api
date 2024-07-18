@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import jakarta.websocket.server.PathParam
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @Tag(name = "신고이력", description = "신고이력 조회 API 목록입니다.")
 @WebAdapter
@@ -36,7 +34,6 @@ internal class EmergencyReportController(
         parameters = [
             Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true, example = "2021-01-01"),
             Parameter(name = "end", description = "신고 이력 조회 끝나는 시간", required = true, example = "2021-01-01"),
-            Parameter(name = "emergency", description = "HEART_RATE or REPORT", required = true),
         ]
     )
     @PreAuthorize("hasRole('ADMIN')")
@@ -60,13 +57,24 @@ internal class EmergencyReportController(
     @Operation(
         summary = "신고 이력 조회 [Employee]",
         description = "신고 이력을 조회합니다. [Employee]",
+        parameters = [
+            Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true, example = "2021-01-01"),
+            Parameter(name = "end", description = "신고 이력 조회 끝나는 시간", required = true, example = "2021-01-01"),
+        ]
     )
     @ApiResponse(responseCode = "200", description = "신고 목록 반환")
     @GetMapping("/employee/emergency-report")
-    fun emergencyReport(): GenericResponse<List<EmergencyReportDto>> {
+    fun myEmergencyReport(
+        @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
+        @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
+    ): GenericResponse<List<EmergencyReportDto>> {
 
         return GenericResponse(
-            data = emergencyReportUseCase.findReport(MEMBER),
+            data = emergencyReportUseCase.findReport(
+                member = MEMBER,
+                start = start.atStartOfDay(),
+                end = end.atTime(23, 59, 59),
+            ),
             success = true,
             statusCode = HttpStatus.OK.value(),
         )
@@ -75,14 +83,26 @@ internal class EmergencyReportController(
     @Operation(
         summary = "특정 회원 신고 이력 조회 [Admin]",
         description = "특정 회원 신고 이력을 조회합니다. [Admin]",
+        parameters = [
+            Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true, example = "2021-01-01"),
+            Parameter(name = "end", description = "신고 이력 조회 끝나는 시간", required = true, example = "2021-01-01"),
+        ]
     )
     @ApiResponse(responseCode = "200", description = "신고 목록 반환")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/emergency-report/{memberId}")
-    fun emergencyReport(@PathVariable("memberId") memberId: Long): GenericResponse<List<EmergencyReportDto>> {
+    fun emergencyReport(
+        @PathVariable("memberId") memberId: Long,
+        @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
+        @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
+    ): GenericResponse<List<EmergencyReportDto>> {
 
         return GenericResponse(
-            data = emergencyReportUseCase.findReport(MemberId(memberId)),
+            data = emergencyReportUseCase.findReport(
+                memberId = MemberId(memberId),
+                start = start.atStartOfDay(),
+                end = end.atTime(23, 59, 59),
+            ),
             success = true,
             statusCode = HttpStatus.OK.value(),
         )
