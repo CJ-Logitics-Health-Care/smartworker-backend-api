@@ -23,4 +23,6 @@ data class UpdateMemberCommand(
     val employeeName: EmployeeName,
     @Schema(description = "이메일")
     val email: Email?,
+    @Schema(description = "심박수 임계치")
+    val heartRateThreshold: Int,
 )
