@@ -4,15 +4,18 @@ import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
+import com.cj.smartworker.domain.member.valueobject.MemberId
 import com.cj.smartworker.security.MemberContext.MEMBER
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.websocket.server.PathParam
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -64,6 +67,22 @@ internal class EmergencyReportController(
 
         return GenericResponse(
             data = emergencyReportUseCase.findReport(MEMBER),
+            success = true,
+            statusCode = HttpStatus.OK.value(),
+        )
+    }
+
+    @Operation(
+        summary = "특정 회원 신고 이력 조회 [Admin]",
+        description = "특정 회원 신고 이력을 조회합니다. [Admin]",
+    )
+    @ApiResponse(responseCode = "200", description = "신고 목록 반환")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/emergency-report/{memberId}")
+    fun emergencyReport(@PathVariable("memberId") memberId: Long): GenericResponse<List<EmergencyReportDto>> {
+
+        return GenericResponse(
+            data = emergencyReportUseCase.findReport(MemberId(memberId)),
             success = true,
             statusCode = HttpStatus.OK.value(),
         )
