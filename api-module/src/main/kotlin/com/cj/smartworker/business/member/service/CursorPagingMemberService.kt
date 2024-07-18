@@ -6,7 +6,11 @@ import com.cj.smartworker.business.member.dto.response.MemberPagingResponse
 import com.cj.smartworker.business.member.port.`in`.CursorPagingMemberUseCase
 import com.cj.smartworker.business.member.port.out.HasNextMemberPort
 import com.cj.smartworker.business.member.port.out.PagingMemberPort
+import com.cj.smartworker.business.member.util.MaskingUtil
+import com.cj.smartworker.domain.member.valueobject.EmployeeName
+import com.cj.smartworker.domain.member.valueobject.LoginId
 import com.cj.smartworker.domain.member.valueobject.MemberId
+import com.cj.smartworker.domain.member.valueobject.Phone
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -24,6 +28,13 @@ internal class CursorPagingMemberService(
                 hasNextMemberPort.hasNext(MemberId(members.last().memberId))
             } else {
                 false
+            }
+            members.map {
+                it.copy(
+                    phone = MaskingUtil.maskPhone(Phone(it.phone)),
+                    loginId = MaskingUtil.maskLoginId(LoginId(it.loginId)),
+                    employeeName = MaskingUtil.maskEmployeeName(EmployeeName(it.employeeName)),
+                )
             }
             return CursorResultResponse(members, hasNext, lastIndex)
         }

@@ -12,5 +12,8 @@ fun MemberJpaEntity.toMemberPagingResponse(): MemberPagingResponse = let {
         year = it.year,
         month = it.month,
         day = it.day,
+        loginId = it.loginId,
+        phone = it.phone,
+        employeeName = it.employeeName,
     )
 }

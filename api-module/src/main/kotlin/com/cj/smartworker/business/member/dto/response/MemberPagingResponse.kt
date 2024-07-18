@@ -26,4 +26,10 @@ data class MemberPagingResponse(
         pattern = "yyyy-MM-dd HH:mm:ss"
     )
     val createdAt: LocalDateTime,
+    @Schema(description = "로그인 ID")
+    var loginId: String,
+    @Schema(description = "전화번호")
+    var phone: String,
+    @Schema(description = "이름")
+    var employeeName: String,
 )
