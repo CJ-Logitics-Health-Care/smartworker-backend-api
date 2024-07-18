@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 data class EmergencyReportDto(
     @Schema(description = "긴급 신고 ID")
     val id: Long,
-    @Schema(description = "신고 시간")
+    @Schema(description = "신고 시간", pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     val createdAt: LocalDateTime,
     @Schema(description = "신고자")

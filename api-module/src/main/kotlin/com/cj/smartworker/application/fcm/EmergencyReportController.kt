@@ -31,8 +31,8 @@ internal class EmergencyReportController(
         summary = "신고 이력 조회 [Admin]",
         description = "신고 이력을 조회합니다. [Admin]",
         parameters = [
-            Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true),
-            Parameter(name = "end", description = "신고 이력 조회 끝나는 시간", required = true),
+            Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true, example = "2021-01-01"),
+            Parameter(name = "end", description = "신고 이력 조회 끝나는 시간", required = true, example = "2021-01-01"),
             Parameter(name = "emergency", description = "HEART_RATE or REPORT", required = true),
         ]
     )
