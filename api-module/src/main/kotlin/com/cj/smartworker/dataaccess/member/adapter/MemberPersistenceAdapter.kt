@@ -1,6 +1,7 @@
 package com.cj.smartworker.dataaccess.member.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
+import com.cj.smartworker.business.member.dto.response.MemberPagingResponse
 import com.cj.smartworker.business.member.port.`in`.SaveMemberPort
 import com.cj.smartworker.business.member.port.out.*
 import com.cj.smartworker.dataaccess.member.entity.AuthorityJpaEntity
@@ -8,6 +9,7 @@ import com.cj.smartworker.dataaccess.member.entity.QMemberJpaEntity.memberJpaEnt
 import com.cj.smartworker.dataaccess.member.mapper.toDomain
 import com.cj.smartworker.dataaccess.member.mapper.toDomainEntity
 import com.cj.smartworker.dataaccess.member.mapper.toJpaEntity
+import com.cj.smartworker.dataaccess.member.mapper.toMemberPagingResponse
 import com.cj.smartworker.dataaccess.member.repository.AuthorityJpaRepository
 import com.cj.smartworker.dataaccess.member.repository.MemberJpaRepository
 import com.cj.smartworker.domain.member.entity.Member
@@ -80,7 +82,7 @@ internal class MemberPersistenceAdapter(
             ?: true
     }
 
-    override fun searchByLoginId(loginId: LoginId): Member? {
+    override fun searchByLoginId(loginId: LoginId): MemberPagingResponse? {
         return queryFactory.select(memberJpaEntity)
             .from(memberJpaEntity)
             .where(
@@ -88,7 +90,7 @@ internal class MemberPersistenceAdapter(
                 memberJpaEntity.deleted.eq(Deleted.NOT_DELETED),
             )
             .fetchOne()
-            ?.let { return it.toDomainEntity() }
+            ?.let { return it.toMemberPagingResponse() }
     }
 
     override fun findAdmins(): List<Member> {

@@ -67,7 +67,7 @@ GET {{DNS_HOST}}/api/v1/check/admin
 Authorization: Bearer {{auth_token}}
 
 ### 로그인 아이디로 검색 - Admin 권한만 가능
-GET {{DNS_HOST}}/api/v1/member/search?loginId=ssdf24
+GET {{DNS_HOST}}/api/v1/member/search?loginId=ssdf23
 Authorization: Bearer {{auth_token}}
 
 ### 로그인 아이디 중복 체크
