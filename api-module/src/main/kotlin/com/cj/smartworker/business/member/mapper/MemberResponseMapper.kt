@@ -21,6 +21,7 @@ class MemberResponseMapper {
             year = member.year.year,
             month = member.month.month,
             day = member.day.day,
+            heartRateThreshold = member.heartRateThreshold.value,
         )
     }
 }

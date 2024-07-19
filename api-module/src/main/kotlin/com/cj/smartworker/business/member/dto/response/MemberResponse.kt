@@ -32,4 +32,6 @@ data class MemberResponse(
         pattern = "yyyy-MM-dd HH:mm:ss"
     )
     val createdAt: LocalDateTime,
+    @Schema(description = "심박수 임계치")
+    val heartRateThreshold: Int,
 )
