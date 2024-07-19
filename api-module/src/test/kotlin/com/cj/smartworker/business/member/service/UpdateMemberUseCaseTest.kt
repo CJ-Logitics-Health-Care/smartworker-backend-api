@@ -43,6 +43,7 @@ class UpdateMemberUseCaseTest @Autowired constructor(
             day = Day(1),
             employeeName = EmployeeName("홍길순"),
             email = email,
+            heartRateThreshold = 80,
         )
         // when
         val updated = updateMemberUseCase.update(updateMemberCommand)
