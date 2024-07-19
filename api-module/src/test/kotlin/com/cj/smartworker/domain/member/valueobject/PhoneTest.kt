@@ -1,7 +1,5 @@
 package com.cj.smartworker.domain.member.valueobject
 
-import com.cj.smartworker.business.member.util.MaskingUtil
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -12,7 +10,7 @@ class PhoneTest {
         assertThrows(IllegalArgumentException::class.java) {
             Phone(invalidPhoneNumber)
         }.message.let {
-            assertEquals("전화번호는 숫자와 '-'만 가능합니다.", it)
+            assertEquals("전화번호는 숫자와 '-'만 가능합니다. Ex: 010-1234-1234", it)
         }
     }
 
