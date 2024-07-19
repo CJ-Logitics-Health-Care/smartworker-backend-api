@@ -5,6 +5,7 @@ import com.cj.smartworker.application.response.GenericResponse
 import com.cj.smartworker.business.heart_rate.dto.response.HeartRateAggregateResponse
 import com.cj.smartworker.business.heart_rate.port.`in`.AggregateHeartRateUseCase
 import com.cj.smartworker.domain.member.valueobject.MemberId
+import com.cj.smartworker.security.MemberContext.MEMBER
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -45,6 +46,33 @@ internal class AggregateHeartRateController(
     ): GenericResponse<List<HeartRateAggregateResponse>> {
         val aggregateHeartRate = aggregateHeartRateUseCase.aggregateHeartRate(
             memberId = MemberId(memberId),
+            start = start,
+            end = end,
+        )
+        return GenericResponse(
+            data = aggregateHeartRate,
+            success = true,
+            statusCode = HttpStatus.OK.value(),
+        )
+    }
+
+    @Operation(
+        summary = "심박수 집계 조회[Employee]",
+        description = "직원이 본인 심박수를 조회합니다.",
+        parameters = [
+            Parameter(name = "start", description = "심박수 집계 조회 시작 시간", required = true, example = "2021-01-01 00:00:00"),
+            Parameter(name = "end", description = "심박수 집계 조회 끝나는 시간", required = true, example = "2021-01-01 23:59:59"),
+        ]
+    )
+    @ApiResponse(responseCode = "200", description = "집계 성공")
+    @GetMapping("/aggregate")
+    fun aggregateHeartRate(
+        @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") start: LocalDateTime,
+        @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") end: LocalDateTime,
+    ): GenericResponse<List<HeartRateAggregateResponse>> {
+        MEMBER
+        val aggregateHeartRate = aggregateHeartRateUseCase.aggregateHeartRate(
+            memberId = MEMBER.memberId!!,
             start = start,
             end = end,
         )
