@@ -2,6 +2,7 @@ package com.cj.smartworker.business.fcm.service
 
 import com.cj.smartworker.business.fcm.port.`in`.EmergencyAlarmPushUseCase
 import com.cj.smartworker.business.fcm.port.out.FcmPushPort
+import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.fcm.port.out.FindTokenPort
 import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
 import com.cj.smartworker.business.member.port.out.FindAdminPort
@@ -22,6 +23,7 @@ internal class EmergencyAlarmPushService(
     private val findTokenPort: FindTokenPort,
     private val findAdminPort: FindAdminPort,
     private val saveFcmHistoryPort: SaveFcmHistoryPort,
+    private val findEmergencyReportPort: FindEmergencyReportPort,
 ) : EmergencyAlarmPushUseCase {
 
     companion object {
@@ -50,6 +52,14 @@ internal class EmergencyAlarmPushService(
         val date = LocalDate.of(member.year.year, member.month.month, member.day.day)
         val age = Period.between(date, LocalDate.now()).years
         if (emergency == Emergency.HEART_RATE) {
+            findEmergencyReportPort.findLatestReport(
+                member = member,
+                emergency = Emergency.HEART_RATE,
+                after = Instant.now().toKstLocalDateTime().minusHours(1),
+            ) ?.let {
+                throw IllegalArgumentException("심박수 신고는 심박수 신고 이후 1시간이 지나야 신고가 가능합니다.")
+            }
+
             findTokenPort.findByMemberId(member.memberId!!)?.let {
                 fcmPushPort.sendMessage(
                     targetToken = it.token.token,

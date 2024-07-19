@@ -5,15 +5,20 @@ import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
+import com.cj.smartworker.dataaccess.fcm.entity.QFcmHistoryJpaEntity
+import com.cj.smartworker.dataaccess.fcm.entity.QFcmHistoryJpaEntity.fcmHistoryJpaEntity
+import com.cj.smartworker.dataaccess.fcm.mapper.toEmergencyReportDto
 import com.cj.smartworker.dataaccess.fcm.repository.FcmHistoryJpaRepository
 import com.cj.smartworker.dataaccess.member.mapper.toJpaEntity
 import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import com.cj.smartworker.domain.member.entity.Member
+import com.querydsl.jpa.impl.JPAQueryFactory
 import java.time.LocalDateTime
 
 @PersistenceAdapter
 internal class FcmHistoryPersistenceAdapter(
     private val fcmHistoryJpaRepository: FcmHistoryJpaRepository,
+    private val queryFactory: JPAQueryFactory,
 ): SaveFcmHistoryPort,
     FindEmergencyReportPort {
     override fun saveFcmHistory(
@@ -41,16 +46,7 @@ internal class FcmHistoryPersistenceAdapter(
             start = start,
             end = end,
         ).map {
-            EmergencyReportDto(
-                id = it.id!!,
-                createdAt = it.createdAt,
-                reporter = it.reporter.employeeName,
-                x = it.x,
-                y = it.y,
-                emergency = it.emergency,
-                loginId = it.reporter.loginId,
-                phone = it.reporter.phone,
-            )
+            it.toEmergencyReportDto()
         }
     }
 
@@ -60,31 +56,31 @@ internal class FcmHistoryPersistenceAdapter(
             start = start,
             end = end,
         ).map {
-            EmergencyReportDto(
-                id = it.id!!,
-                createdAt = it.createdAt,
-                reporter = it.reporter.employeeName,
-                x = it.x,
-                y = it.y,
-                emergency = it.emergency,
-                loginId = it.reporter.loginId,
-                phone = it.reporter.phone,
-            )
+            it.toEmergencyReportDto()
         }
     }
 
     override fun findReport(member: Member): List<EmergencyReportDto> {
         return fcmHistoryJpaRepository.findByReporterOrderByCreatedAtDesc(member.toJpaEntity()).map {
-            EmergencyReportDto(
-                id = it.id!!,
-                createdAt = it.createdAt,
-                reporter = it.reporter.employeeName,
-                x = it.x,
-                y = it.y,
-                emergency = it.emergency,
-                loginId = it.reporter.loginId,
-                phone = it.reporter.phone,
-            )
+            it.toEmergencyReportDto()
         }
+    }
+
+    override fun findLatestReport(
+        member: Member,
+        emergency: Emergency,
+        after: LocalDateTime,
+        ): EmergencyReportDto? {
+        return queryFactory.select(fcmHistoryJpaEntity)
+            .from(fcmHistoryJpaEntity)
+            .where(
+                fcmHistoryJpaEntity.reporter.eq(member.toJpaEntity()),
+                fcmHistoryJpaEntity.emergency.eq(emergency),
+                fcmHistoryJpaEntity.createdAt.after(after),
+            )
+            .orderBy(fcmHistoryJpaEntity.createdAt.desc())
+            .limit(1)
+            .fetchOne()
+            ?.toEmergencyReportDto()
     }
 }

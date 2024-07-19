@@ -1,7 +1,8 @@
-package com.cj.smartworker.business.fcm.port.out
+package com.cj.smartworker.business.fcm.service
 
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
+import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.member.port.out.FindMemberPort
 import com.cj.smartworker.business.member.port.out.SearchMemberPort
 import com.cj.smartworker.business.member.util.MaskingUtil
