@@ -13,5 +13,6 @@ interface FindEmergencyReportUseCase {
 
     fun findReport(memberId: MemberId, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
 
-    fun findReport(loginId: LoginId): List<EmergencyReportDto>
+    fun findReport(loginId1: LoginId): List<EmergencyReportDto>
+    fun findReport(loginId1: LoginId, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
 }

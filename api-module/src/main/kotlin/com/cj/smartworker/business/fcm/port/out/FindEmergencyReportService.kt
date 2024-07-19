@@ -2,7 +2,6 @@ package com.cj.smartworker.business.fcm.port.out
 
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
-import com.cj.smartworker.business.member.dto.response.MemberPagingResponse
 import com.cj.smartworker.business.member.port.out.FindMemberPort
 import com.cj.smartworker.business.member.port.out.SearchMemberPort
 import com.cj.smartworker.business.member.util.MaskingUtil
@@ -67,6 +66,29 @@ internal class FindEmergencyReportService(
             return listOf()
         }
         val reportList = findEmergencyReportPort.findReport(member)
+        reportList.forEach { report ->
+            report.apply {
+                reporter = MaskingUtil.maskEmployeeName(EmployeeName(reporter))
+                phone = MaskingUtil.maskPhone(Phone(phone))
+                loginId = MaskingUtil.maskLoginId(LoginId(loginId))
+            }
+        }
+        return reportList
+    }
+
+    override fun findReport(
+        loginId1: LoginId,
+        start: LocalDateTime,
+        end: LocalDateTime
+    ): List<EmergencyReportDto> {
+        val member = searchMemberPort.searchByLoginIdReturnMember(loginId1) ?: run {
+            return listOf()
+        }
+        val reportList = findEmergencyReportPort.findReport(
+            member = member,
+            start = start,
+            end = end,
+        )
         reportList.forEach { report ->
             report.apply {
                 reporter = MaskingUtil.maskEmployeeName(EmployeeName(reporter))
