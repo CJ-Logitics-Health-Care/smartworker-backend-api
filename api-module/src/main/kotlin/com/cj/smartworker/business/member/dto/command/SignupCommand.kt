@@ -9,7 +9,7 @@ data class SignupCommand(
     val loginId: String,
     @Schema(description = "로그인 비밀번호")
     val password: String,
-    @Schema(description = "전화번호")
+    @Schema(description = "전화번호(-를 붙여서 사용)", example = "010-1234-1234")
     val phone: String,
     @Schema(description = "성별")
     val gender: Gender,
