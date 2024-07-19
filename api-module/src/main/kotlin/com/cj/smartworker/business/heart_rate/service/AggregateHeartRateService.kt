@@ -3,6 +3,7 @@ package com.cj.smartworker.business.heart_rate.service
 import com.cj.smartworker.business.heart_rate.dto.response.HeartRateAggregateResponse
 import com.cj.smartworker.business.heart_rate.port.`in`.AggregateHeartRateUseCase
 import com.cj.smartworker.business.heart_rate.port.out.AggregateHeartRatePort
+import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.MemberId
 import com.cj.smartworker.domain.util.logger
 import org.springframework.stereotype.Service
@@ -22,7 +23,6 @@ internal class AggregateHeartRateService(
         start: LocalDateTime,
         end: LocalDateTime,
     ): List<HeartRateAggregateResponse> {
-        logger.info("start: $start, end: $end")
         val aggregateHeartRate = aggregateHeartRatePort.aggregateHeartRate(
             memberId = memberId,
             start = start,
