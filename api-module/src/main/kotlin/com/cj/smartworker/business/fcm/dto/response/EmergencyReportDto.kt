@@ -14,6 +14,8 @@ data class EmergencyReportDto(
     val createdAt: LocalDateTime,
     @Schema(description = "신고자")
     var reporter: String,
+    @Schema(description = "신고자 memberId")
+    val reporterId: Long,
     @Schema(description = "긴급 신고 위치 x 좌표")
     val x: Float,
     @Schema(description = "긴급 신고 위치 y 좌표")
