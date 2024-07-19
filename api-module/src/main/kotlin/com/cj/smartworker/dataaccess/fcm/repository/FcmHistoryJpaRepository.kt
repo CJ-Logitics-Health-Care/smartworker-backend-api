@@ -15,4 +15,6 @@ interface FcmHistoryJpaRepository: JpaRepository<FcmHistoryJpaEntity, Long> {
         start: LocalDateTime,
         end: LocalDateTime
     ): List<FcmHistoryJpaEntity>
+
+    fun findByReporterOrderByCreatedAtDesc(memberJpaEntity: MemberJpaEntity): List<FcmHistoryJpaEntity>
 }

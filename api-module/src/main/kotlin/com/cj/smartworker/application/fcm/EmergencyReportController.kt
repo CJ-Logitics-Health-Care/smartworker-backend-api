@@ -4,6 +4,7 @@ import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
+import com.cj.smartworker.domain.member.valueobject.LoginId
 import com.cj.smartworker.domain.member.valueobject.MemberId
 import com.cj.smartworker.security.MemberContext.MEMBER
 import io.swagger.v3.oas.annotations.Operation
@@ -107,4 +108,55 @@ internal class EmergencyReportController(
             statusCode = HttpStatus.OK.value(),
         )
     }
+
+    @Operation(
+        summary = "loginId로 신고 이력 조회 [Admin]",
+        description = "loginId로 신고 이력을 조회합니다. [Admin]",
+        parameters = [
+            Parameter(name = "loginId", description = "검색할 로그인 아이디", required = true, example = "qwert1234"),
+        ]
+    )
+    @ApiResponse(responseCode = "200", description = "신고 목록 반환")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/emergency-report/search")
+    fun emergencyReport(
+        @RequestParam("loginId") loginId: String,
+    ): GenericResponse<List<EmergencyReportDto>> {
+
+        return GenericResponse(
+            data = emergencyReportUseCase.findReport(
+                loginId1 = LoginId(loginId)
+            ),
+            success = true,
+            statusCode = HttpStatus.OK.value(),
+        )
+    }
+
+    @Operation(
+        summary = "loginId + 날짜로 신고 이력 조회 [Admin]",
+        description = "loginId + 날짜로 신고 이력을 조회합니다. [Admin]",
+        parameters = [
+            Parameter(name = "loginId", description = "검색할 로그인 아이디", required = true, example = "qwert1234"),
+            Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true, example = "2021-01-01"),
+            Parameter(name = "end", description = "신고 이력 조회 끝나는 시간", required = true, example = "2021-01-01"),
+        ]
+    )
+    @ApiResponse(responseCode = "200", description = "신고 목록 반환")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/emergency-report/search-with-date")
+    fun emergencyReport(
+        @RequestParam("loginId") loginId: String,
+        @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
+        @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
+    ): GenericResponse<List<EmergencyReportDto>> {
+
+        return GenericResponse(
+            data = emergencyReportUseCase.findReport(
+                loginId1 = LoginId(loginId)
+            ),
+            success = true,
+            statusCode = HttpStatus.OK.value(),
+        )
+    }
 }
+
