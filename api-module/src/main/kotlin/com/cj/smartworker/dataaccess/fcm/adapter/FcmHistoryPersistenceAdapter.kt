@@ -5,7 +5,6 @@ import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
-import com.cj.smartworker.dataaccess.fcm.entity.QFcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.entity.QFcmHistoryJpaEntity.fcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.mapper.toEmergencyReportDto
 import com.cj.smartworker.dataaccess.fcm.repository.FcmHistoryJpaRepository
@@ -48,6 +47,23 @@ internal class FcmHistoryPersistenceAdapter(
         ).map {
             it.toEmergencyReportDto()
         }
+    }
+
+    override fun findReport(
+        start: LocalDateTime,
+        end: LocalDateTime,
+        emergency: Emergency
+    ): List<EmergencyReportDto> {
+        return queryFactory.select(fcmHistoryJpaEntity)
+            .from(fcmHistoryJpaEntity)
+            .where(
+                fcmHistoryJpaEntity.createdAt.goe(start),
+                fcmHistoryJpaEntity.createdAt.loe(end),
+                fcmHistoryJpaEntity.emergency.eq(emergency),
+            )
+            .orderBy(fcmHistoryJpaEntity.createdAt.desc())
+            .fetch()
+            .map { it.toEmergencyReportDto() }
     }
 
     override fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto> {

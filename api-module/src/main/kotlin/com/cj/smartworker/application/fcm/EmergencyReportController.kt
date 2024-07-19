@@ -4,6 +4,7 @@ import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
+import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import com.cj.smartworker.domain.member.valueobject.LoginId
 import com.cj.smartworker.domain.member.valueobject.MemberId
 import com.cj.smartworker.security.MemberContext.MEMBER
@@ -47,6 +48,35 @@ internal class EmergencyReportController(
         val report = emergencyReportUseCase.findReport(
             start = start.atStartOfDay(),
             end = end.atTime(23, 59, 59),
+        )
+        return GenericResponse(
+            data = report,
+            success = true,
+            statusCode = HttpStatus.OK.value(),
+        )
+    }
+
+    @Operation(
+        summary = "신고 타입별 신고 이력 조회 [Admin]",
+        description = "신고 타입별 신고 이력을 조회합니다. [Admin]",
+        parameters = [
+            Parameter(name = "start", description = "신고 이력 조회 시작 시간", required = true, example = "2021-01-01"),
+            Parameter(name = "end", description = "신고 이력 조회 끝나는 시간", required = true, example = "2021-01-01"),
+            Parameter(name = "emergency", description = "심박수 혹은 긴급 신고 type 지정", required = true, example = "HEART_RATE or REPORT"),
+        ]
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @ApiResponse(responseCode = "200", description = "신고 목록 반환")
+    @GetMapping("/admin/emergency-report-by-type")
+    fun emergencyReport(
+        @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
+        @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
+        @RequestParam("emergency") emergency: Emergency,
+    ): GenericResponse<List<EmergencyReportDto>> {
+        val report = emergencyReportUseCase.findReport(
+            start = start.atStartOfDay(),
+            end = end.atTime(23, 59, 59),
+            emergency = emergency,
         )
         return GenericResponse(
             data = report,
