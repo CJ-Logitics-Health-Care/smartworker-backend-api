@@ -4,6 +4,7 @@ import com.cj.smartworker.business.member.dto.response.MemberPagingResponse
 import com.cj.smartworker.domain.member.entity.Member
 import com.cj.smartworker.domain.member.valueobject.LoginId
 
-fun interface SearchMemberPort {
+interface SearchMemberPort {
     fun searchByLoginId(loginId: LoginId): MemberPagingResponse?
+    fun searchByLoginIdReturnMember(loginId: LoginId): Member?
 }

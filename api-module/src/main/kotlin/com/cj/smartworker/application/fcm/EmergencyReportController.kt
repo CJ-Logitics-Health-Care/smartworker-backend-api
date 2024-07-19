@@ -4,6 +4,7 @@ import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
+import com.cj.smartworker.domain.member.valueobject.LoginId
 import com.cj.smartworker.domain.member.valueobject.MemberId
 import com.cj.smartworker.security.MemberContext.MEMBER
 import io.swagger.v3.oas.annotations.Operation
@@ -102,6 +103,29 @@ internal class EmergencyReportController(
                 memberId = MemberId(memberId),
                 start = start.atStartOfDay(),
                 end = end.atTime(23, 59, 59),
+            ),
+            success = true,
+            statusCode = HttpStatus.OK.value(),
+        )
+    }
+
+    @Operation(
+        summary = "loginId로 신고 이력 조회 [Admin]",
+        description = "loginId로 신고 이력을 조회합니다. [Admin]",
+        parameters = [
+            Parameter(name = "loginId", description = "검색할 로그인 아이디", required = true, example = "qwert1234"),
+        ]
+    )
+    @ApiResponse(responseCode = "200", description = "신고 목록 반환")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/emergency-report/search")
+    fun emergencyReport(
+        @RequestParam("loginId") loginId: String,
+    ): GenericResponse<List<EmergencyReportDto>> {
+
+        return GenericResponse(
+            data = emergencyReportUseCase.findReport(
+                loginId = LoginId(loginId)
             ),
             success = true,
             statusCode = HttpStatus.OK.value(),

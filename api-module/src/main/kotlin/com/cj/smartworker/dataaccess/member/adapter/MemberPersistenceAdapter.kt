@@ -93,6 +93,17 @@ internal class MemberPersistenceAdapter(
             ?.let { return it.toMemberPagingResponse() }
     }
 
+    override fun searchByLoginIdReturnMember(loginId: LoginId): Member? {
+        return queryFactory.select(memberJpaEntity)
+            .from(memberJpaEntity)
+            .where(
+                memberJpaEntity.loginId.eq(loginId.loginId),
+                memberJpaEntity.deleted.eq(Deleted.NOT_DELETED),
+            )
+            .fetchOne()
+            ?.toDomainEntity()
+    }
+
     override fun findAdmins(): List<Member> {
         val memberJpaEntityIds = queryFactory.select(memberJpaEntity)
             .from(memberJpaEntity)
