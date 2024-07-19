@@ -7,6 +7,11 @@ import java.time.LocalDateTime
 
 interface FindEmergencyReportPort {
     fun findReport(start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
+    fun findReport(
+        start: LocalDateTime,
+        end: LocalDateTime,
+        emergency: Emergency,
+    ): List<EmergencyReportDto>
 
     fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto>
     fun findReport(member: Member): List<EmergencyReportDto>
