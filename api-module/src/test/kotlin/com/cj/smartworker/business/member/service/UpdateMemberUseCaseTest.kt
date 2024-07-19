@@ -17,7 +17,7 @@ class UpdateMemberUseCaseTest @Autowired constructor(
     val signupCommand = SignupCommand(
         loginId = "abcd1234",
         password = "Abcd1234@",
-        phone = "010-1234-567",
+        phone = "010-1234-5678",
         gender = Gender.MALE,
         email = null,
         employeeName = "홍길동",
