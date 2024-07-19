@@ -37,6 +37,11 @@ GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/search?loginId=ssdf23
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
+### 날짜 + 신고 타입 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report-by-type?start=2024-07-15&end=2024-07-20&emergency=REPORT
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
 ### 전체 회원 커서 페이징 조회
 GET {{DNS_HOST}}/api/v1/member/cursor-paging
 Content-Type: application/json
