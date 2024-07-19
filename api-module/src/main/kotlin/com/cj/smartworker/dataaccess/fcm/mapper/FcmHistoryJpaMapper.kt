@@ -13,5 +13,6 @@ fun FcmHistoryJpaEntity.toEmergencyReportDto(): EmergencyReportDto = let {
         emergency = it.emergency,
         loginId = it.reporter.loginId,
         phone = it.reporter.phone,
+        reporterId = it.reporter.id!!,
     )
 }
