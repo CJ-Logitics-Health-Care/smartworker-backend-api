@@ -1,7 +1,7 @@
 package com.cj.smartworker.dataaccess.fcm.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
-import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
+import com.cj.smartworker.business.fcm.dto.response.EmergencyReportResponse
 import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
@@ -40,7 +40,7 @@ internal class FcmHistoryPersistenceAdapter(
         fcmHistoryJpaRepository.save(fcmHistoryJpaEntity)
     }
 
-    override fun findReport(start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto> {
+    override fun findReport(start: LocalDateTime, end: LocalDateTime): List<EmergencyReportResponse> {
         return fcmHistoryJpaRepository.findByCreatedAtBetweenOrderByCreatedAtDesc(
             start = start,
             end = end,
@@ -53,7 +53,7 @@ internal class FcmHistoryPersistenceAdapter(
         start: LocalDateTime,
         end: LocalDateTime,
         emergency: Emergency
-    ): List<EmergencyReportDto> {
+    ): List<EmergencyReportResponse> {
         return queryFactory.select(fcmHistoryJpaEntity)
             .from(fcmHistoryJpaEntity)
             .where(
@@ -66,7 +66,7 @@ internal class FcmHistoryPersistenceAdapter(
             .map { it.toEmergencyReportDto() }
     }
 
-    override fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportDto> {
+    override fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportResponse> {
         return fcmHistoryJpaRepository.findByReporterAndCreatedAtBetweenOrderByCreatedAtDesc(
             memberJapEntity = member.toJpaEntity(),
             start = start,
@@ -76,7 +76,7 @@ internal class FcmHistoryPersistenceAdapter(
         }
     }
 
-    override fun findReport(member: Member): List<EmergencyReportDto> {
+    override fun findReport(member: Member): List<EmergencyReportResponse> {
         return fcmHistoryJpaRepository.findByReporterOrderByCreatedAtDesc(member.toJpaEntity()).map {
             it.toEmergencyReportDto()
         }
@@ -86,7 +86,7 @@ internal class FcmHistoryPersistenceAdapter(
         member: Member,
         emergency: Emergency,
         after: LocalDateTime,
-        ): EmergencyReportDto? {
+        ): EmergencyReportResponse? {
         return queryFactory.select(fcmHistoryJpaEntity)
             .from(fcmHistoryJpaEntity)
             .where(

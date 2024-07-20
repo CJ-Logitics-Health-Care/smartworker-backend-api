@@ -1,10 +1,10 @@
 package com.cj.smartworker.dataaccess.fcm.mapper
 
-import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
+import com.cj.smartworker.business.fcm.dto.response.EmergencyReportResponse
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
 
-fun FcmHistoryJpaEntity.toEmergencyReportDto(): EmergencyReportDto = let {
-    EmergencyReportDto(
+fun FcmHistoryJpaEntity.toEmergencyReportDto(): EmergencyReportResponse = let {
+    EmergencyReportResponse(
         id = it.id!!,
         createdAt = it.createdAt,
         reporter = it.reporter.employeeName,

@@ -2,7 +2,7 @@ package com.cj.smartworker.application.fcm
 
 import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
-import com.cj.smartworker.business.fcm.dto.response.EmergencyReportDto
+import com.cj.smartworker.business.fcm.dto.response.EmergencyReportResponse
 import com.cj.smartworker.business.fcm.port.`in`.FindEmergencyReportUseCase
 import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import com.cj.smartworker.domain.member.valueobject.LoginId
@@ -44,7 +44,7 @@ internal class EmergencyReportController(
     fun emergencyReport(
         @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
         @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
-    ): GenericResponse<List<EmergencyReportDto>> {
+    ): GenericResponse<List<EmergencyReportResponse>> {
         val report = emergencyReportUseCase.findReport(
             start = start.atStartOfDay(),
             end = end.atTime(23, 59, 59),
@@ -72,7 +72,7 @@ internal class EmergencyReportController(
         @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
         @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
         @RequestParam("emergency") emergency: Emergency,
-    ): GenericResponse<List<EmergencyReportDto>> {
+    ): GenericResponse<List<EmergencyReportResponse>> {
         val report = emergencyReportUseCase.findReport(
             start = start.atStartOfDay(),
             end = end.atTime(23, 59, 59),
@@ -98,7 +98,7 @@ internal class EmergencyReportController(
     fun myEmergencyReport(
         @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
         @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
-    ): GenericResponse<List<EmergencyReportDto>> {
+    ): GenericResponse<List<EmergencyReportResponse>> {
 
         return GenericResponse(
             data = emergencyReportUseCase.findReport(
@@ -126,7 +126,7 @@ internal class EmergencyReportController(
         @PathVariable("memberId") memberId: Long,
         @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
         @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
-    ): GenericResponse<List<EmergencyReportDto>> {
+    ): GenericResponse<List<EmergencyReportResponse>> {
 
         return GenericResponse(
             data = emergencyReportUseCase.findReport(
@@ -151,7 +151,7 @@ internal class EmergencyReportController(
     @GetMapping("/admin/emergency-report/search")
     fun emergencyReport(
         @RequestParam("loginId") loginId: String,
-    ): GenericResponse<List<EmergencyReportDto>> {
+    ): GenericResponse<List<EmergencyReportResponse>> {
 
         return GenericResponse(
             data = emergencyReportUseCase.findReport(
@@ -178,7 +178,7 @@ internal class EmergencyReportController(
         @RequestParam("loginId") loginId: String,
         @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") start: LocalDate,
         @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") end: LocalDate,
-    ): GenericResponse<List<EmergencyReportDto>> {
+    ): GenericResponse<List<EmergencyReportResponse>> {
 
         return GenericResponse(
             data = emergencyReportUseCase.findReport(
