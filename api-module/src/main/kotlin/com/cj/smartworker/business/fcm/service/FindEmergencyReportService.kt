@@ -29,14 +29,6 @@ internal class FindEmergencyReportService(
             start = start,
             end = end,
         ).toMask()
-//        reportList.forEach { report ->
-//            report.apply {
-//                reporter = MaskingUtil.maskEmployeeName(EmployeeName(reporter))
-//                phone = MaskingUtil.maskPhone(Phone(phone))
-//                loginId = MaskingUtil.maskLoginId(LoginId(loginId))
-//            }
-//        }
-//        return reportList
     }
 
     override fun findReport(
@@ -49,14 +41,6 @@ internal class FindEmergencyReportService(
             end = end,
             emergency = emergency,
         ).toMask()
-//        reportList.forEach { report ->
-//            report.apply {
-//                reporter = MaskingUtil.maskEmployeeName(EmployeeName(reporter))
-//                phone = MaskingUtil.maskPhone(Phone(phone))
-//                loginId = MaskingUtil.maskLoginId(LoginId(loginId))
-//            }
-//        }
-//        return reportList
     }
 
     override fun findReport(member: Member, start: LocalDateTime, end: LocalDateTime): List<EmergencyReportResponse> {
@@ -86,14 +70,6 @@ internal class FindEmergencyReportService(
             return listOf()
         }
         return findEmergencyReportPort.findReport(member).toMask()
-//        reportList.forEach { report ->
-//            report.apply {
-//                reporter = MaskingUtil.maskEmployeeName(EmployeeName(reporter))
-//                phone = MaskingUtil.maskPhone(Phone(phone))
-//                loginId = MaskingUtil.maskLoginId(LoginId(loginId))
-//            }
-//        }
-//        return reportList
     }
 
     override fun findReport(
@@ -109,14 +85,6 @@ internal class FindEmergencyReportService(
             start = start,
             end = end,
         ).toMask()
-//        reportList.forEach { report ->
-//            report.apply {
-//                reporter = MaskingUtil.maskEmployeeName(EmployeeName(reporter))
-//                phone = MaskingUtil.maskPhone(Phone(phone))
-//                loginId = MaskingUtil.maskLoginId(LoginId(loginId))
-//            }
-//        }
-//        return reportList.toMask()
     }
 }
 
