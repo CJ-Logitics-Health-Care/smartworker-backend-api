@@ -61,3 +61,25 @@ Authorization: Bearer {{auth_token}}
 GET {{DNS_HOST}}/api/v1/member/2
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+### 관리자 전체 조회(이름순)
+GET {{DNS_HOST}}/api/v1/member/admins
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 업데이트
+PUT {{DNS_HOST}}/api/v1/member/manage
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "memberId": 3,
+  "phone": "010-1234-1234",
+  "gender": "FEMALE",
+  "authority": "ADMIN",
+  "year": 1973,
+  "month": 1,
+  "day": 20,
+  "employeeName": "김감독",
+  "heartRateThreshold": 200
+}
