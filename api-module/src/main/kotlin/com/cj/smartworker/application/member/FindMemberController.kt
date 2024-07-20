@@ -2,7 +2,9 @@ package com.cj.smartworker.application.member
 
 import com.cj.smartworker.annotation.WebAdapter
 import com.cj.smartworker.application.response.GenericResponse
+import com.cj.smartworker.business.member.dto.response.MemberPagingResponse
 import com.cj.smartworker.business.member.dto.response.MemberResponse
+import com.cj.smartworker.business.member.port.`in`.FindAdminUseCase
 import com.cj.smartworker.business.member.port.`in`.FindMemberUseCase
 import com.cj.smartworker.domain.member.valueobject.MemberId
 import io.swagger.v3.oas.annotations.Operation
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/member")
 internal class FindMemberController(
     private val findMemberUseCase: FindMemberUseCase,
+    private val findAdminUseCase: FindAdminUseCase,
 ) {
 
     @Operation(
@@ -34,6 +37,23 @@ internal class FindMemberController(
         val memberResponse = findMemberUseCase.findMember(MemberId(memberId))
         return GenericResponse(
             data = memberResponse,
+            statusCode = HttpStatus.OK.value(),
+            success = true,
+        )
+    }
+
+
+    @Operation(
+        summary = "Admin권한 관리자 이름순으로 조회 [Admin]",
+        description = "Admin권한 관리자를 이름순으로 조회합니다. [Admin]",
+    )
+    @ApiResponse(responseCode = "200", description = "Admin권한 관리자 이름순으로 조회")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admins")
+    fun findAdmins(): GenericResponse<List<MemberPagingResponse>> {
+        val findAdmins = findAdminUseCase.findAdmins()
+        return GenericResponse(
+            data = findAdmins,
             statusCode = HttpStatus.OK.value(),
             success = true,
         )
