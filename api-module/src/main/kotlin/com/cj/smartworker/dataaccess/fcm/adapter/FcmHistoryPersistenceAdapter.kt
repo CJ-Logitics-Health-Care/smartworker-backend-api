@@ -2,8 +2,11 @@ package com.cj.smartworker.dataaccess.fcm.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportResponse
+import com.cj.smartworker.business.fcm.dto.response.HeartRateAggregateResponse
+import com.cj.smartworker.business.fcm.port.out.AggregateHeartRateReportPort
 import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
+import com.cj.smartworker.dataaccess.fcm.dto.HeartRateAggregateDto
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.entity.QFcmHistoryJpaEntity.fcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.mapper.toEmergencyReportDto
@@ -11,6 +14,9 @@ import com.cj.smartworker.dataaccess.fcm.repository.FcmHistoryJpaRepository
 import com.cj.smartworker.dataaccess.member.mapper.toJpaEntity
 import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import com.cj.smartworker.domain.member.entity.Member
+import com.querydsl.core.types.Projections
+import com.querydsl.core.types.dsl.MathExpressions.*
+import com.querydsl.core.types.dsl.Wildcard.count
 import com.querydsl.jpa.impl.JPAQueryFactory
 import java.time.LocalDateTime
 
@@ -19,7 +25,8 @@ internal class FcmHistoryPersistenceAdapter(
     private val fcmHistoryJpaRepository: FcmHistoryJpaRepository,
     private val queryFactory: JPAQueryFactory,
 ): SaveFcmHistoryPort,
-    FindEmergencyReportPort {
+    FindEmergencyReportPort,
+    AggregateHeartRateReportPort {
     override fun saveFcmHistory(
         reporter: Member,
         admins: Set<Member>,
@@ -98,5 +105,29 @@ internal class FcmHistoryPersistenceAdapter(
             .limit(1)
             .fetchOne()
             ?.toEmergencyReportDto()
+    }
+
+    override fun aggregate(start: LocalDateTime, end: LocalDateTime, round: Int): List<HeartRateAggregateResponse> {
+        return queryFactory.select(
+            Projections.constructor(
+                HeartRateAggregateDto::class.java,
+                round(fcmHistoryJpaEntity.x.avg(), 6),
+                round(fcmHistoryJpaEntity.y.avg(), 6),
+                count,
+            )
+        ).from(fcmHistoryJpaEntity)
+            .where(
+                fcmHistoryJpaEntity.createdAt.goe(start),
+                fcmHistoryJpaEntity.createdAt.loe(end),
+                fcmHistoryJpaEntity.emergency.eq(Emergency.HEART_RATE),
+            ).groupBy(round(fcmHistoryJpaEntity.x, round), round(fcmHistoryJpaEntity.y, round))
+            .fetch()
+            .map {
+                HeartRateAggregateResponse(
+                    x = it.x.toFloat(),
+                    y = it.y.toFloat(),
+                    count = it.count,
+                )
+            }
     }
 }
