@@ -111,8 +111,24 @@ internal class MemberPersistenceAdapter(
                 memberJpaEntity.authorities.any().authority.eq(Authority.ADMIN),
                 memberJpaEntity.deleted.eq(Deleted.NOT_DELETED),
             )
+            .orderBy(memberJpaEntity.createdAt.desc())
             .fetch()
         return memberJpaEntityIds.map { it.toDomainEntity() }
+    }
+
+    override fun findAdminsPagingResponse(): List<MemberPagingResponse> {
+        return queryFactory.select(memberJpaEntity)
+            .from(memberJpaEntity)
+            .where(
+                memberJpaEntity.authorities.any().authority.eq(Authority.ADMIN),
+                memberJpaEntity.deleted.eq(Deleted.NOT_DELETED),
+            )
+            .orderBy(
+                memberJpaEntity.employeeName.asc(),
+                memberJpaEntity.createdAt.desc(),
+            )
+            .fetch()
+            .map { it.toMemberPagingResponse() }
     }
 
     override fun update(member: Member) {
