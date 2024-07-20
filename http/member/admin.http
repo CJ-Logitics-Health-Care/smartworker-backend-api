@@ -53,7 +53,7 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ### 특정 회원 신고 이력 조회
-GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/2?start=2024-07-15&end=2024-07-20
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/1?start=2024-07-20&end=2024-07-21
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
