@@ -19,11 +19,10 @@ internal class AggregateHeartRateReportService(
         end: LocalDateTime,
         gpsRange: GPSRange,
     ): List<HeartRateAggregateResponse> {
-        val round = if (gpsRange == LARGE) 3 else 4
         return aggregateHeartRateReportPort.aggregate(
             start = start,
             end = end,
-            round = round,
+            gpsRange = gpsRange,
         )
     }
 }
