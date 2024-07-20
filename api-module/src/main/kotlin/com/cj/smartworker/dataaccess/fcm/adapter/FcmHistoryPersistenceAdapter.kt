@@ -1,6 +1,7 @@
 package com.cj.smartworker.dataaccess.fcm.adapter
 
 import com.cj.smartworker.annotation.PersistenceAdapter
+import com.cj.smartworker.business.fcm.dto.request.GPSRange
 import com.cj.smartworker.business.fcm.dto.response.EmergencyReportResponse
 import com.cj.smartworker.business.fcm.dto.response.HeartRateAggregateResponse
 import com.cj.smartworker.business.fcm.port.out.AggregateHeartRateReportPort
@@ -43,6 +44,10 @@ internal class FcmHistoryPersistenceAdapter(
             x = x,
             y = y,
             emergency = emergency,
+            roundedXSmall = String.format("%.4f", x).toFloat(),
+            roundedYSmall = String.format("%.4f", y).toFloat(),
+            roundedXLarge = String.format("%.3f", x).toFloat(),
+            roundedYLarge = String.format("%.3f", y).toFloat(),
         )
         fcmHistoryJpaRepository.save(fcmHistoryJpaEntity)
     }
@@ -107,7 +112,9 @@ internal class FcmHistoryPersistenceAdapter(
             ?.toEmergencyReportDto()
     }
 
-    override fun aggregate(start: LocalDateTime, end: LocalDateTime, round: Int): List<HeartRateAggregateResponse> {
+    override fun aggregate(start: LocalDateTime, end: LocalDateTime, gpsRange: GPSRange): List<HeartRateAggregateResponse> {
+        val roundX = if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedXLarge else fcmHistoryJpaEntity.roundedXSmall
+        val roundY = if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedYLarge else fcmHistoryJpaEntity.roundedYSmall
         return queryFactory.select(
             Projections.constructor(
                 HeartRateAggregateDto::class.java,
@@ -120,7 +127,7 @@ internal class FcmHistoryPersistenceAdapter(
                 fcmHistoryJpaEntity.createdAt.goe(start),
                 fcmHistoryJpaEntity.createdAt.loe(end),
                 fcmHistoryJpaEntity.emergency.eq(Emergency.HEART_RATE),
-            ).groupBy(round(fcmHistoryJpaEntity.x, round), round(fcmHistoryJpaEntity.y, round))
+            ).groupBy(roundX, roundY)
             .fetch()
             .map {
                 HeartRateAggregateResponse(

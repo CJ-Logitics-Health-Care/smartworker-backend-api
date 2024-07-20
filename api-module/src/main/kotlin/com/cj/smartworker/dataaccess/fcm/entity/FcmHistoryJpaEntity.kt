@@ -5,7 +5,15 @@ import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-@Table(name = "fcm_history")
+@Table(
+    name = "fcm_history",
+    indexes = [
+        Index(name = "idx_rounded_xy_small", columnList = "rounded_x_small, rounded_y_small"),
+        Index(name = "idx_rounded_xy_large", columnList = "rounded_x_large, rounded_y_large"),
+        Index(name = "idx_created_at", columnList = "created_at"),
+        Index(name = "idx_emergency", columnList = "emergency"),
+    ]
+)
 @Entity
 class FcmHistoryJpaEntity(
     @Id
@@ -28,11 +36,23 @@ class FcmHistoryJpaEntity(
     @JoinColumn(name = "member_id", nullable = false)
     val reporter: MemberJpaEntity, // 알람을 보낸 사용자
 
-    @Column(name = "x", nullable = false)
+    @Column(name = "x", nullable = false, columnDefinition = "DECIMAL(9, 6)")
     val x: Float,
 
-    @Column(name = "y", nullable = false)
+    @Column(name = "y", nullable = false, columnDefinition = "DECIMAL(9, 6)")
     val y: Float,
+
+    @Column(name = "rounded_x_small", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    val roundedXSmall: Float,
+
+    @Column(name = "rounded_y_small", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    val roundedYSmall: Float,
+
+    @Column(name = "rounded_x_large", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    val roundedXLarge: Float,
+
+    @Column(name = "rounded_Y_large", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    val roundedYLarge: Float,
 
     @Column(name = "emergency", nullable = false)
     @Enumerated(EnumType.STRING)
