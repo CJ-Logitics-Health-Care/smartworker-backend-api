@@ -7,7 +7,6 @@ import com.cj.smartworker.business.fcm.dto.response.HeartRateAggregateResponse
 import com.cj.smartworker.business.fcm.port.out.AggregateHeartRateReportPort
 import com.cj.smartworker.business.fcm.port.out.FindEmergencyReportPort
 import com.cj.smartworker.business.fcm.port.out.SaveFcmHistoryPort
-import com.cj.smartworker.dataaccess.fcm.dto.HeartRateAggregateDto
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.entity.QFcmHistoryJpaEntity.fcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.fcm.mapper.toEmergencyReportDto
@@ -15,6 +14,7 @@ import com.cj.smartworker.dataaccess.fcm.repository.FcmHistoryJpaRepository
 import com.cj.smartworker.dataaccess.member.mapper.toJpaEntity
 import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import com.cj.smartworker.domain.member.entity.Member
+import com.cj.smartworker.domain.util.logger
 import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.MathExpressions.*
 import com.querydsl.core.types.dsl.Wildcard.count
@@ -25,9 +25,12 @@ import java.time.LocalDateTime
 internal class FcmHistoryPersistenceAdapter(
     private val fcmHistoryJpaRepository: FcmHistoryJpaRepository,
     private val queryFactory: JPAQueryFactory,
-): SaveFcmHistoryPort,
+) : SaveFcmHistoryPort,
     FindEmergencyReportPort,
     AggregateHeartRateReportPort {
+
+    private val logger = logger()
+
     override fun saveFcmHistory(
         reporter: Member,
         admins: Set<Member>,
@@ -64,7 +67,7 @@ internal class FcmHistoryPersistenceAdapter(
     override fun findReport(
         start: LocalDateTime,
         end: LocalDateTime,
-        emergency: Emergency
+        emergency: Emergency,
     ): List<EmergencyReportResponse> {
         return queryFactory.select(fcmHistoryJpaEntity)
             .from(fcmHistoryJpaEntity)
@@ -98,7 +101,7 @@ internal class FcmHistoryPersistenceAdapter(
         member: Member,
         emergency: Emergency,
         after: LocalDateTime,
-        ): EmergencyReportResponse? {
+    ): EmergencyReportResponse? {
         return queryFactory.select(fcmHistoryJpaEntity)
             .from(fcmHistoryJpaEntity)
             .where(
@@ -112,29 +115,27 @@ internal class FcmHistoryPersistenceAdapter(
             ?.toEmergencyReportDto()
     }
 
-    override fun aggregate(start: LocalDateTime, end: LocalDateTime, gpsRange: GPSRange): List<HeartRateAggregateResponse> {
+    override fun aggregate(
+        start: LocalDateTime,
+        end: LocalDateTime,
+        gpsRange: GPSRange,
+    ): List<HeartRateAggregateResponse> {
         val roundX = if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedXLarge else fcmHistoryJpaEntity.roundedXSmall
         val roundY = if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedYLarge else fcmHistoryJpaEntity.roundedYSmall
         return queryFactory.select(
             Projections.constructor(
-                HeartRateAggregateDto::class.java,
+                HeartRateAggregateResponse::class.java,
                 round(fcmHistoryJpaEntity.x.avg(), 6),
                 round(fcmHistoryJpaEntity.y.avg(), 6),
                 count,
             )
         ).from(fcmHistoryJpaEntity)
             .where(
-                fcmHistoryJpaEntity.createdAt.goe(start),
-                fcmHistoryJpaEntity.createdAt.loe(end),
                 fcmHistoryJpaEntity.emergency.eq(Emergency.HEART_RATE),
+                fcmHistoryJpaEntity.createdAt.between(start, end),
             ).groupBy(roundX, roundY)
+            .orderBy(count.desc())
+            .limit(1000)
             .fetch()
-            .map {
-                HeartRateAggregateResponse(
-                    x = it.x.toFloat(),
-                    y = it.y.toFloat(),
-                    count = it.count,
-                )
-            }
     }
 }

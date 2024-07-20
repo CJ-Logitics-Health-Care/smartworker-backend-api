@@ -11,7 +11,6 @@ import java.time.LocalDateTime
         Index(name = "idx_rounded_xy_small", columnList = "rounded_x_small, rounded_y_small"),
         Index(name = "idx_rounded_xy_large", columnList = "rounded_x_large, rounded_y_large"),
         Index(name = "idx_created_at", columnList = "created_at"),
-        Index(name = "idx_emergency", columnList = "emergency"),
     ]
 )
 @Entity
@@ -36,22 +35,22 @@ class FcmHistoryJpaEntity(
     @JoinColumn(name = "member_id", nullable = false)
     val reporter: MemberJpaEntity, // 알람을 보낸 사용자
 
-    @Column(name = "x", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    @Column(name = "x", nullable = false, columnDefinition = "FLOAT")
     val x: Float,
 
-    @Column(name = "y", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    @Column(name = "y", nullable = false, columnDefinition = "FLOAT")
     val y: Float,
 
-    @Column(name = "rounded_x_small", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    @Column(name = "rounded_x_small", nullable = false, columnDefinition = "FLOAT")
     val roundedXSmall: Float,
 
-    @Column(name = "rounded_y_small", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    @Column(name = "rounded_y_small", nullable = false, columnDefinition = "FLOAT")
     val roundedYSmall: Float,
 
-    @Column(name = "rounded_x_large", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    @Column(name = "rounded_x_large", nullable = false, columnDefinition = "FLOAT")
     val roundedXLarge: Float,
 
-    @Column(name = "rounded_Y_large", nullable = false, columnDefinition = "DECIMAL(9, 6)")
+    @Column(name = "rounded_y_large", nullable = false, columnDefinition = "FLOAT")
     val roundedYLarge: Float,
 
     @Column(name = "emergency", nullable = false)
