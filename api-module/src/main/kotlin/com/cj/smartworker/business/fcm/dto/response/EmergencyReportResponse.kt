@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
 @Schema(description = "긴급 신고 정보")
-data class EmergencyReportDto(
+data class EmergencyReportResponse(
     @Schema(description = "긴급 신고 ID")
     val id: Long,
     @Schema(description = "신고 시간", pattern = "yyyy-MM-dd HH:mm:ss")

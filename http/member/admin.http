@@ -53,7 +53,7 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ### 특정 회원 신고 이력 조회
-GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/2
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/2?start=2024-07-15&end=2024-07-20
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
@@ -83,3 +83,8 @@ Authorization: Bearer {{auth_token}}
   "employeeName": "김감독",
   "heartRateThreshold": 200
 }
+
+### 이상 심박수 지도용 집계 [Admin]
+GET {{DNS_HOST}}/api/v1/fcm/aggregate-heart-report?start=2022-01-01 00:00:00&end=2024-08-01 00:00:00&gps-range=SMALL
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
