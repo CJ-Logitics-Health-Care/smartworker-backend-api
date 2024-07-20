@@ -12,6 +12,7 @@ class MemberResponseMapper {
         }
         return MemberResponse(
             memberId = member.memberId!!.id,
+            loginId = member.loginId.loginId,
             email = member.email?.email,
             phone = member.phone.phone,
             authorities = member.authorities.map { it.authority }.toSet(),
