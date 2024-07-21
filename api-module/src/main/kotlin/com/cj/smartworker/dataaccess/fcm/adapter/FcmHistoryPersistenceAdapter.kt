@@ -14,10 +14,6 @@ import com.cj.smartworker.dataaccess.fcm.repository.FcmHistoryJpaRepository
 import com.cj.smartworker.dataaccess.member.mapper.toJpaEntity
 import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import com.cj.smartworker.domain.member.entity.Member
-import com.cj.smartworker.domain.util.logger
-import com.querydsl.core.types.Projections
-import com.querydsl.core.types.dsl.MathExpressions.*
-import com.querydsl.core.types.dsl.Wildcard.count
 import com.querydsl.jpa.impl.JPAQueryFactory
 import java.time.LocalDateTime
 
@@ -28,8 +24,6 @@ internal class FcmHistoryPersistenceAdapter(
 ) : SaveFcmHistoryPort,
     FindEmergencyReportPort,
     AggregateHeartRateReportPort {
-
-    private val logger = logger()
 
     override fun saveFcmHistory(
         reporter: Member,
@@ -119,23 +113,53 @@ internal class FcmHistoryPersistenceAdapter(
         start: LocalDateTime,
         end: LocalDateTime,
         gpsRange: GPSRange,
+        emergency: Emergency,
     ): List<HeartRateAggregateResponse> {
-        val roundX = if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedXLarge else fcmHistoryJpaEntity.roundedXSmall
-        val roundY = if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedYLarge else fcmHistoryJpaEntity.roundedYSmall
-        return queryFactory.select(
-            Projections.constructor(
-                HeartRateAggregateResponse::class.java,
-                round(fcmHistoryJpaEntity.x.avg(), 6),
-                round(fcmHistoryJpaEntity.y.avg(), 6),
-                count,
-            )
-        ).from(fcmHistoryJpaEntity)
-            .where(
-                fcmHistoryJpaEntity.emergency.eq(Emergency.HEART_RATE),
-                fcmHistoryJpaEntity.createdAt.between(start, end),
-            ).groupBy(roundX, roundY)
-            .orderBy(count.desc())
-            .limit(1000)
-            .fetch()
+        return if (gpsRange == GPSRange.LARGE) {
+            fcmHistoryJpaRepository.aggregateMapLarge(
+                start = start,
+                end = end,
+                emergency = emergency.name,
+            ).map {
+                HeartRateAggregateResponse(
+                    x = it["x"] as Double,
+                    y = it["y"] as Double,
+                    count = it["count"] as Long,
+                )
+            }
+        } else {
+            fcmHistoryJpaRepository.aggregateMapSmall(
+                start = start,
+                end = end,
+                emergency = emergency.name,
+            ).map {
+                HeartRateAggregateResponse(
+                    x = it["x"] as Double,
+                    y = it["y"] as Double,
+                    count = it["count"] as Long,
+                )
+            }
+        }
+
+
+//        val roundX =
+//            if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedXLarge else fcmHistoryJpaEntity.roundedXSmall
+//        val roundY =
+//            if (gpsRange == GPSRange.LARGE) fcmHistoryJpaEntity.roundedYLarge else fcmHistoryJpaEntity.roundedYSmall
+//        return queryFactory.select(
+//            Projections.constructor(
+//                HeartRateAggregateResponse::class.java,
+//                round(fcmHistoryJpaEntity.x.avg(), 6),
+//                round(fcmHistoryJpaEntity.y.avg(), 6),
+//                count,
+//            )
+//        ).from(fcmHistoryJpaEntity)
+//            .where(
+//                fcmHistoryJpaEntity.emergency.eq(Emergency.HEART_RATE),
+//                fcmHistoryJpaEntity.createdAt.between(start, end),
+//            ).groupBy(roundX, roundY)
+//            .orderBy(count.desc())
+//            .limit(1000)
+//            .fetch()
     }
 }
