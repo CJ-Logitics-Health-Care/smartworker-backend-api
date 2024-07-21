@@ -1,7 +1,8 @@
 ## AWS 배포된 서버
-server: http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080
 
 docs: http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/index.html
+
+</br>
 
 ## Infra Docker setting
 mac에서 가능합니다.
@@ -89,6 +90,7 @@ DELIMITER ;
 
 CALL InsertRandomData();
 ```
+</br>
 
 ### Slow Query 시간: 3 s
 
@@ -101,6 +103,7 @@ SELECT ROUND(AVG(x), 6) as x, ROUND(AVG(y), 6) as y, COUNT(*) as count
         ORDER BY count DESC
         LIMIT 1000;
 ```
+</br>
 
 ### After Indexing
 
@@ -109,6 +112,7 @@ CREATE INDEX idx_created_at ON fcm_history (created_at);
 CREATE INDEX idx_rounded_xy_small ON fcm_history (rounded_x_small, rounded_y_small);
 CREATE INDEX idx_rounded_xy_large ON fcm_history (rounded_x_large, rounded_y_large);
 ```
+</br>
 
 ### Using index 시간: 3000 ms → 1300 ms
 
@@ -122,6 +126,7 @@ SELECT ROUND(AVG(x), 6) as x, ROUND(AVG(y), 6) as y, COUNT(*) as count
         ORDER BY count DESC
         LIMIT 1000;
 ```
+</br>
 
 ### Top-N 쿼리 최적화 1300 ms → 650 ms
 
