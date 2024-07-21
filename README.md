@@ -1,7 +1,7 @@
 ## AWS 배포된 서버
 server: http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080
 
-docs: ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/index.html
+docs: http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/index.html
 
 ## Infra Docker setting
 mac에서 가능합니다.
