@@ -74,11 +74,16 @@ internal class EmergencyAlarmPushService(
                 )
             }
         }
+        val message = if(emergency == Emergency.REPORT) {
+            "${member.employeeName.employeeName}님께서 위급 상황 신고를 하였습니다. 확인해주세요."
+        } else {
+            "${member.employeeName.employeeName}님의 심박수가 비정상적으로 높습니다."
+        }
         findTokenPort.findByMemberIds(findAdminIds.map { it.memberId!! }).forEach {
             val sendMessageSuccess = fcmPushPort.sendMessage(
                 targetToken = it.key.token,
                 title = title,
-                body = "${member.employeeName.employeeName}님께서 긴급 신고를 하였습니다. 확인해주세요.",
+                body = message,
                 x = x,
                 y = y,
                 age = age,
