@@ -39,12 +39,14 @@ dev server용 yml파일은 숨김 처리 하였습니다.
 
 local 서버에서 실행할 수 있게 application-local.yml 파일을 사용하실 수 있습니다.
 
+</br>
+
 ## 시스템 구조
 ![image](https://github.com/user-attachments/assets/5aab764c-87aa-4afa-bd53-105deb022f2a)
 
 ---
 
-# 신기능 - 심박수 신고 시각화 기능
+# 신기능 - (심박수, 긴급)신고 시각화 기능
 
 ## 쿼리 최적화
 
