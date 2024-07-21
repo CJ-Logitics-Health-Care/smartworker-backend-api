@@ -8,8 +8,8 @@ import java.time.LocalDateTime
 @Table(
     name = "fcm_history",
     indexes = [
-        Index(name = "idx_rounded_xy_small", columnList = "rounded_x_small, rounded_y_small"),
-        Index(name = "idx_rounded_xy_large", columnList = "rounded_x_large, rounded_y_large"),
+//        Index(name = "idx_rounded_xy_small", columnList = "rounded_x_small, rounded_y_small"),
+//        Index(name = "idx_rounded_xy_large", columnList = "rounded_x_large, rounded_y_large"),
         Index(name = "idx_created_at", columnList = "created_at"),
     ]
 )
