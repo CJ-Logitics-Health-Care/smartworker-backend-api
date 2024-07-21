@@ -27,7 +27,7 @@ object Query {
                     ?1
                   ]
                 },
-                ${THIRTY_MINUTES_IN_MILLS}
+                $THIRTY_MINUTES_IN_MILLS
               ]
             }
           }
