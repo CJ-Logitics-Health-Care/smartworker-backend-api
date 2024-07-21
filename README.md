@@ -12,9 +12,10 @@ brew install kcat
 ```
 ```text
 cd ./infra/local
+// 인프라 부분을 도커 컴포즈로 띄웁니다.
 ./start-up.sh
 
-// 종료
+// 종료(인프라 부분을 종료합니다. 종료시 무조건 해당 커멘드로 종료해 주세요.)
 ./shutdown.sh
 ```
 
