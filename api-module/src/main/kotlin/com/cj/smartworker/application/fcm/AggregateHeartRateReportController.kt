@@ -5,6 +5,7 @@ import com.cj.smartworker.application.response.GenericResponse
 import com.cj.smartworker.business.fcm.dto.request.GPSRange
 import com.cj.smartworker.business.fcm.dto.response.HeartRateAggregateResponse
 import com.cj.smartworker.business.fcm.port.`in`.AggregateHeartRateReportUseCase
+import com.cj.smartworker.domain.fcm.valueobject.Emergency
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -37,7 +38,8 @@ internal class AggregateHeartRateReportController(
                 description = "SMALL = 10m x 10m 범위, LARGE 100m x 100m 범위",
                 required = true,
                 example = "SMALL or LARGE",
-            )
+            ),
+            Parameter(name = "emergency", description = "신고 타입", required = true, example = "HEART_RATE or REPORT")
         ]
     )
     @ApiResponse(responseCode = "200", description = "집계 성공")
@@ -47,11 +49,13 @@ internal class AggregateHeartRateReportController(
         @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") start: LocalDateTime,
         @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") end: LocalDateTime,
         @RequestParam("gps-range") gpsRange: GPSRange,
+        @RequestParam("emergency") emergency: Emergency,
     ): GenericResponse<List<HeartRateAggregateResponse>> {
         val aggregate = aggregateHeartRateReportUseCase.aggregate(
             start = start,
             end = end,
             gpsRange = gpsRange,
+            emergency = emergency,
         )
         return GenericResponse(
             data = aggregate,

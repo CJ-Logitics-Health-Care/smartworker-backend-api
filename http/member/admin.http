@@ -48,7 +48,7 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ### 직원 심박수 집계
-GET {{DNS_HOST}}/api/v1/heart-rate/aggregate/2?start=2024-07-15 00:00:00&end=2024-07-20 00:00:00
+GET {{DNS_HOST}}/api/v1/heart-rate/aggregate/1?start=2024-07-15 00:00:00&end=2024-07-21 00:00:00
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
@@ -85,6 +85,6 @@ Authorization: Bearer {{auth_token}}
 }
 
 ### 이상 심박수 지도용 집계 [Admin]
-GET {{DNS_HOST}}/api/v1/fcm/aggregate-heart-report?start=2022-01-01 00:00:00&end=2024-08-01 00:00:00&gps-range=SMALL
+GET {{DNS_HOST}}/api/v1/fcm/aggregate-heart-report?start=2024-07-19 00:00:00&end=2024-08-01 00:00:00&gps-range=SMALL&emergency=HEART_RATE
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
