@@ -35,6 +35,6 @@ echo "Creating Kafka topics"
 docker compose -f common.yml -f init_kafka.yml up -d
 
 echo "Start MySQL and MongoDB"
-docker-compose -f common.yml -f docker-compose.yml up -d
+docker compose -f common.yml -f docker-compose.yml up -d
 
 echo "Start-up completed"
