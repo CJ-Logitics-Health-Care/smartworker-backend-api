@@ -1,5 +1,6 @@
 package com.cj.smartworker.dataaccess.fcm.repository
 
+import com.cj.smartworker.dataaccess.fcm.dto.HeartRateAggregateVo
 import com.cj.smartworker.dataaccess.fcm.entity.FcmHistoryJpaEntity
 import com.cj.smartworker.dataaccess.member.entity.MemberJpaEntity
 import org.springframework.data.jpa.repository.JpaRepository
@@ -37,24 +38,25 @@ interface FcmHistoryJpaRepository: JpaRepository<FcmHistoryJpaEntity, Long> {
         @Param("start") start: LocalDateTime,
         @Param("end") end: LocalDateTime,
         @Param("emergency") emergency: String,
-    ): List<Map<String, Any>>
+    ): List<HeartRateAggregateVo>
 
     @Query(
         value = """
         SELECT ROUND(AVG(x), 6) as x, ROUND(AVG(y), 6) as y, COUNT(*) as count
         FROM fcm_history
         FORCE INDEX (idx_created_at, idx_rounded_xy_small)
-        WHERE created_at BETWEEN :start AND :end 
+        WHERE created_at BETWEEN :start AND :end
         AND emergency = :emergency
         GROUP BY rounded_x_large, rounded_y_large
         ORDER BY count DESC
         LIMIT 1000;
         """,
         nativeQuery = true,
+        name = "aggregateMapLarge"
     )
     fun aggregateMapLarge(
         @Param("start") start: LocalDateTime,
         @Param("end") end: LocalDateTime,
         @Param("emergency") emergency: String,
-    ): List<Map<String, Any>>
+    ): List<HeartRateAggregateVo>
 }

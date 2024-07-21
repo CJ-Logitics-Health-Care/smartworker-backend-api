@@ -1,7 +1,7 @@
 package com.cj.smartworker.business.fcm.dto.response
 
 data class HeartRateAggregateResponse(
-    val x: Double,
-    val y: Double,
+    val x: Float,
+    val y: Float,
     val count: Long,
 )

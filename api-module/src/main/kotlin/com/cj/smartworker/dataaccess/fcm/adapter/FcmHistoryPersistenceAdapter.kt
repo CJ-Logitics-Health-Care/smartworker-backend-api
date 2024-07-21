@@ -122,9 +122,9 @@ internal class FcmHistoryPersistenceAdapter(
                 emergency = emergency.name,
             ).map {
                 HeartRateAggregateResponse(
-                    x = it["x"] as Double,
-                    y = it["y"] as Double,
-                    count = it["count"] as Long,
+                    x = it.getX(),
+                    y = it.getY(),
+                    count = it.getCount(),
                 )
             }
         } else {
@@ -134,12 +134,13 @@ internal class FcmHistoryPersistenceAdapter(
                 emergency = emergency.name,
             ).map {
                 HeartRateAggregateResponse(
-                    x = it["x"] as Double,
-                    y = it["y"] as Double,
-                    count = it["count"] as Long,
+                    x = it.getX(),
+                    y = it.getY(),
+                    count = it.getCount(),
                 )
             }
         }
+    }
 
 
 //        val roundX =
@@ -161,5 +162,5 @@ internal class FcmHistoryPersistenceAdapter(
 //            .orderBy(count.desc())
 //            .limit(1000)
 //            .fetch()
-    }
+
 }
