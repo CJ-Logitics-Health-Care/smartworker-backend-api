@@ -1,17 +1,17 @@
-@DNS_HOST = localhost:8080
+@DNS_HOST = http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080
 
 ### Sign Up
 POST {{DNS_HOST}}/api/v1/member/signup
 Content-Type: application/json
 
 {
-  "loginId": "ssdf22",
-  "password": "SSd1234@!",
+  "loginId": "asdf1234",
+  "password": "asdf1234@",
   "phone": "010-1234-1234",
   "gender": "FEMALE",
   "email": "sdf2@gmail.com",
   "employeeName": "홍길동",
-  "year": 2021,
+  "year": 2000,
   "month": 1,
   "day": 1
 }
@@ -38,8 +38,8 @@ POST {{DNS_HOST}}/api/v1/member/login
 Content-Type: application/json
 
 {
-  "loginId": "ssdf22",
-  "password": "SSd1234@!",
+  "loginId": "asdf1234",
+  "password": "asdf1234@",
   "token": "cUKqqTxtRJmpwFeEP8YMIg:APA91bFqCvtjaHChoCZ83UMt7_gnTwKwgPSM3OC1JT_b11F66gTSYgqMc9LGO_jgkt9b1qCYwGuXvBw-ue1UHV65yfKzvGlOpLv70AqcPiMaN82mQwWSMpCcPM1qMgKdk0tVG6rm6H3t"
 }
 
@@ -75,7 +75,7 @@ GET {{DNS_HOST}}/api/v1/member/check/login-id?loginId=ssdf22
 
 
 ### FCM Push
-POST {{DNS_HOST}}/api/v1/fcm/emergency-alarm?x=123&y=129&emergency=REPORT
+POST {{DNS_HOST}}/api/v1/fcm/emergency-alarm?x=123&y=129&emergency=HEART_RATE
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
