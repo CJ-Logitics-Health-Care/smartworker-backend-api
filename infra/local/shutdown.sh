@@ -27,4 +27,6 @@ yes | rm -r ../zookeeper/*
 echo "Shutdown services"
 
 echo "Shutdown MongoDB and MySQL"
-docker-compose -f common.yml -f docker-compose.yml down
+docker compose -f common.yml -f docker-compose.yml down
+
+#docker compose -f common.yml -f api-module.yml down
