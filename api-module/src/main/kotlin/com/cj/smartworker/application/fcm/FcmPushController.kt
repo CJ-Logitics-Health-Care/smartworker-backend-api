@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "FCM API", description = "FCM 푸시, 히스토리 등 API 목록입니다.")
+@Tag(name = "알림 기능 API", description = "신고 알림을 보내는 API 입니다.")
 @WebAdapter
 @RestController
 @RequestMapping("/api/v1/fcm")
