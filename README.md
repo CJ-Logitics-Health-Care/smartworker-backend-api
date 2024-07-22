@@ -2,9 +2,17 @@
 
 docs: http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/index.html
 
+회원 로그인 관리자 계정입니다.
+```
+{
+  "loginId": "asdf1234",
+  "password": "asdf1234@"
+}
+```
+
 </br>
 
-## Infra Docker setting
+## 로컬에서 시작 - Infra Docker setting
 mac에서 가능합니다.
 
 ```text
