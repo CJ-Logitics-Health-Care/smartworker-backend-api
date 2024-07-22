@@ -154,3 +154,62 @@ SELECT ROUND(AVG(x), 6) as x, ROUND(AVG(y), 6) as y, COUNT(*) as count
 5. **필터링 효과:** `count`가 높은 그룹을 우선적으로 처리함으로써, 데이터의 대부분을 차지하는 주요 그룹을 빠르게 식별할 수 있습니다.
 
 ---
+</br>
+
+# ERD
+```mermaid
+classDiagram
+direction BT
+class authority {
+   enum('admin', 'employee') authority
+   bigint authority_id
+}
+class device_token {
+   varchar(255) token
+   bigint member_id
+   bigint id
+}
+class fcm_history {
+   datetime(6) created_at
+   enum('heart_rate', 'report') emergency
+   decimal(9,6) rounded_x_large
+   decimal(9,6) rounded_x_small
+   decimal(9,6) rounded_y_large
+   decimal(9,6) rounded_y_small
+   decimal(9,6) x
+   decimal(9,6) y
+   bigint member_id
+   bigint fcm_history_id
+}
+class fcm_history_admin {
+   bigint fcm_history_id
+   bigint member_id
+}
+class member {
+   datetime(6) created_at
+   int day
+   enum('deleted', 'not_deleted') deleted
+   varchar(255) email
+   varchar(255) employee_name
+   enum('female', 'male') gender
+   int heart_rate_threshold
+   varchar(255) login_id
+   int month
+   varchar(255) password
+   varchar(255) phone
+   int year
+   bigint member_id
+}
+class member_authority {
+   bigint member_id
+   bigint authority_id
+}
+
+device_token  -->  member : member_id
+fcm_history  -->  member : member_id
+fcm_history_admin  -->  fcm_history : fcm_history_id
+fcm_history_admin  -->  member : member_id
+member_authority  -->  authority : authority_id
+member_authority  -->  member : member_id
+
+```
