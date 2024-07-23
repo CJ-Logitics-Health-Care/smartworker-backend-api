@@ -50,7 +50,9 @@ local 서버에서 실행할 수 있게 application-local.yml 파일을 사용�
 </br>
 
 ## 시스템 구조
-![image](https://github.com/user-attachments/assets/5aab764c-87aa-4afa-bd53-105deb022f2a)
+
+![image](https://github.com/user-attachments/assets/43268410-791e-4c75-a292-5b72e33538f1)
+
 
 </br>
 
