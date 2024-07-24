@@ -40,3 +40,7 @@ spring:
       auto-index-creation: true
       host: localhost
       port: 27018
+server:
+  tomcat:
+    threads:
+      max: 10
