@@ -49,7 +49,7 @@ class TokenProvider(
         val now: Long = Date().time
         // 임시 수정
 //        val validity = Date(now.plus(ONE_MINUTE * 15))
-        val validity = Date(now.plus(ONE_MINUTE * 60 * 24 * 4))
+        val validity = Date(now.plus(ONE_MINUTE * 60 * 4)) // 4H
 
         return Jwts.builder()
             .header()
