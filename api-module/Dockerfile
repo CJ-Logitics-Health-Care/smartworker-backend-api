@@ -11,4 +11,4 @@ EXPOSE 8080
 
 ENV SPRING_PROFILES_ACTIVE=$STAGE
 
-ENTRYPOINT ["java", "-jar", "app.jar", "-Dfile.encoding=UTF-8"]
+ENTRYPOINT ["java", "-jar", "app.jar", "-XX:+UseZGC -XX:+ZGenerational", "-Dfile.encoding=UTF-8"]
