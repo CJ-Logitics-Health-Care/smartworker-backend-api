@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "회원 API", description = "회원 가입, 로그인, 로그아웃, 회원 정보 수정, 회원 탈퇴 등 API 목록입니다.")
@@ -27,6 +28,7 @@ internal class DeleteMemberController(
         description = "회원 id로 회원을 삭제합니다. Admin권한에서 사용 가능합니다.",
     )
     @ApiResponse(responseCode = "204", description = "삭제 성공")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/member/{memberId}")
     fun deleteMember(@PathVariable memberId: Long): GenericResponse<Unit> {
