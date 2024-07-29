@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "회원 API", description = "회원 가입, 로그인, 로그아웃, 회원 정보 수정, 회원 탈퇴 등 API 목록입니다.")
 @WebAdapter
@@ -22,6 +19,7 @@ internal class SignupController(
 ) {
     @Operation(summary = "회원 가입", description = "회원 가입을 진행합니다.")
     @ApiResponse(responseCode = "201", description = "회원 가입 성공")
+    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/signup")
     fun signup(
         @RequestBody command: SignupCommand,
