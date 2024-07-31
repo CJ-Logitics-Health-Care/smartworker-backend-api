@@ -1,4 +1,4 @@
-@DNS_HOST = http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080
+@DNS_HOST = https://cj-api.serial-blog.com
 
 ### Login
 ### 응답의 data.token을 변수로 받는다.
