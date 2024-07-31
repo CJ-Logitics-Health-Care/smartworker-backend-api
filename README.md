@@ -1,7 +1,6 @@
 ## AWS 배포된 서버
 
-docs: http://ec2-3-35-138-197.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/index.html
-- 현재는 서버 꺼놓았습니다.
+docs: https://cj-api.serial-blog.com/swagger-ui/index.html
 
 </br>
 
