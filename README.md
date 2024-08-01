@@ -93,7 +93,7 @@ BEGIN
     DECLARE random_date DATETIME;
     -- Generate a random date between 2024-07-15 and 2024-07-21
 
-    WHILE i < 1000 DO -- row 개수
+    WHILE i < 1000000 DO -- row 개수
         -- Generate a random date and time between 2024-07-15 00:00:00 and 2024-07-21 23:59:59
         SET random_date = DATE_ADD('2024-07-15 00:00:00', INTERVAL FLOOR(RAND() * 7) DAY);
         SET random_date = DATE_ADD(random_date, INTERVAL FLOOR(RAND() * 24) HOUR);
