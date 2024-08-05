@@ -25,7 +25,6 @@ interface FcmHistoryJpaRepository: JpaRepository<FcmHistoryJpaEntity, Long> {
         value = """
         SELECT ROUND(AVG(x), 6) as x, ROUND(AVG(y), 6) as y, COUNT(*) as count
         FROM fcm_history
-        FORCE INDEX (idx_created_at, idx_rounded_xy_small)
         WHERE created_at BETWEEN :start AND :end 
         AND emergency = :emergency
         GROUP BY rounded_x_small, rounded_y_small
@@ -44,7 +43,6 @@ interface FcmHistoryJpaRepository: JpaRepository<FcmHistoryJpaEntity, Long> {
         value = """
         SELECT ROUND(AVG(x), 6) as x, ROUND(AVG(y), 6) as y, COUNT(*) as count
         FROM fcm_history
-        FORCE INDEX (idx_created_at, idx_rounded_xy_small)
         WHERE created_at BETWEEN :start AND :end
         AND emergency = :emergency
         GROUP BY rounded_x_large, rounded_y_large
