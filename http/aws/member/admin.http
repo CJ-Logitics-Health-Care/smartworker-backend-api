@@ -6,10 +6,11 @@ POST {{DNS_HOST}}/api/v1/member/login
 Content-Type: application/json
 
 {
-  "loginId": "ssdf22",
-  "password": "SSd1234@!",
-  "token": "c31VbLf2QlaITGLwtmbjnm:APA91bGR5kmT3n75oqMyhIvCjzd0CH8ss3ZpBPrcNve2AsZDZ8yQCjYzfvwLXuuLtAaFLTxR53teRIEliknPXV4A1IvBEyV31XfroRono9KuZ0V_5V7WmW-Ouet0aRlGGAJ2dvjLCMnG"
+  "loginId": "asdf1234",
+  "password": "asdf1234@",
+  "token": "cUKqqTxtRJmpwFeEP8YMIg:APA91bFqCvtjaHChoCZ83UMt7_gnTwKwgPSM3OC1JT_b11F66gTSYgqMc9LGO_jgkt9b1qCYwGuXvBw-ue1UHV65yfKzvGlOpLv70AqcPiMaN82mQwWSMpCcPM1qMgKdk0tVG6rm6H3t"
 }
+
 > {% client.global.set("auth_token", response.body.data.token); %}
 
 ### 회원 심박수 임계치 변경

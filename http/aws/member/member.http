@@ -85,6 +85,6 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ### 본인 심박수 집계
-GET {{DNS_HOST}}/api/v1/heart-rate/aggregate?start=2024-07-15 00:00:00&end=2024-07-20 00:00:00
+GET {{DNS_HOST}}/api/v1/heart-rate/aggregate?start=2024-07-15 00:00:00&end=2024-08-06 00:00:00
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
