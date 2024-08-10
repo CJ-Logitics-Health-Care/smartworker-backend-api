@@ -106,3 +106,8 @@ Content-Type: application/json
 GET {{DNS_HOST}}/api/v1/reporting/day-report?page=1&offset=10&report-sorting=NONE&report-condition=HEART_RATE_FILTER
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+### step-count 저장
+POST {{DNS_HOST}}/api/v1/reporting/step-count?step=10
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

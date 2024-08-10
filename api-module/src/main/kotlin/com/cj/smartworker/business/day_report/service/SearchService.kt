@@ -11,9 +11,10 @@ class SearchService(
 ) {
 
     @Transactional(readOnly = true)
-    fun searchByName(name: String): DayReportResponse {
-        return searchByNamePort.searchByName(name) ?: run {
-            throw IllegalArgumentException("해당 이름의 사원은 존재하지 않습니다.")
+    fun searchByName(name: String): List<DayReportResponse> {
+        if (name.length < 2) {
+            throw IllegalArgumentException("검색 시 이름은 두 글자 이상으로 입력해 주세요.")
         }
+        return searchByNamePort.searchByName(name)
     }
 }

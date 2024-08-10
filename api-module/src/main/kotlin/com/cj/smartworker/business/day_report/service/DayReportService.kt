@@ -18,8 +18,8 @@ class DayReportService(
     override fun paging(
         page: Long,
         offset: Long,
-        reportSorting: Set<ReportSorting>,
-        reportFilter: Set<ReportFilter>,
+        reportSorting: List<ReportSorting>,
+        reportFilter: List<ReportFilter>,
     ): PagingResponse<DayReportResponse> {
         if (page < 1) throw IllegalArgumentException("page는 1부터 시작해야 합니다.")
         if (offset < 1) throw IllegalArgumentException("offset은 1부터 시작해야 합니다.")

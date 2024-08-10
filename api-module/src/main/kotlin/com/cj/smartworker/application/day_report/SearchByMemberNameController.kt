@@ -36,7 +36,7 @@ class SearchByMemberNameController(
     @GetMapping("/search")
     fun searchByName(
         @RequestParam("name") name: String,
-    ): GenericResponse<DayReportResponse> {
+    ): GenericResponse<List<DayReportResponse>> {
         val searchByName = searchService.searchByName(name)
         return GenericResponse(
             data = searchByName,

@@ -9,7 +9,7 @@ interface PagingDayUseCase {
     fun paging(
         page: Long,
         offset: Long,
-        reportSorting: Set<ReportSorting>,
-        reportFilter: Set<ReportFilter>,
+        reportSorting: List<ReportSorting>,
+        reportFilter: List<ReportFilter>,
     ): PagingResponse<DayReportResponse>
 }

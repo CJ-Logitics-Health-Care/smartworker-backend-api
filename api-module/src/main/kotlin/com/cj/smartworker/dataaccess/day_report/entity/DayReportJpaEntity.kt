@@ -15,9 +15,6 @@ class DayReportJpaEntity(
     @JoinColumn(name = "member_id")
     val memberJpaEntity: MemberJpaEntity,
 
-    @Column(name = "member_name")
-    val memberName: String,
-
     @Column(name = "move_work")
     val moveWork: Int, // 걸음 수
 

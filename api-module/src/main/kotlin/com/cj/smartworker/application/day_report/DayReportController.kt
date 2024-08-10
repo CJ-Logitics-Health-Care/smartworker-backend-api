@@ -27,70 +27,6 @@ class DayReportController(
     private val dayReportService: DayReportService,
 ) {
 
-//    @Operation(
-//        summary = "시기능 정렬 [Admin]",
-//        description = "신기능 정렬 [Admin]",
-//        parameters = [
-//            Parameter(name = "page", description = "현재 페이지 1부터 시작", required = true, example = "1"),
-//            Parameter(name = "offset", description = "item 개수", required = true, example = "10"),
-//        ]
-//    )
-//    @ApiResponse(responseCode = "200", description = "조회 성공")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/day-report/v1")
-//    fun pagingDayReport(
-//        @RequestParam("page") page: Long,
-//        @RequestParam("offset") offset: Long,
-//        @RequestParam("report-sorting") reportSorting: ReportSorting,
-//    ): GenericResponse<PagingResponse<DayReportResponse>> {
-//        val paging = dayReportService.paging(
-//            page = page,
-//            offset = offset,
-//            reportSorting = reportSorting,
-//        )
-//        return GenericResponse(
-//            data = paging,
-//            statusCode = HttpStatus.OK.value(),
-//            success = true,
-//        )
-//    }
-
-//    @Operation(
-//        summary = "시기능 정렬 [Admin]",
-//        description = "신기능 정렬 [Admin]",
-//        parameters = [
-//            Parameter(name = "page", description = "현재 페이지 1부터 시작", required = true, example = "1"),
-//            Parameter(name = "offset", description = "item 개수", required = true, example = "10"),
-//            Parameter(
-//                name = "report-sorting",
-//                description = "정렬할 것",
-//                required = true,
-//                example = "MOVE_DESC, MOVE_ASC 등등",
-//            ),
-//        ]
-//    )
-//    @ApiResponse(responseCode = "200", description = "조회 성공")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/day-report/v2")
-//    fun pagingDayReport(
-//        @RequestParam("page") page: Long,
-//        @RequestParam("offset") offset: Long,
-//        @RequestParam("report-sorting1") reportSorting1: ReportSorting,
-//        @RequestParam("report-sorting2") reportSorting2: ReportSorting,
-//    ): GenericResponse<PagingResponse<DayReportResponse>> {
-//        val paging = dayReportService.paging(
-//            page = page,
-//            offset = offset,
-//            reportSorting1 = reportSorting1,
-//            reportSorting2 = reportSorting2,
-//        )
-//        return GenericResponse(
-//            data = paging,
-//            statusCode = HttpStatus.OK.value(),
-//            success = true,
-//        )
-//    }
-
     @Operation(
         summary = "시기능 정렬 [Admin]",
         description = "신기능 정렬 [Admin]",
@@ -105,8 +41,8 @@ class DayReportController(
     fun pagingDayReport(
         @RequestParam("page") page: Long,
         @RequestParam("offset") offset: Long,
-        @RequestParam("report-sorting") reportSorting: Set<ReportSorting>,
-        @RequestParam("report-condition") reportCondition: Set<ReportFilter>,
+        @RequestParam("report-sorting") reportSorting: List<ReportSorting>,
+        @RequestParam("report-condition") reportCondition: List<ReportFilter>,
     ): GenericResponse<PagingResponse<DayReportResponse>> {
         val paging = dayReportService.paging(
             page = page,

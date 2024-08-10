@@ -88,3 +88,25 @@ Authorization: Bearer {{auth_token}}
 GET {{DNS_HOST}}/api/v1/fcm/aggregate-heart-report?start=2024-07-19 00:00:00&end=2024-08-01 00:00:00&gps-range=SMALL&emergency=HEART_RATE
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+### Login
+### 응답의 data.token을 변수로 받는다.
+POST {{DNS_HOST}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "asdf123456",
+  "password": "asdf12345@",
+  "token": "cUKqqTxtRJmpwFeEP8YMIg:APA91bFqCvtjaHChoCZ83UMt7_gnTwKwgPSM3OC1JT_b11F66gTSYgqMc9LGO_jgkt9b1qCYwGuXvBw-ue1UHV65yfKzvGlOpLv70AqcPiMaN82mQwWSMpCcPM1qMgKdk0tVG6rm6H3t"
+}
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+### report 정렬과 필터가 있는 버전
+GET {{DNS_HOST}}/api/v1/reporting/day-report?page=1&offset=10&report-sorting=MOVE_DESC&report-sorting=KM_ASC&report-condition=HEART_RATE_FILTER
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 이름으로 Search - 두 글자 이상으로
+GET {{DNS_HOST}}/api/v1/reporting/search?name=홍길
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

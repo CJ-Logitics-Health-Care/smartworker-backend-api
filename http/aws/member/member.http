@@ -94,3 +94,8 @@ Authorization: Bearer {{auth_token}}
 GET {{DNS_HOST}}/api/v1/reporting/search?name=김정직
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+### step-count 저장
+POST {{DNS_HOST}}/api/v1/reporting/step-count?step=10
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

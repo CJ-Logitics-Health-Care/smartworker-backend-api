@@ -5,6 +5,7 @@ import com.cj.smartworker.business.day_report.dto.response.DayReportResponse
 import com.cj.smartworker.business.day_report.port.out.PagingDayReportPort
 import com.cj.smartworker.business.day_report.port.out.SearchByNamePort
 import com.cj.smartworker.dataaccess.day_report.entity.QDayReportJpaEntity.dayReportJpaEntity
+import com.cj.smartworker.dataaccess.member.entity.QMemberJpaEntity.memberJpaEntity
 import com.cj.smartworker.domain.day_report.entity.ReportFilter
 import com.cj.smartworker.domain.day_report.entity.ReportSorting
 import com.querydsl.core.types.Order
@@ -20,7 +21,7 @@ internal class DayReportAdapter(
     SearchByNamePort {
 
     private fun reportingSorting(
-        reportSorting: Set<ReportSorting>,
+        reportSorting: List<ReportSorting>,
         list: MutableList<OrderSpecifier<*>>,
     ): List<OrderSpecifier<*>> {
         reportSorting.forEach { sorting ->
@@ -41,8 +42,8 @@ internal class DayReportAdapter(
     override fun paging(
         page: Long,
         offset: Long,
-        reportSorting: Set<ReportSorting>,
-        reportFilter: Set<ReportFilter>,
+        reportSorting: List<ReportSorting>,
+        reportFilter: List<ReportFilter>,
     ): List<DayReportResponse> {
         val orderSpecifiers = mutableListOf<OrderSpecifier<*>>()
         if (reportSorting.isEmpty() || !reportSorting.contains(ReportSorting.NONE)) {
@@ -58,7 +59,7 @@ internal class DayReportAdapter(
             Projections.constructor(
                 DayReportResponse::class.java,
                 dayReportJpaEntity.id,
-                dayReportJpaEntity.memberName,
+                dayReportJpaEntity.memberJpaEntity.employeeName,
                 dayReportJpaEntity.moveWork,
                 dayReportJpaEntity.heartRate,
                 dayReportJpaEntity.km,
@@ -76,7 +77,7 @@ internal class DayReportAdapter(
         return data
     }
 
-    private fun reportCondition(reportFilters: Set<ReportFilter>, list: MutableList<BooleanExpression?>) {
+    private fun reportCondition(reportFilters: List<ReportFilter>, list: MutableList<BooleanExpression?>) {
         reportFilters.forEach { filter ->
             val booleanExpression = when (filter) {
                 ReportFilter.KM_FILTER -> dayReportJpaEntity.km.gt(1.2)
@@ -88,7 +89,7 @@ internal class DayReportAdapter(
         }
     }
 
-    override fun countPage(reportFilter: Set<ReportFilter>): Long {
+    override fun countPage(reportFilter: List<ReportFilter>): Long {
         val whereList = mutableListOf<BooleanExpression?>() // where ReportFilter 조건 리스트
         reportCondition(reportFilter, whereList)
         return queryFactory.select(dayReportJpaEntity.count())
@@ -97,12 +98,23 @@ internal class DayReportAdapter(
             .fetchOne() ?: 0
     }
 
-    override fun searchByName(name: String): DayReportResponse? {
-        val fetchOne = queryFactory.select(
+    override fun searchByName(name: String): List<DayReportResponse> {
+        val memberSubQuery = queryFactory
+            .select(memberJpaEntity.id)
+            .from(memberJpaEntity)
+            .where(memberJpaEntity.employeeName.like("$name%"))
+
+        val latestReportSubQuery = queryFactory
+            .select(dayReportJpaEntity.id.max())
+            .from(dayReportJpaEntity)
+            .where(dayReportJpaEntity.memberJpaEntity.id.`in`(memberSubQuery))
+            .groupBy(dayReportJpaEntity.memberJpaEntity.id)
+
+        return queryFactory.select(
             Projections.constructor(
                 DayReportResponse::class.java,
                 dayReportJpaEntity.id,
-                dayReportJpaEntity.memberName,
+                dayReportJpaEntity.memberJpaEntity.employeeName,
                 dayReportJpaEntity.moveWork,
                 dayReportJpaEntity.heartRate,
                 dayReportJpaEntity.km,
@@ -111,10 +123,9 @@ internal class DayReportAdapter(
             )
         )
             .from(dayReportJpaEntity)
-            .where(dayReportJpaEntity.memberName.like("$name%"))
+            .innerJoin(dayReportJpaEntity.memberJpaEntity, memberJpaEntity)
+            .where(dayReportJpaEntity.id.`in`(latestReportSubQuery))
             .orderBy(dayReportJpaEntity.createdAt.desc())
-            .limit(1)
-            .fetchOne()
-        return fetchOne
+            .fetch()
     }
 }

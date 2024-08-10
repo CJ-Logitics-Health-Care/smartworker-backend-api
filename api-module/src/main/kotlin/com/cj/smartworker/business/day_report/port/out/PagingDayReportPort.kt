@@ -8,9 +8,9 @@ interface PagingDayReportPort {
     fun paging(
         page: Long,
         offset: Long,
-        reportSorting: Set<ReportSorting>,
-        reportFilter: Set<ReportFilter>,
+        reportSorting: List<ReportSorting>,
+        reportFilter: List<ReportFilter>,
     ): List<DayReportResponse>
 
-    fun countPage(reportFilter: Set<ReportFilter>): Long
+    fun countPage(reportFilter: List<ReportFilter>): Long
 }

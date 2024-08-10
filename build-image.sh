@@ -16,3 +16,4 @@ docker build --platform linux/amd64 --build-arg STAGE=docker -t bsj1209/save-hea
 
 #docker pull bsj1209/smart-worker:latest
 #docker pull bsj1209/save-heart-rate:latest
+#docker compose -f common.yml -f api-module.yml up -d
