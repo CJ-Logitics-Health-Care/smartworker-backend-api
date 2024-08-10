@@ -63,6 +63,7 @@ class TokenProvider(
             .subject(authentication.name)
             .claim(AUTHORITIES_KEY, authorities)
             .issuedAt(Date(System.currentTimeMillis()))
+            // SHA512로 암호화
             .signWith(key)
             .expiration(validity)
             .compact()

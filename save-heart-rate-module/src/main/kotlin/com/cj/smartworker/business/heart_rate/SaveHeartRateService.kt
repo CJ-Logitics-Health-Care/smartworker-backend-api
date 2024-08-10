@@ -4,6 +4,7 @@ import com.cj.smartworker.kafka.model.HeartRateDto
 import com.cj.smartworker.mongo.heart_rate.entity.HeartRateDocument
 import com.cj.smartworker.mongo.heart_rate.repository.HeartRateMongoRepository
 import com.cj.smartworker.mongo.heart_rate.value.HeartRateDataId
+import com.cj.smartworker.util.HeartRateEncodingUtil
 import org.springframework.stereotype.Service
 import java.time.Instant
 import com.cj.smartworker.util.toKstLocalDateTime
@@ -19,7 +20,7 @@ class SaveHeartRateService(
                     memberId = it.memberId,
                     timestamp = Instant.ofEpochSecond(it.timestamp).toKstLocalDateTime(),
                 ),
-                heartRate = it.heartRate,
+                heartRate = HeartRateEncodingUtil.encrypt(it.heartRate.toString(), "12345678"),
             )
         }
         heartRateMongoRepository.saveAll(heartRateDocuments)
