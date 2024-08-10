@@ -52,6 +52,7 @@ fcm:
   project-id: smartworker-78dd9
 heart-rate:
   topic-name: heart-rate
+  step-count: step-count
 
 kafka-config:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092

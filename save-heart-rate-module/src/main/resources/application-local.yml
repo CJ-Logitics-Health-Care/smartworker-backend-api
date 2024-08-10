@@ -33,6 +33,7 @@ kafka-consumer-config:
   poll-timeout-ms: 150
 heart-rate:
   topic-name: heart-rate
+  step-count: step-count
 
 spring:
   data:

@@ -4,7 +4,6 @@ import com.cj.smartworker.annotation.PersistenceAdapter
 import com.cj.smartworker.business.day_report.dto.response.DayReportResponse
 import com.cj.smartworker.business.day_report.port.out.PagingDayReportPort
 import com.cj.smartworker.business.day_report.port.out.SearchByNamePort
-import com.cj.smartworker.dataaccess.day_report.entity.DayReportJpaEntity
 import com.cj.smartworker.dataaccess.day_report.entity.QDayReportJpaEntity.dayReportJpaEntity
 import com.cj.smartworker.domain.day_report.entity.ReportFilter
 import com.cj.smartworker.domain.day_report.entity.ReportSorting
