@@ -4,6 +4,8 @@ import com.cj.smartworker.business.member.util.MaskingUtil
 import com.cj.smartworker.domain.member.valueobject.EmployeeName
 import com.cj.smartworker.domain.member.valueobject.LoginId
 import com.cj.smartworker.domain.member.valueobject.Phone
+import com.cj.smartworker.domain.util.HeartRateEncodingUtil
+import com.cj.smartworker.domain.util.PasswordEncodeUtil
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -38,4 +40,13 @@ class MakingUtilTest {
         val maskEmployeeName2 = MaskingUtil.maskEmployeeName(EmployeeName("김구"))
         Assertions.assertThat(maskEmployeeName2).isEqualTo("김*")
     }
+
+    @Test
+    fun test() {
+        val str = "sdfsdfsdf@"
+        val encode = PasswordEncodeUtil.encode(str)
+        val ss = PasswordEncodeUtil.matches(str, encode)
+        println("test: ${ss}")
+    }
+
 }

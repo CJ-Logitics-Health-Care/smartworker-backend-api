@@ -1,18 +1,20 @@
 package com.cj.smartworker.domain.util
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
+import java.security.MessageDigest
+import java.util.*
 
 class PasswordEncodeUtil {
     companion object {
-        private val passwordEncoder: PasswordEncoder = BCryptPasswordEncoder()
+        private val messageDigest: MessageDigest = MessageDigest.getInstance("SHA-512")
 
         fun encode(password: String): String {
-            return passwordEncoder.encode(password)
+            val bytes = messageDigest.digest(password.toByteArray())
+            return Base64.getEncoder().encodeToString(bytes)
         }
 
         fun matches(password: String, encodedPassword: String): Boolean {
-            return passwordEncoder.matches(password, encodedPassword)
+            val newEncodedPassword = encode(password)
+            return newEncodedPassword == encodedPassword
         }
     }
 }

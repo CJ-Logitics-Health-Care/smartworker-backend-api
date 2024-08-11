@@ -11,6 +11,7 @@ import java.time.LocalDateTime
     indexes = [
         Index(name = "member_login_id_index", columnList = "login_id"),
         Index(name = "member_phone_index", columnList = "phone"),
+        Index(name = "employee_name_index", columnList = "employee_name"),
     ],
 )
 class MemberJpaEntity(
