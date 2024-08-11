@@ -8,10 +8,17 @@ docs: https://cj-api.serial-blog.com/swagger-ui/index.html
 회원 로그인 관리자 계정입니다.
 ```
 {
-  "loginId": "asdf1234",
-  "password": "asdf1234@"
+  "loginId": "asdf123456",
+  "password": "asdf12345@",
 }
 ```
+</br>
+
+## 본선 신기능 입니다.
+
+<img width="764" alt="image" src="https://github.com/user-attachments/assets/fbe68283-7a60-4923-8626-ef14097ac9aa">
+
+</br>
 
 </br>
 
