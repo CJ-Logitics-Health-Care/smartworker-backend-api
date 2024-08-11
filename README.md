@@ -23,6 +23,14 @@ docs: https://cj-api.serial-blog.com/swagger-ui/index.html
 
 <img width="764" alt="image" src="https://github.com/user-attachments/assets/fbe68283-7a60-4923-8626-ef14097ac9aa">
 
+- 하나의 정렬 API 에서 여러 정렬, 필터 조건을 받아 처리할 수 있습니다.
+  - 정렬, 필터 쿼리를 동적으로 생성하여 처리합니다.
+  - 동적 쿼리 생성에는 **QueryDsl**을 사용하였습니다.
+- 이름으로 검색하는 API를 추가하였습니다.
+  - 리포트 데이터에서 가장 최근의 데이터를 가져옵니다.
+- 5초 마다 걸음 수를 받는 API를 추가하였습니다.
+  - 모든 근로자의 걸음 수를 5초마다 받아오면 부하가 크기 때문에 MQ(Kafka)를 버퍼로 사용하여 배치 처리합니다.
+
 </br>
 
 </br>
