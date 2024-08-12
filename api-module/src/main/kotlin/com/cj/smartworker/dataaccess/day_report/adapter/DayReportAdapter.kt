@@ -4,19 +4,23 @@ import com.cj.smartworker.annotation.PersistenceAdapter
 import com.cj.smartworker.business.day_report.dto.response.DayReportResponse
 import com.cj.smartworker.business.day_report.port.out.PagingDayReportPort
 import com.cj.smartworker.business.day_report.port.out.SearchByNamePort
+import com.cj.smartworker.dataaccess.day_report.dto.DayReportResponseDto
 import com.cj.smartworker.dataaccess.day_report.entity.QDayReportJpaEntity.dayReportJpaEntity
 import com.cj.smartworker.dataaccess.member.entity.QMemberJpaEntity.memberJpaEntity
 import com.cj.smartworker.domain.day_report.entity.ReportFilter
 import com.cj.smartworker.domain.day_report.entity.ReportSorting
+import com.cj.smartworker.domain.util.HeartRateEncodingUtil
 import com.querydsl.core.types.Order
 import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
+import org.springframework.beans.factory.annotation.Value
 
 @PersistenceAdapter
 internal class DayReportAdapter(
     private val queryFactory: JPAQueryFactory,
+    @Value("\${aes.key}") private val key: String,
 ) : PagingDayReportPort,
     SearchByNamePort {
 
@@ -55,16 +59,16 @@ internal class DayReportAdapter(
         reportCondition(reportFilter, whereList)
 
 
-        val data: MutableList<DayReportResponse> = queryFactory.select(
+        val data = queryFactory.select(
             Projections.constructor(
-                DayReportResponse::class.java,
+                DayReportResponseDto::class.java,
                 dayReportJpaEntity.id,
                 dayReportJpaEntity.memberJpaEntity.employeeName,
                 dayReportJpaEntity.moveWork,
                 dayReportJpaEntity.heartRate,
                 dayReportJpaEntity.km,
                 dayReportJpaEntity.createdAt,
-                dayReportJpaEntity.heartRate.gt(dayReportJpaEntity.memberJpaEntity.heartRateThreshold)
+                dayReportJpaEntity.isOver,
             )
         )
             .from(dayReportJpaEntity)
@@ -74,7 +78,18 @@ internal class DayReportAdapter(
             .limit(offset)
             .fetch()
 
-        return data
+        return data.map {
+            val heartRate = HeartRateEncodingUtil.decrypt(it.heartRate, key).toDouble()
+            DayReportResponse(
+                id = it.id,
+                memberName = it.memberName,
+                moveWork = it.moveWork,
+                heartRate = heartRate,
+                km = it.km,
+                createdAt = it.createdAt,
+                isOverHeartRate = it.isOver,
+            )
+        }
     }
 
     private fun reportCondition(reportFilters: List<ReportFilter>, list: MutableList<BooleanExpression?>) {
@@ -82,7 +97,7 @@ internal class DayReportAdapter(
             val booleanExpression = when (filter) {
                 ReportFilter.KM_FILTER -> dayReportJpaEntity.km.gt(1.2)
                 ReportFilter.MOVE_FILTER -> dayReportJpaEntity.moveWork.gt(7000)
-                ReportFilter.HEART_RATE_FILTER -> dayReportJpaEntity.heartRate.gt(dayReportJpaEntity.memberJpaEntity.heartRateThreshold)
+                ReportFilter.HEART_RATE_FILTER -> dayReportJpaEntity.isOver.isTrue
                 ReportFilter.NONE -> null
             }
             list.add(booleanExpression)
@@ -112,14 +127,14 @@ internal class DayReportAdapter(
 
         return queryFactory.select(
             Projections.constructor(
-                DayReportResponse::class.java,
+                DayReportResponseDto::class.java,
                 dayReportJpaEntity.id,
                 dayReportJpaEntity.memberJpaEntity.employeeName,
                 dayReportJpaEntity.moveWork,
                 dayReportJpaEntity.heartRate,
                 dayReportJpaEntity.km,
                 dayReportJpaEntity.createdAt,
-                dayReportJpaEntity.memberJpaEntity.heartRateThreshold.gt(dayReportJpaEntity.heartRate)
+                dayReportJpaEntity.isOver,
             )
         )
             .from(dayReportJpaEntity)
@@ -127,5 +142,17 @@ internal class DayReportAdapter(
             .where(dayReportJpaEntity.id.`in`(latestReportSubQuery))
             .orderBy(dayReportJpaEntity.createdAt.desc())
             .fetch()
+            .map {
+                val heartRate = HeartRateEncodingUtil.decrypt(it.heartRate, key).toDouble()
+                DayReportResponse(
+                    id = it.id,
+                    memberName = it.memberName,
+                    moveWork = it.moveWork,
+                    heartRate = heartRate,
+                    km = it.km,
+                    createdAt = it.createdAt,
+                    isOverHeartRate = it.isOver,
+                )
+            }
     }
 }
