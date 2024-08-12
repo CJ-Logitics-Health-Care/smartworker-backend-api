@@ -110,8 +110,3 @@ Authorization: Bearer {{auth_token}}
 GET {{DNS_HOST}}/api/v1/reporting/search?name=홍길
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
-
-### migration
-POST {{DNS_HOST}}/api/v1/reporting/is-over
-Content-Type: application/json
-Authorization: Bearer {{auth_token}}
