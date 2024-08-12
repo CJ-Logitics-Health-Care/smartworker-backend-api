@@ -117,6 +117,6 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ### 회원 이름으로 Search - 두 글자 이상으로
-GET {{DNS_HOST}}/api/v1/reporting/search?name=홍길
+GET {{DNS_HOST}}/api/v1/reporting/search?name=열정
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}

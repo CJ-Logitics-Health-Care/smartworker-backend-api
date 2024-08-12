@@ -117,7 +117,7 @@ internal class DayReportAdapter(
         val memberSubQuery = queryFactory
             .select(memberJpaEntity.id)
             .from(memberJpaEntity)
-            .where(memberJpaEntity.employeeName.like("$name%"))
+            .where(memberJpaEntity.employeeName.like("%$name%"))
 
         val latestReportSubQuery = queryFactory
             .select(dayReportJpaEntity.id.max())
