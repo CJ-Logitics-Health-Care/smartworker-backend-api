@@ -21,7 +21,8 @@ docs: https://cj-api.serial-blog.com/swagger-ui/index.html
 
 ## 본선 신기능 입니다.
 
-<img width="764" alt="image" src="https://github.com/user-attachments/assets/fbe68283-7a60-4923-8626-ef14097ac9aa">
+![image](https://github.com/user-attachments/assets/4fd03793-cfe7-407c-a207-1e7063fa6d41)
+
 
 - 하나의 정렬 API 에서 여러 정렬, 필터 조건을 받아 처리할 수 있습니다.
   - 정렬, 필터 쿼리를 동적으로 생성하여 처리합니다.
