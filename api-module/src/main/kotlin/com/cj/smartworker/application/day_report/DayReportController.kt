@@ -28,8 +28,8 @@ class DayReportController(
 ) {
 
     @Operation(
-        summary = "시기능 정렬 [Admin]",
-        description = "신기능 정렬 [Admin]",
+        summary = "신기능 리포트 정렬 페이징 조회[Admin]",
+        description = "신기능 리포트 정렬 페이징 조회 [Admin]",
         parameters = [
             Parameter(name = "page", description = "현재 페이지 1부터 시작", required = true, example = "1"),
             Parameter(name = "offset", description = "item 개수", required = true, example = "10"),
