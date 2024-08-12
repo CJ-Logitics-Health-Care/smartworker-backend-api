@@ -28,6 +28,6 @@ internal class HeartRateConsumer(
         @Header(KafkaHeaders.OFFSET) offsets: List<Long>,
     ) {
         logger.info("Received ${messages.size} heart rate messages with keys: $keys, partitions: $partitions and offsets: $offsets")
-        saveHeartRateService.save(messages)
+        saveHeartRateService.saveAll(messages)
     }
 }

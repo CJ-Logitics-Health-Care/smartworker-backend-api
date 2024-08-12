@@ -11,7 +11,7 @@ class HeartRateDocument(
     val id: HeartRateDataId,
 
     @Field(name = "heartRate")
-    val heartRate: String,
+    val heartRate: Double,
 
 ) {
     override fun equals(other: Any?): Boolean {
