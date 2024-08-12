@@ -34,6 +34,12 @@ docs: https://cj-api.serial-blog.com/swagger-ui/index.html
 
 </br>
 
+## 심박수 AES256 암호화
+<img width="1008" alt="image" src="https://github.com/user-attachments/assets/eeab9731-d2ec-4192-8bc8-83198052f78b">
+
+</br>
+
+
 </br>
 
 ## 로컬에서 시작 - Infra Docker setting
