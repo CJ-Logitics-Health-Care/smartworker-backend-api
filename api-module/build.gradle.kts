@@ -48,6 +48,10 @@ dependencies {
     // Module
     implementation(project(":document-db-module"))
     implementation(project(":common-messaging-module:kafka-producer"))
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.1")
 }
 tasks.test {
     useJUnitPlatform()
