@@ -81,7 +81,8 @@ local 서버에서 실행할 수 있게 application-local.yml 파일을 사용�
 
 ## 시스템 구조
 
-![image](https://github.com/user-attachments/assets/43268410-791e-4c75-a292-5b72e33538f1)
+<img width="1029" alt="image" src="https://github.com/user-attachments/assets/6a694842-15f0-43d3-8209-26da052e0272">
+
 
 
 </br>
