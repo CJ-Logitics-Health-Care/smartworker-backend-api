@@ -1,6 +1,8 @@
 ## AWS 배포된 서버
 
 docs: https://cj-api.serial-blog.com/swagger-ui/index.html
+- 현재는 서버 종료시켰습니다.
+- 필요시 말씀 주시면 서버 오픈 하겠습니다.
 
 </br>
 
