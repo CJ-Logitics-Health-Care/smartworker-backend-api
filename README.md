@@ -7,7 +7,6 @@ docs: https://cj-api.serial-blog.com/swagger-ui/index.html
 </br>
 
 ## 백엔드 개발자 연락처입니다.
-- 전화번호: 010-4474-5825
 - 이메일: tmdwo5825@gmail.com
 
 </br>
