@@ -1,3 +1,5 @@
+## 주제: 스마트 워치를 활용한 물류 현장 근로자 건강 관리 어플리케이션
+
 ## AWS 배포된 서버
 
 docs: https://cj-api.serial-blog.com/swagger-ui/index.html
