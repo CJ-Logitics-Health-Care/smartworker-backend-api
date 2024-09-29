@@ -41,8 +41,10 @@ abstract class IntegrationTestBase {
             val properties: Map<String, String> = hashMapOf(
                 "spring.datasource.driver-class-name" to "org.testcontainers.jdbc.ContainerDatabaseDriver",
                 "spring.datasource.url" to "jdbc:tc:mysql:8.0:///test?TC_REUSABLE=true",
-                "spring.data.mongodb.uri" to MONGO_CONTAINER.replicaSetUrl,
-                "spring.data.mongodb.database" to "test",
+//                "spring.data.mongodb.uri" to MONGO_CONTAINER.replicaSetUrl,
+                "spring.data.mongodb.uri" to "mongodb://ec2-43-203-200-1.ap-northeast-2.compute.amazonaws.com:27018",
+                "spring.data.mongodb.database" to "benchmark",
+//                "spring.data.mongodb.database" to "smart_worker",
                 "spring.data.mongodb.auto-index-creation" to true.toString(),
                 "sms.from" to "01012341234",
                 "sms.apiKey" to "test",

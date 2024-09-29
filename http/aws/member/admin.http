@@ -49,7 +49,7 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ### 직원 심박수 집계
-GET {{DNS_HOST}}/api/v1/heart-rate/aggregate/1?start=2024-07-15 00:00:00&end=2024-07-21 00:00:00
+GET {{DNS_HOST}}/api/v1/heart-rate/aggregate/2?start=2024-08-12 00:00:00&end=2024-08-19 00:00:00
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
