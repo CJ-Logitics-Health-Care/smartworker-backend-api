@@ -12,9 +12,7 @@ class SearchService(
 
     @Transactional(readOnly = true)
     fun searchByName(name: String): List<DayReportResponse> {
-        if (name.length < 2) {
-            throw IllegalArgumentException("검색 시 이름은 두 글자 이상으로 입력해 주세요.")
-        }
+        require(name.length >= 2) { "검색 시 이름은 두 글자 이상으로 입력해 주세요." }
         return searchByNamePort.searchByName(name)
     }
 }
