@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class DayReportService(
     private val pagingDayReportPort: PagingDayReportPort,
-): PagingDayUseCase {
+) : PagingDayUseCase {
 
     @Transactional(readOnly = true)
     override fun paging(
@@ -21,8 +21,8 @@ class DayReportService(
         reportSorting: List<ReportSorting>,
         reportFilter: List<ReportFilter>,
     ): PagingResponse<DayReportResponse> {
-        if (page < 1) throw IllegalArgumentException("page는 1부터 시작해야 합니다.")
-        if (offset < 1) throw IllegalArgumentException("offset은 1부터 시작해야 합니다.")
+        require(page >= 1) { "page는 1부터 시작해야 합니다." }
+        require(offset >= 1) { "offset은 1부터 시작해야 합니다." }
 
         val paging = pagingDayReportPort.paging(
             page = page,
